@@ -14,6 +14,6 @@ export default {
   components: {
     MemberList
   },
-  layout: "nav"
+  layout: "nav-bar"
 }
 </script>

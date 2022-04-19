@@ -3,16 +3,19 @@
    
    <Header />
    
+   
  </div>
 </template>
 
 <script>
 import Header from '@/components/Hea-der.vue'
+import SlideBar from '@/components/slide-bar.vue'
 export default {
   name: 'IndexPage',
   components: {
-    Header
+    Header,
+    SlideBar
   },
-  layout:"nav"
+  layout:"nav-bar"
 }
 </script>

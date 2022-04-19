@@ -7,6 +7,6 @@
         <nuxt-link class="nav-item nav-link" to="/member">Member</nuxt-link>
       </b-navbar-nav>
     </b-navbar>
-    <nuxt />
+    <Nuxt />
 </div>
 </template>
