@@ -7,21 +7,21 @@
 </template> -->
 <template>
    <div class="header">
-      
+
       <img src="@/assests/image/headerImage.jpg" alt="" />
 
-
       <div class="text-container">
-         
-            <div class="text">       
-               <div class="">
-            <SlideBar />
-            </div>        
-               <!-- <span class="mini-heading">Now Stremaing</span> -->
-               <h1 class="pt-20"><span>Now</span> Streaming</h1>
-               <a href="#movie-grid" class="button">View Movies</a>
+         <div class="text">
+            <div class="">
+               <SlideBar />
             </div>
-         
+            <!-- <span class="mini-heading">Now Stremaing</span> -->
+            <h1 class="pt-20"><span>Now</span> Streaming</h1>
+            <b-button variant="primary" size="sm" class="">
+            <a href="#movie-grid" class="button">View Movies</a>
+            </b-button>
+            
+         </div>
       </div>
    </div>
 </template>
