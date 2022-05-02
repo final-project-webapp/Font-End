@@ -5,12 +5,17 @@
 
     <!-- search -->
     <div class="container search">
-      <b-form-input v-model.lazy="searchInput" type="text" placeholder="Search" @keyup.enter="$fetch" @keyup.delete="clearSearch"></b-form-input>
-      <b-button  v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm" @click="clearSearch">Clear Search</b-button>
+      <b-form-input v-model.lazy="searchInput" type="text" placeholder="Search" @keyup.enter="$fetch"
+        @keyup.delete="clearSearch"></b-form-input>
+      <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm" @click="clearSearch">Clear
+        Search</b-button>
     </div>
 
+    <!-- Loading -->
+    <Loading v-if="$fetchState.pending" />
+
     <!-- movie -->
-    <div class="container movies">
+    <div v-else class="container movies">
       <!-- search movie -->
       <div v-if="searchInput !== ''" id="movie-grid" class="movies-grid">
         <div v-for="(movie, index) in searchedMovies" :key="index" class="movie">
@@ -27,11 +32,11 @@
             <p class="release">
               Released:
               {{
-                new Date(movie.release_date).toLocaleString('en-us', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
+                  new Date(movie.release_date).toLocaleString('en-us', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })
               }}
             </p>
             <b-button variant="outline-primary">
@@ -58,11 +63,11 @@
             <p class="release">
               Released:
               {{
-                new Date(movie.release_date).toLocaleString('en-us', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
+                  new Date(movie.release_date).toLocaleString('en-us', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })
               }}
             </p>
             <b-button variant="outline-primary">
@@ -80,11 +85,13 @@
 <script>
 import axios from 'axios'
 import Header from '@/components/Hea-der.vue'
+import Loading from '@/components/Loading.vue'
 
 export default {
   name: 'IndexPage',
   components: {
     Header,
+    Loading
   },
   layout: "nav-bar",
 
@@ -102,6 +109,7 @@ export default {
     }
     await this.searchMovies()
   },
+  fetchDelay: 2000,
 
   methods: {
     async getMovies() {
@@ -136,30 +144,31 @@ export default {
     padding-top: 120px;
     align-items: flex-start;
   }
-}
 
-.search {
-  display: flex;
-  padding: 32px 16px;
 
-  input {
-    max-width: 350px;
-    width: 100%;
-    padding: 12px 6px;
-    font-size: 14px;
-    border: none;
+  .search {
+    display: flex;
+    padding: 32px 16px;
 
-    &:focus {
-      outline: none;
+    input {
+      max-width: 350px;
+      width: 100%;
+      padding: 12px 6px;
+      font-size: 14px;
+      border: none;
+
+      &:focus {
+        outline: none;
+      }
     }
-  }
 
-  // .button {
-  //   border-top-left-radius: 0;
-  //   border-top-right-radius: 0;
-  //   border-bottom-left-radius: 0;
-  //   border-bottom-right-radius: 0;
-  // }
+    // .button {
+    //   border-top-left-radius: 0;
+    //   border-top-right-radius: 0;
+    //   border-bottom-left-radius: 0;
+    //   border-bottom-right-radius: 0;
+    // }
+  }
 }
 
 .movies {
