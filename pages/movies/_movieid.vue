@@ -1,38 +1,79 @@
 <template>
-<div class="bg-zinc-800 min-h-screen text-white">
-<Loading v-if="$fetchState.pending"/>
- <div v-else class="container single-movie">
-     <h1>{{movie.title}}</h1>
- </div>
-</div>
+  <div class="bg-zinc-800 min-h-screen text-white">
+    <Loading v-if="$fetchState.pending" />
+    <div v-else class="container single-movie">
+      <!-- <b-button variant="outline-primary"> -->
+      <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
+      <!-- </b-button> -->
+      <div class="movie-info">
+        <div class="movie-img">
+          <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" />
+        </div>
+
+        <div class="movie-content">
+          <h1> Titile: {{ movie.title }}</h1>
+          <p class="movie-fact tagline">
+            <span>Tagline:</span> "{{ movie.tagline }}"
+          </p>
+          <p class="movie-fact">
+            <span>Released:</span>
+            {{
+                new Date(movie.release_date).toLocaleString('en-us', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                })
+            }}
+          </p>
+          <p class="movie-fact">
+            <span>Duration:</span> {{ movie.runtime }} minutes
+          </p>
+          <p class="movie-fact">
+            <span>Revenue:</span>
+            {{
+                movie.revenue.toLocaleString('en-us', {
+                  style: 'currency',
+                  currency: 'USD',
+                })
+            }}
+          </p>
+          <p class="movie-fact">
+            <span>Overview:</span>
+            {{ movie.overview }}
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 import axios from "axios"
 import Loading from "../../components/Loading.vue"
 export default {
-    name: "SingleMovie",
-    components: { Loading },
-    data() {
-        return {
-            movie: '',
-        }
-    },
-    async fetch() {
-        await this.getSingleMovie();
-    },
-    fetchDelay: 2000,
-    methods: {
-        async getSingleMovie() {
-            const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
-            const result = await data;
-            this.movie = result.data;
+  name: "SingleMovie",
+  components: { Loading },
+  data() {
+    return {
+      movie: '',
+    }
+  },
+  async fetch() {
+    await this.getSingleMovie();
+  },
+  fetchDelay: 2000,
+  methods: {
+    async getSingleMovie() {
+      const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
+      const result = await data;
+      this.movie = result.data;
 
-            console.log('hi')
-            console.log(this.movie)
-        }
-    },
-    
+      console.log('hi')
+      console.log(this.movie)
+    }
+  },
+
 }
 
 </script>
@@ -46,46 +87,57 @@ export default {
   flex-direction: column;
   justify-content: center;
   padding: 32px 16px;
+
   .button {
     align-self: flex-start;
     margin-bottom: 32px;
+    
   }
+
   .movie-info {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 32px;
     color: #fff;
+
     @media (min-width: 800px) {
       flex-direction: row;
       align-items: flex-start;
     }
+
     .movie-img {
       img {
         max-height: 500px;
         width: 100%;
+
         @media (min-width: 800px) {
           max-height: 700px;
           width: initial;
         }
       }
     }
+
     .movie-content {
       h1 {
         font-size: 56px;
         font-weight: 400;
       }
+
       .movie-fact {
         margin-top: 12px;
         font-size: 20px;
         line-height: 1.5;
+
         span {
           font-weight: 600;
           text-decoration: underline;
         }
       }
+
       .tagline {
         font-style: italic;
+
         span {
           font-style: normal;
         }
@@ -109,6 +161,7 @@ export default {
 .page-leave-active {
   transition: opacity 0.5s;
 }
+
 .page-enter,
 .page-leave-to {
   opacity: 0;
@@ -124,7 +177,7 @@ export default {
   text-decoration: none;
   color: inherit;
   padding: 8px 16px;
-  background-color: #c92502;
+  background-color: #007bff;
   border: none;
   color: #fff;
   border-radius: 4px;
@@ -132,13 +185,13 @@ export default {
   transition: 0.3s ease all;
 
   &:hover {
-    background-color: #891b02;
+    background-color: #007bff;
   }
 }
 
 .button-light {
   background-color: transparent;
-  border: 1px solid #c92502;
+  border: 1px solid #007bff;
 
   &:hover {
     border-color: transparent;
