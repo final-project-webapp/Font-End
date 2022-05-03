@@ -16,7 +16,7 @@
                <SlideBar />
             </div>
             <!-- <span class="mini-heading">Now Stremaing</span> -->
-            <h1 class="pt-20"><span>Now</span> Streaming</h1>
+            <h1 class="pt-20"><span>Now</span> Playing</h1>
             <b-button variant="primary" size="sm" class="">
             <a href="#movie-grid" class="button">View Movies</a>
             </b-button>
