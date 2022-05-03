@@ -41,7 +41,18 @@
             <span>Overview:</span>
             {{ movie.overview }}
           </p>
+          <!-- <div v-for="(provider, index) in providers" :key="index"> -->
+          <div class="movie-fact">
+            <span>Provider:</span>
+            <div class="w-20 mt-2">
+              <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.TH.buy[0].logo_path}`" />
+            </div>
+            <!-- {{ providers.results.TH.flatrate[0].provider_name }} -->
+          </div>
+          <!-- </div> -->
         </div>
+
+
 
       </div>
     </div>
@@ -57,10 +68,12 @@ export default {
   data() {
     return {
       movie: '',
+      providers: '',
     }
   },
   async fetch() {
     await this.getSingleMovie();
+    await this.getProvider();
   },
   fetchDelay: 2000,
   methods: {
@@ -69,9 +82,17 @@ export default {
       const result = await data;
       this.movie = result.data;
 
-      console.log('hi')
+      console.log('movie:')
       console.log(this.movie)
-    }
+    },
+    async getProvider() {
+      const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
+      const result = await data;
+      this.providers = result.data;
+
+      console.log('provider:')
+      console.log(this.providers)
+    },
   },
 
 }
@@ -91,7 +112,7 @@ export default {
   .button {
     align-self: flex-start;
     margin-bottom: 32px;
-    
+
   }
 
   .movie-info {
