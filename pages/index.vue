@@ -44,6 +44,11 @@
                 Get More Info
               </NuxtLink>
             </b-button>
+            <b-button variant="outline-primary">
+              <NuxtLink class="" :to="{ name: 'comments-commentid', params: { commentid: movie.id } }">
+                See Comment
+              </NuxtLink>
+            </b-button>
           </div>
         </div>
       </div>

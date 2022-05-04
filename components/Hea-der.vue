@@ -17,10 +17,9 @@
             </div>
             <!-- <span class="mini-heading">Now Stremaing</span> -->
             <h1 class="pt-20"><span>Now</span> Playing</h1>
-            <b-button variant="primary" size="sm" class="">
-            <a href="#movie-grid" class="button">View Movies</a>
-            </b-button>
-            
+            <b-button variant="" size="sm" >
+            <a href="#movie-grid" class="view">View Movies</a>
+            </b-button>            
          </div>
       </div>
    </div>
@@ -79,18 +78,6 @@ export default {
          margin: 0 auto;
       }
 
-      .mini-heading {
-         font-weight: 600;
-         font-size: 18px;
-         text-transform: uppercase;
-         color: #c92502;
-         margin-bottom: 8px;
-
-         @media (min-width: 750px) {
-            font-size: 22px;
-         }
-      }
-
       h1 {
          color: #fff;
          font-size: 64px;
@@ -106,7 +93,7 @@ export default {
          }
       }
 
-      .button {
+      .view {
          font-size: 20px;
          align-self: flex-start;
       }
