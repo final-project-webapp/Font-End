@@ -8,7 +8,7 @@
 <template>
    <div class="header">
 
-      <img src="@/assests/image/headerImage.jpg" alt="" />
+      <img src="@/assests/image/popcorn.jpg" alt="" />
 
       <div class="text-container">
          <div class="text">

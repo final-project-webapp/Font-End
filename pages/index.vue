@@ -81,7 +81,7 @@
               </NuxtLink>
             </b-button>
             <b-button variant="outline-primary">
-              <NuxtLink class="" :to="{ name: 'comments-commentid', params: { commentid: movie.id } }">
+              <NuxtLink class="" :to="{ name: 'comments-commentid', params: [{ commentid: movie.id }, { movietitle: movie.title }] }">
                 See Comment
               </NuxtLink>
             </b-button>
@@ -109,46 +109,73 @@ export default {
     return {
       movies: [],
       searchInput: '',
-      searchedMovies: []
+      searchedMovies: [],
+      url: 'http://localhost:3000'
     }
   },
   async fetch() {
     if (this.searchInput === '') {
       await this.getMovies()
-      return
+      // return
     }
-    await this.searchMovies()
+    // await this.searchMovies()
   },
   fetchDelay: 2000,
 
   methods: {
     async getMovies() {
-      const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
+      try{
+      // const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
+      const data = axios.get("http://localhost:3000/movies")
+     
       const result = await data
-      result.data.results.forEach((movie) => {
+
+       console.log('movie:')
+       console.log(result.data.data.results)
+      console.log(this.movies)
+      result.data.data.results.forEach((movie) => {
         this.movies.push(movie)
       })
-      console.log(this.movies)
-    },
 
-    async searchMovies() {
-      const data = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1&query=${this.searchInput}`)
-      const result = await data
-      result.data.results.forEach((movie) => {
-        this.searchedMovies.push(movie)
-        console.log(this.searchedMovies)
-      })
-    },
+      //  const result = await data;
+      // this.movies = result.data;
+      
+      }
+      catch (error) { console.log(`get movie failed: ${error}`) }
+    },    
+
+    // async searchMovies() {
+    //   const data = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1&query=${this.searchInput}`)
+    //   const result = await data
+    //   result.data.results.forEach((movie) => {
+    //     this.searchedMovies.push(movie)
+    //     console.log(this.searchedMovies)
+    //   })
+    // },
 
     clearSearch() {
       this.searchInput = ''
       this.searchedMovies = []
     }
-  }
+  },
+
+  //  async created() {
+  //   this.movies = await this.getMovie()
+    
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
+// app transitions
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
 .home {
   .loading {
     padding-top: 120px;

@@ -43,7 +43,7 @@
           </p>
           <!-- <div v-for="(provider, index) in providers" :key="index"> -->
           <div class="movie-fact">
-            <span>Provider:</span>
+            <span>Watch Provider:</span>
             <div class="w-20 mt-2">
               <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.TH.buy[0].logo_path}`" />
             </div>
@@ -65,10 +65,15 @@ import Loading from "../../components/Loading.vue"
 export default {
   name: "SingleMovie",
   components: { Loading },
+  head() {
+    return {
+      title: this.movie.title
+    }
+  },
   data() {
     return {
       movie: '',
-      providers: '',
+      providers: null,
     }
   },
   async fetch() {

@@ -31,6 +31,11 @@ import Loading from "../../components/Loading.vue"
 export default {
     name: "CommentMovie",
     components: { Loading },
+    head() {
+    return {
+      title: this.$route.params.movietitle
+    }
+  },
     data() {
         return {
             comments: []
@@ -46,7 +51,7 @@ export default {
             const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.commentid}/reviews?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
             const result = await data;
             result.data.results.forEach((comment) => {
-                this.comments.push(comment)
+            this.comments.push(comment)
             })
 
             console.log('comments:')

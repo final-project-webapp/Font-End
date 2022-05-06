@@ -8,7 +8,8 @@
         <div class="p-3">         
           <nav class="mb-3">
             <b-nav vertical>
-              <b-nav-item to="/" @click="hide" >Home</b-nav-item>
+              <b-nav-item to="/" @click="hide" >Now Playing</b-nav-item>
+              <b-nav-item to="" @click="hide" >Review Article</b-nav-item>
               <b-nav-item to="/about" @click="hide">About</b-nav-item>
               <b-nav-item to="/member" @click="hide">Member</b-nav-item>
             </b-nav>
