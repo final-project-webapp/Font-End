@@ -5,7 +5,7 @@
 
     <!-- search -->
     <div class="container search">
-      <b-form-input v-model.lazy="searchInput" type="text" placeholder="Search" @keyup.enter="$fetch"
+      <b-form-input v-model.lazy="searchInput" type="text" placeholder="Search Movie Name" @keyup.enter="$fetch"
         @keyup.delete="clearSearch"></b-form-input>
       <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm" @click="clearSearch">Clear
         Search</b-button>
@@ -81,7 +81,7 @@
               </NuxtLink>
             </b-button>
             <b-button variant="outline-primary">
-              <NuxtLink class="" :to="{ name: 'comments-commentid', params: [{ commentid: movie.id }, { movietitle: movie.title }] }">
+              <NuxtLink class="" :to="{ name: 'comments-commentid', params: { commentid: movie.id } }">
                 See Comment
               </NuxtLink>
             </b-button>
@@ -89,6 +89,18 @@
         </div>
       </div>
     </div>
+
+    <!-- page botton -->
+    
+    <div class="justify-center flex gap-2">
+      <b-button >
+        <b-icon icon="arrow-left" font-scale="1"></b-icon>
+      </b-button>
+      <b-button >
+        <b-icon icon="arrow-right" font-scale="1"></b-icon>
+      </b-button>
+    </div>
+    
   </div>
 </template>
 
@@ -115,8 +127,7 @@ export default {
   },
   async fetch() {
     if (this.searchInput === '') {
-      await this.getMovies()
-      // return
+      await this.getMovies()      
     }
     // await this.searchMovies()
   },
@@ -124,25 +135,21 @@ export default {
 
   methods: {
     async getMovies() {
-      try{
-      // const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
-      const data = axios.get("http://localhost:3000/movies")
-     
-      const result = await data
+      try {
+        // const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
+        const data = axios.get("http://localhost:3000/movies/1")
 
-       console.log('movie:')
-       console.log(result.data.data.results)
-      console.log(this.movies)
-      result.data.data.results.forEach((movie) => {
-        this.movies.push(movie)
-      })
+        const result = await data
 
-      //  const result = await data;
-      // this.movies = result.data;
-      
+        console.log('movie:')
+        console.log(result.data.data.results)
+        console.log(this.movies)
+        result.data.data.results.forEach((movie) => {
+          this.movies.push(movie)
+        })       
       }
       catch (error) { console.log(`get movie failed: ${error}`) }
-    },    
+    },
 
     // async searchMovies() {
     //   const data = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1&query=${this.searchInput}`)
@@ -159,10 +166,6 @@ export default {
     }
   },
 
-  //  async created() {
-  //   this.movies = await this.getMovie()
-    
-  // }
 }
 </script>
 
@@ -172,10 +175,12 @@ export default {
 .page-leave-active {
   transition: opacity 0.5s;
 }
+
 .page-enter,
 .page-leave-to {
   opacity: 0;
 }
+
 .home {
   .loading {
     padding-top: 120px;

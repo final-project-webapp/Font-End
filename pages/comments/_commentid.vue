@@ -32,10 +32,10 @@ export default {
     name: "CommentMovie",
     components: { Loading },
     head() {
-    return {
-      title: this.$route.params.movietitle
-    }
-  },
+        return {
+            title: this.$route.params.movietitle
+        }
+    },
     data() {
         return {
             comments: []
@@ -48,15 +48,23 @@ export default {
     fetchDelay: 2000,
     methods: {
         async getComment() {
-            const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.commentid}/reviews?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
-            const result = await data;
-            result.data.results.forEach((comment) => {
-            this.comments.push(comment)
-            })
+            try {
+                // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.commentid}/reviews?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
+                const data = axios.get(`http://localhost:3000/moviesreviews/${this.$route.params.commentid}`)
+                const result = await data;
+                console.log('comment:')
+                console.log(result.data.data.results)
+                console.log(this.comments)
+                result.data.data.results.forEach((comment) => {
+                    this.comments.push(comment)
+                })
 
-            console.log('comments:')
-            console.log(this.comments)
+                console.log('comments:')
+                console.log(this.comments)
+            }
+            catch (error) { console.log(`get comment failed: ${error}`) }
         },
+        
     },
 
 }
@@ -101,15 +109,16 @@ export default {
             }
         }
 
-        .movie-content {           
+        .movie-content {
             margin-bottom: 24px;
+
             .movie-fact {
-                margin-top: 12px;                
+                margin-top: 12px;
                 font-size: 20px;
                 line-height: 1.5;
 
-                span {                    
-                    text-decoration: underline;                    
+                span {
+                    text-decoration: underline;
                 }
             }
 

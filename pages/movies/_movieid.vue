@@ -42,13 +42,18 @@
             {{ movie.overview }}
           </p>
           <!-- <div v-for="(provider, index) in providers" :key="index"> -->
-          <div class="movie-fact">
-            <span>Watch Provider:</span>
-            <div class="w-20 mt-2">
-              <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.TH.buy[0].logo_path}`" />
+            <div class="movie-fact">
+              <span>Watch Provider:</span>
+              <p>TH:</p>
+              <div class="w-20 mt-2">
+                <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.TH.buy[0].logo_path}`" />
+              </div>
+              <p>US:</p>
+              <div class="w-20 mt-2">
+                <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.US.buy[0].logo_path}`" />
+              </div>
+              <!-- {{ providers.results.TH.flatrate[0].provider_name }} -->
             </div>
-            <!-- {{ providers.results.TH.flatrate[0].provider_name }} -->
-          </div>
           <!-- </div> -->
         </div>
 
@@ -79,25 +84,49 @@ export default {
   async fetch() {
     await this.getSingleMovie();
     await this.getProvider();
+    // await this.getAllProvider();
   },
   fetchDelay: 2000,
   methods: {
     async getSingleMovie() {
-      const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
-      const result = await data;
-      this.movie = result.data;
+      // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
+      const data = axios.get(`http://localhost:3000/moviesid/${this.$route.params.movieid}`)
 
-      console.log('movie:')
+      const result = await data;
+      this.movie = result.data.data;
+
+      console.log('singlemovie:')
       console.log(this.movie)
     },
     async getProvider() {
-      const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
+      // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
+      const data = axios.get(`http://localhost:3000/moviespro/${this.$route.params.movieid}`)
       const result = await data;
-      this.providers = result.data;
+      this.providers = result.data.data;
 
       console.log('provider:')
       console.log(this.providers)
     },
+    // async getAllProvider() {
+    //   try {
+    //     // const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
+    //     const prodata = axios.get(`http://localhost:3000/moviespro/${this.$route.params.movieid}`)
+
+    //     const proresult = await prodata
+
+    //     console.log('allpro:')
+    //     console.log(proresult.data.results.th)
+    //     console.log(this.movies)
+    //     proresult.data.data.results.TH.flatrate.forEach((provider) => {
+    //       this.providers.push(provider)
+    //     })
+
+    //     //  const result = await data;
+    //     // this.movies = result.data;
+
+    //   }
+    //   catch (error) { console.log(`get movie failed: ${error}`) }
+    // },
   },
 
 }
