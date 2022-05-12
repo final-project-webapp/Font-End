@@ -15,10 +15,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    
-    
-  ],
+  css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -50,7 +47,29 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
+    proxy: true,
   },
+
+  
+  proxy: {
+    "/movies": "http://localhost:3000"
+  },
+
+//     modules: [
+//       '@nuxtjs/axios',
+//       '@nuxtjs/proxy'
+      
+//   ],
+// proxy: {
+//   '/movies': {
+//     target: 'http://localhost:3000',
+//     pathRewrite: {
+//       '^/movies' : '/'
+//       }
+//     }
+// },
+  
+ 
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

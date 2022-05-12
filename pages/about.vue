@@ -4,7 +4,7 @@
  
     <SlideBar class="pl-20 pt-10"/>
     <p>Ah! My Goddess</p>
-    <b-icon icon="exclamation-circle-fill" variant="light">1</b-icon>
+    <b-icon icon="list" variant="light">1</b-icon>
     
     
     
