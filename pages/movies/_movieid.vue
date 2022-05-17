@@ -42,18 +42,24 @@
             {{ movie.overview }}
           </p>
           <!-- <div v-for="(provider, index) in providers" :key="index"> -->
-            <div class="movie-fact">
-              <span>Watch Provider:</span>
-              <p>TH:</p>
-              <div class="w-20 mt-2">
-                <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.TH.buy[0].logo_path}`" />
+          <div class="movie-fact">
+            <span>Watch Provider:</span>
+            <div class="flex gap-8">
+              <div>
+                <p>TH</p>
+                <div class="w-20 mt-2">
+                  <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.TH.buy[0].logo_path}`" />
+                </div>
               </div>
-              <p>US:</p>
-              <div class="w-20 mt-2">
-                <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.US.buy[0].logo_path}`" />
+              <div>
+                <p>US</p>
+                <div class="w-20 mt-2">
+                  <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.US.buy[0].logo_path}`" />
+                </div>
               </div>
-              <!-- {{ providers.results.TH.flatrate[0].provider_name }} -->
             </div>
+            <!-- {{ providers.results.TH.flatrate[0].provider_name }} -->
+          </div>
           <!-- </div> -->
         </div>
 
@@ -79,6 +85,8 @@ export default {
     return {
       movie: '',
       providers: null,
+      // url: process.env.BACK_URL,
+      url: 'http://localhost:3000'
     }
   },
   async fetch() {
@@ -89,9 +97,10 @@ export default {
   fetchDelay: 2000,
   methods: {
     async getSingleMovie() {
+      console.log('url:')
+      console.log(this.url)
       // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
-      const data = axios.get(`http://localhost:3000/moviesid/${this.$route.params.movieid}`)
-
+      const data = axios.get(`${this.url}/moviesid/${this.$route.params.movieid}`)
       const result = await data;
       this.movie = result.data.data;
 
@@ -100,7 +109,7 @@ export default {
     },
     async getProvider() {
       // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
-      const data = axios.get(`http://localhost:3000/moviespro/${this.$route.params.movieid}`)
+      const data = axios.get(`${this.url}/moviespro/${this.$route.params.movieid}`)
       const result = await data;
       this.providers = result.data.data;
 

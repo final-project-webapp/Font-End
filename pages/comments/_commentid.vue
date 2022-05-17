@@ -2,21 +2,24 @@
     <div class="bg-zinc-800 min-h-screen text-white">
         <Loading v-if="$fetchState.pending" />
         <div v-else class="container comment-movie">
-            <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
+            <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>                       
             <div v-for="(comment, index) in comments" :key="index" class="movie-info">
                 <div class="movie-content">
                     <p class="movie-fact">
-                        <span> {{ comment.author }}</span>
+                    <div class="flex flex-row gap-8">
+                        <span class="underline decoration-solid"> {{ comment.author }}</span>
+                    </div>
                     <div>
-                        <span> {{ new Date(comment.updated_at).toLocaleString('en-us', {
+                        <span class="text-sm"> {{ new Date(comment.updated_at).toLocaleString('en-us', {
                                 month: 'long',
                                 day: 'numeric',
                                 year: 'numeric',
                             })
                         }} </span>
+
                     </div>
-                    <div>
-                        <span class="text-xs"> {{ comment.content }}</span>
+                    <div class="h-20 overflow-y-scroll pr-2">
+                        <span class="text-xs "> {{ comment.content }}</span>
                     </div>
                     </p>
                 </div>
@@ -38,7 +41,8 @@ export default {
     },
     data() {
         return {
-            comments: []
+            comments: [],
+            url: 'http://localhost:3000'
         }
     },
     async fetch() {
@@ -50,7 +54,7 @@ export default {
         async getComment() {
             try {
                 // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.commentid}/reviews?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
-                const data = axios.get(`http://localhost:3000/moviesreviews/${this.$route.params.commentid}`)
+                const data = axios.get(`${this.url}/moviesreviews/${this.$route.params.commentid}`)
                 const result = await data;
                 console.log('comment:')
                 console.log(result.data.data.results)
@@ -64,7 +68,7 @@ export default {
             }
             catch (error) { console.log(`get comment failed: ${error}`) }
         },
-        
+
     },
 
 }
