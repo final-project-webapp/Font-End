@@ -42,18 +42,33 @@
             {{ movie.overview }}
           </p>
           <!-- <div v-for="(provider, index) in providers" :key="index"> -->
-            <div class="movie-fact">
-              <span>Watch Provider:</span>
-              <p>TH:</p>
-              <div class="w-20 mt-2">
-                <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.TH.buy[0].logo_path}`" />
+          <div class="movie-fact">
+            <span>Watch Provider:</span>
+            <div class="flex gap-8">
+              <div>
+                <p>TH</p>
+                <div class="w-20 mt-2">
+                  <div v-if="this.nonprovider == ''">
+                  <img :src="`https://image.tmdb.org/t/p/w500/${providers.TH.flatrate[0].logo_path}`" />
+                  </div>
+                  <div v-else class="border-2 border-red-600 bg-red-600 pl-1">
+                  <p class="text-white font-bold"> {{ nonprovider }}</p>
+                  </div>
+                </div>
               </div>
-              <p>US:</p>
-              <div class="w-20 mt-2">
-                <img :src="`https://image.tmdb.org/t/p/w500/${providers.results.US.buy[0].logo_path}`" />
+              <div>
+                <p>US</p>
+                <div class="w-20 mt-2">
+                  <div v-if="this.nonprovider == ''">
+                  <img :src="`https://image.tmdb.org/t/p/w500/${providers.US.flatrate[0].logo_path}`" />
+                  </div>
+                  <div v-else class="border-2 border-red-600 bg-red-600 pl-1">
+                  <p class="text-white font-bold"> {{ nonprovider }}</p>
+                  </div>
+                </div>
               </div>
-              <!-- {{ providers.results.TH.flatrate[0].provider_name }} -->
-            </div>
+            </div>            
+          </div>
           <!-- </div> -->
         </div>
 
@@ -79,33 +94,60 @@ export default {
     return {
       movie: '',
       providers: null,
+      nonprovider:'',
+      // url: process.env.BACK_URL,
+      url: 'http://localhost:3000'
     }
   },
   async fetch() {
     await this.getSingleMovie();
-    await this.getProvider();
+    await this.getProvider();    
     // await this.getAllProvider();
   },
   fetchDelay: 2000,
   methods: {
     async getSingleMovie() {
+      console.log('url:')
+      console.log(this.url)
       // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
-      const data = axios.get(`http://localhost:3000/moviesid/${this.$route.params.movieid}`)
-
+      const data = axios.get(`${this.url}/moviesid/${this.$route.params.movieid}`)
+      
       const result = await data;
-      this.movie = result.data.data;
+      console.log('single result:')
+      console.log(result.data)
+
+      this.movie = result.data;
 
       console.log('singlemovie:')
       console.log(this.movie)
     },
     async getProvider() {
       // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
-      const data = axios.get(`http://localhost:3000/moviespro/${this.$route.params.movieid}`)
+      const data = axios.get(`${this.url}/moviespro/${this.$route.params.movieid}`)
+      
       const result = await data;
-      this.providers = result.data.data;
 
-      console.log('provider:')
-      console.log(this.providers)
+      console.log('provider result:')
+      console.log(result.data.results)
+      console.log('message result:')
+      console.log(result.data.message)
+      
+      
+      if(result.data.status !== 404){
+        this.providers = result.data.results;
+        console.log('provider:')
+        console.log(this.providers)
+      } else {
+        this.nonprovider = result.data.message
+        console.log('nonprovider:')
+        console.log(this.nonprovider)
+      };
+      
+      
+      
+      //  .catch(function (error) {
+      //    if (error.response) {}
+      //  });
     },
     // async getAllProvider() {
     //   try {

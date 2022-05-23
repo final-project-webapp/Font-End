@@ -1,6 +1,5 @@
 <template>
 <div class="bg-zinc-800 min-h-screen text-white">
-    <SlideBar class="pl-20 pt-10"/>
         <b-container fluid>
         <b-row align-h="center">
             <div v-for="member in members" :key="member.id">                
@@ -27,17 +26,16 @@
 </template>
 
 <script>
-import SlideBar from '@/components/slide-bar.vue'
 export default {
      components: {
-      SlideBar
+
       },
     data() {
         return {
             members: [
-                { title: "Kamolwish Woramethaleot", sid: "62130500003", position: "Front-End, Database", image: "https://files.catbox.moe/lz6xvn.jpeg", id: 1 },
-                { title: "Korawit Rittisit", sid: "62130500006", position: "DevOps, Network", image: "https://picsum.photos/600/300/?image=25", id: 2 },
-                { title: "Thanadol Chuesai", sid: "62130500030", position: "Back-End", image: "https://picsum.photos/600/300/?image=25", id: 3 }
+                { title: "Kamolwish Woramethaleot", sid: "62130500003", position: "Front-End, Database", image: "https://files.catbox.moe/6gtvug.jpg", id: 1 },
+                { title: "Korawit Rittisit", sid: "62130500006", position: "DevOps, Network", image: "https://files.catbox.moe/fl67os.jpg", id: 2 },
+                { title: "Thanadol Chuesai", sid: "62130500030", position: "Back-End", image: "https://files.catbox.moe/pk3vz2.jpg", id: 3 }
             ]
         }
     }

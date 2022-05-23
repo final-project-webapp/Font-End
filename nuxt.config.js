@@ -55,6 +55,10 @@ export default {
     "/movies": "http://localhost:3000"
   },
 
+  env: {
+    baseUrl: process.env.BACK_URL
+  },
+
 //     modules: [
 //       '@nuxtjs/axios',
 //       '@nuxtjs/proxy'
