@@ -90,9 +90,8 @@
       </div>
     </div>
 
-    <!-- page botton -->
-    
-    <div class="justify-center flex gap-2">
+    <!-- page botton -->    
+    <div class="justify-center flex gap-2 pb-8">
       <b-button >
         <b-icon icon="arrow-left" font-scale="1"></b-icon>
       </b-button>
@@ -128,8 +127,9 @@ export default {
   async fetch() {
     if (this.searchInput === '') {
       await this.getMovies()      
+    } else {
+      await this.searchMovies()
     }
-    // await this.searchMovies()
   },
   fetchDelay: 2000,
 
@@ -144,22 +144,26 @@ export default {
 
         console.log('movie:')
         console.log(result.data.data.results)
-        console.log(this.movies)
+        console.log('movies:')
+        
         result.data.data.results.forEach((movie) => {
           this.movies.push(movie)
         })       
+        console.log(this.movies)
       }
       catch (error) { console.log(`get movie failed: ${error}`) }
     },
 
-    // async searchMovies() {
-    //   const data = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1&query=${this.searchInput}`)
-    //   const result = await data
-    //   result.data.results.forEach((movie) => {
-    //     this.searchedMovies.push(movie)
-    //     console.log(this.searchedMovies)
-    //   })
-    // },
+    async searchMovies() {
+      // const data = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1&query=${this.searchInput}`)
+      const data = axios.get(`${this.url}/moviessearch/${this.searchInput}`)
+      
+      const result = await data
+      result.data.data.results.forEach((movie) => {
+        this.searchedMovies.push(movie)
+        console.log(this.searchedMovies)
+      })
+    },
 
     clearSearch() {
       this.searchInput = ''
