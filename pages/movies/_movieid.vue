@@ -96,7 +96,7 @@ export default {
       providers: null,
       nonprovider:'',
       // url: process.env.BACK_URL,
-      url: 'https://backend-final.azurewebsites.net:3000'
+      url: 'https://backend-final.azurewebsites.net'
     }
   },
   async fetch() {

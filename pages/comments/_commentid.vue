@@ -42,7 +42,7 @@ export default {
     data() {
         return {
             comments: [],
-            url: 'https://backend-final.azurewebsites.net:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     async fetch() {
