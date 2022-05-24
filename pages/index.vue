@@ -121,7 +121,7 @@ export default {
       movies: [],
       searchInput: '',
       searchedMovies: [],
-      url: 'http://backend-final.azurewebsites.net:3000'
+      url: 'https://backend-final.azurewebsites.net:3000'
     }
   },
   async fetch() {
