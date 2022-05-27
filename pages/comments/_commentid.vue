@@ -41,9 +41,8 @@ export default {
     },
     data() {
         return {
-            comments: [],
-            url: 'https://backend-final.azurewebsites.net',
-            // url: 'http://localhost:3000'
+            comments: [],          
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     async fetch() {
