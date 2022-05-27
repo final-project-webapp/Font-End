@@ -41,7 +41,7 @@ export default {
     },
     data() {
         return {
-            comments: [],
+            comments: [],          
             url: 'https://backend-final.azurewebsites.net'
         }
     },

@@ -5,7 +5,7 @@
 
     <!-- search -->
     <div class="container search">
-      <b-form-input v-model.lazy="searchInput" type="text" placeholder="Search Movie Name" @keyup.enter="$fetch"
+      <b-form-input v-model.lazy="searchDummyInput" type="text" placeholder="Search Movie Name" @keyup.enter="$fetch"
         @keyup.delete="clearSearch"></b-form-input>
       <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm" @click="clearSearch">Clear
         Search</b-button>
@@ -120,15 +120,20 @@ export default {
     return {
       movies: [],
       searchInput: '',
+      searchDummyInput: '',
       searchedMovies: [],
       url: 'https://backend-final.azurewebsites.net'
+
     }
   },
   async fetch() {
-    if (this.searchInput === '') {
-      await this.getMovies()      
+    if (this.searchDummyInput === '') {
+      await this.getMovies()
+         
     } else {
+      
       await this.searchMovies()
+
     }
   },
   fetchDelay: 2000,
@@ -155,17 +160,21 @@ export default {
     },
 
     async searchMovies() {
+      console.log('Searchmovies:')
+      this.searchInput = this.searchDummyInput
       // const data = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1&query=${this.searchInput}`)
       const data = axios.get(`${this.url}/moviessearch/${this.searchInput}`)
       
       const result = await data
-      result.data.data.results.forEach((movie) => {
-        this.searchedMovies.push(movie)
+      console.log('Searchmovies2:')
+      result.data.data.results.forEach((searchMovie) => {
+        this.searchedMovies.push(searchMovie)
         console.log(this.searchedMovies)
       })
     },
 
     clearSearch() {
+      this.searchDummyInput = ''
       this.searchInput = ''
       this.searchedMovies = []
     }
