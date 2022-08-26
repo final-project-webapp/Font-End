@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import SlideBar from '@/components/slide-bar.vue'
+import SlideBar from '@/components/slide_bar.vue'
 import MemberList from '@/components/MemberList.vue'
 export default {
   name: 'MemberPage',
@@ -15,6 +15,6 @@ export default {
     MemberList,
     SlideBar
   },
-  layout: "nav-bar"
+  layout: "nav_bar"
 }
 </script>

@@ -33,9 +33,6 @@
       </div>
     </div>
 
-
-
-
   </div>
 
 
@@ -43,7 +40,7 @@
 
 <script>
 
-import SlideBar from '@/components/slide-bar.vue'
+import SlideBar from '@/components/slide_bar.vue'
 export default {
   name: "AboutPage",
   components: {

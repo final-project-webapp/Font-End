@@ -1,0 +1,73 @@
+<template>
+<div class="bg-zinc-800 min-h-screen text-white">
+    <b-container fluid>
+    <b-row align-h="between">
+      <b-col cols="4">
+        <SlideBar class="ml-2 pt-20 lg:pl-20 xl:pl-44"/>
+      </b-col>
+      <b-col cols="2">
+        <OD class="mr-2 pt-20 lg:pr-20 xl:pr-44"/>
+      </b-col>
+    </b-row>        
+  </b-container>
+     
+  <div class="pt-20 flex">
+        <b-container fluid style="max-width: 1800px;">
+            <b-row align-h="center">
+                <div v-for="(d, index ) in discuss" :key="index">
+                    <b-col lg="">
+                        <b-card :title="d.title" tag="article"
+                            style="max-width: 28rem; min-width: 20rem; font-size:large" class="mb-4" bg-variant="dark"
+                            text-variant="light">
+                            <b-card-text style="font-size:medium">Writer: {{ d.writer }}</b-card-text>
+                            <b-row align-h="between">
+                                <b-col cols="4">
+                                    <b-card-text style="font-size:medium">View: {{ d.nor }} </b-card-text>
+                                </b-col>
+
+                                <b-col cols="2.5">
+                                    <b-button>
+                                        <NuxtLink class="" :to="{ name: 'discuss-discussid', params: { discussid: d.id } }">
+                                            <b-icon icon="chat-left-text" variant="primary" font-scale="1"></b-icon>
+                                        </NuxtLink>
+                                    </b-button>
+                                </b-col>
+                            </b-row>
+                        </b-card>
+                    </b-col>
+                </div>
+            </b-row>
+        </b-container>
+    </div>
+
+    
+
+</div>
+</template>
+
+<script>
+import SlideBar from '@/components/slide_bar.vue'
+import OD from '@/components/own_discuss.vue'
+
+
+export default {
+  name: 'ShowDiscuss',
+  components: {
+    SlideBar,
+    OD,
+    
+  },
+  data() {
+    return {
+      discuss: [
+        {title: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", writer: "xxxxx xxxxx", nor: "10" , id: 1},
+        {title: "xxx", writer: "xxxxx xxxxx", nor: "11" , id: 2},
+        {title: "xxx", writer: "xxxxx xxxxx", nor: "12" , id: 3},
+        {title: "xxx", writer: "xxxxx xxxxx", nor: "13" , id: 4}
+      ]
+    
+  
+    }
+  }
+}
+</script>
