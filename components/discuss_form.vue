@@ -4,32 +4,31 @@
             <b-card border-variant="primary" bg-variant="dark">
                 <b-form @submit="onSubmit" @reset="onReset">
                     <b-form-group id="input_group_1" label="Discuss Title:" label-for="input_1">
-                        <b-form-input id="input_1" v-model="form.title" type="text" placeholder="" :state="validateState('title')" aria-describedby="input-1-live-feedback">
+                        <b-form-input id="input_1" v-model="form.title" type="text" placeholder="" :state="validateState('title')" aria-describedby="feedback_1">
                         </b-form-input>
-                        <b-form-invalid-feedback id="input-1-live-feedback">This is a required field.</b-form-invalid-feedback>
+                        <b-form-invalid-feedback id="feedback_1">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
 
                     <b-form-group id="input_group_2" label="Writer Name:" label-for="input_2">
-                        <b-form-input id="input_2" v-model="form.name" type="text" placeholder="" :state="validateState('name')" aria-describedby="input-2-live-feedback">
+                        <b-form-input id="input_2" v-model="form.name" type="text" placeholder="" :state="validateState('name')" aria-describedby="feedback_2">
                         </b-form-input>
-                        <b-form-invalid-feedback id="input-2-live-feedback">This is a required field and must be at
+                        <b-form-invalid-feedback id="feedback_2">This is a required field and must be at
                             least 3 characters.</b-form-invalid-feedback>
 
                     </b-form-group>
 
-
-
                     <b-form-group id="input_group_3" label="Discuss Article:" label-for="input_3">
-                        <b-form-textarea id="input_3" v-model="form.article" placeholder="" rows="8">
+                        <b-form-textarea id="input_3" v-model="form.article" placeholder="" rows="8" :state="validateState('article')" aria-describedby="feedback_3">
                         </b-form-textarea>
+                        <b-form-invalid-feedback id="feedback_3">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group id="input_group_4" v-slot="{ ariaDescribedby }" label="Language:">
-                        <b-form-checkbox-group id="checkbox_group_1" v-model="form.lang"
-                            :aria-describedby="ariaDescribedby">
+                    <b-form-group id="input_group_4" label="Language:">
+                        <b-form-checkbox-group id="checkbox_group_1" v-model="form.lang" :state="validateState('lang')" aria-describedby="feedback_4">
                             <b-form-checkbox value="TH">TH</b-form-checkbox>
                             <b-form-checkbox value="EN">EN</b-form-checkbox>
                         </b-form-checkbox-group>
+                        <b-form-invalid-feedback id="feedback_4">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
 
                     <b-button type="submit" variant="primary">Submit</b-button>
@@ -92,13 +91,14 @@ export default {
             return $dirty ? !$error : null;
         },
         onSubmit(event) {
+            event.preventDefault()
+           
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
             }
-
-            event.preventDefault()
             alert(JSON.stringify(this.form))
+            
         },
         onReset(event) {
             event.preventDefault()
@@ -106,7 +106,7 @@ export default {
             this.form.title = ''
             this.form.name = ''
             this.form.article = ''
-            this.form.checked = []
+            this.form.lang = []
             // Trick to reset/clear native browser form validation state
             this.$nextTick(() => {
                 this.$v.$reset();
