@@ -10,34 +10,49 @@
             </b-row>
         </b-container>
 
-        <!-- <div class="pt-20 flex">
-            <b-container fluid style="max-width: 1800px;">
-                <b-row align-h="center">
+        <div class="pt-20 flex">
+            <b-container fluid style="max-width: 1200px; min-height: auto;">
+
+                <b-card border-variant="primary" bg-variant="secondary">
+                    <b-card-text>
+                        xxxx xxxx xxxx xxxx
+                    </b-card-text>
+                </b-card>
+
+                <b-card border-variant="primary" bg-variant="dark">
+                    
                     <div v-for="(c, index ) in comment" :key="index">
-                        <b-col lg="">
-                            <b-card :title="c.title" tag="article"
-                                style="max-width: 28rem; min-width: 20rem; font-size:small" class="mb-4" bg-variant="dark"
-                                text-variant="light">
-                                <b-card-text style="font-size:medium">Writer: {{ c.text }}</b-card-text> -->
-        <!-- <b-row align-h="between">
+                        <!-- <b-col lg=""> -->
+                        <b-row align-h="center" class="">
+                        
+                            <b-card :title="c.writer" tag="article"
+                                style="height: 100px; max-width: 1000px; min-width: 1000px; font-size:small" class="mb-4 overflow-y-scroll"
+                                bg-variant="secondary" text-variant="light" border-variant="primary">
+                                <b-card-text style="font-size:medium">: {{  c.text  }}</b-card-text>
+                                <!-- <b-row>
                                     <b-col cols="4">
-                                        <b-card-text style="font-size:medium">View: {{ c.text }} </b-card-text>
-                                    </b-col>
-    
-                                    <b-col cols="2.5">
+                                        <b-card-text style="font-size:medium">: {{  c.id }} </b-card-text>
+                                    </b-col> -->
+
+                                    <!-- <b-col cols="2.5">
                                         <b-button>
                                             <NuxtLink class="" :to="{ name: 'discuss-discussid', params: {} }">
                                                 <b-icon icon="chat-left-text" variant="primary" font-scale="1"></b-icon>
                                             </NuxtLink>
                                         </b-button>
-                                    </b-col>
-                                </b-row> -->
-        <!-- </b-card>
-                        </b-col>
+                                    </b-col> -->
+                                <!-- </b-row> -->
+                            </b-card>
+                        
+                        </b-row>
+                        <!-- </b-col> -->
                     </div>
-                </b-row>
+                
+                </b-card>
+
+                
             </b-container>
-        </div> -->
+        </div>
 
 
     </div>
@@ -46,7 +61,7 @@
     <script>
     import axios from "axios"
     import SlideBar from '@/components/slide_bar.vue'
-   
+    
     
     export default {
         name: 'ShowArticle',
@@ -55,20 +70,20 @@
     
     
         },
-          data() {
+        data() {
             return {
-              comment: [
-                {title: "xxx", text: "xxxxx xxxxx", nor: "10" , id: 1},
-                {title: "xxx", text: "xxxxx xxxxx", nor: "11" , id: 2},
-                {title: "xxx", text: "xxxxx xxxxx", nor: "12" , id: 3},
-                {title: "xxx", text: "xxxxx xxxxx", nor: "13" , id: 4}
-              ],
-              article: '',
-              url: 'http://localhost:3000'
+                comment: [
+                    { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx",  id: 1 },
+                    { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx",  id: 2 },
+                    { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx",  id: 3 },
+                    { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx",  id: 4 },                    
+                ],
+                article: '',
+                url: 'http://localhost:3000'
     
     
             }
-          },
+        },
         async fetch() {
             await this.getSingleArticle();
         },

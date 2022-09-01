@@ -35,7 +35,7 @@
 
                   <b-col cols="2.5">
                     <b-button>
-                      <NuxtLink class="" :to="{ name: 'articles-articleid', params: {} }">
+                      <NuxtLink class="" :to="{ name: 'articles-articleid', params: {articleid: a.id} }">
                         <b-icon icon="chat-left-text" variant="primary" font-scale="1"></b-icon>
                       </NuxtLink>
                     </b-button>
@@ -67,12 +67,12 @@ export default {
   },
   data() {
     return {
-      discuss: [
-        { title: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", writer: "xxxxx xxxxx", nor: "10", id: 1 },
-        { title: "xxx", writer: "xxxxx xxxxx", nor: "11", id: 2 },
-        { title: "xxx", writer: "xxxxx xxxxx", nor: "12", id: 3 },
-        { title: "xxx", writer: "xxxxx xxxxx", nor: "13", id: 4 }
-      ],
+      // discuss: [
+      //   { title: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", writer: "xxxxx xxxxx", nor: "10", id: 1 },
+      //   { title: "xxx", writer: "xxxxx xxxxx", nor: "11", id: 2 },
+      //   { title: "xxx", writer: "xxxxx xxxxx", nor: "12", id: 3 },
+      //   { title: "xxx", writer: "xxxxx xxxxx", nor: "13", id: 4 }
+      // ],
       articles: [],
       url: 'http://localhost:3000'
 
@@ -83,8 +83,8 @@ export default {
   async created() {
     this.articles = await this.getArticles()
 
-    console.log('Articles:')
-    console.log(this.articles[0])
+    // console.log('Articles:')
+    // console.log(this.articles[0])
 
     // this.userData = await this.getUser();
     // this.userRole = this.userData.data.role

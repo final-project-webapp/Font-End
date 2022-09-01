@@ -12,6 +12,8 @@
               <b-nav-item to="show_discuss" @click="hide" >Discuss</b-nav-item>
               <b-nav-item to="/about" @click="hide">About</b-nav-item>
               <b-nav-item to="/member" @click="hide">Member</b-nav-item>
+              <b-nav-item to="/register_page" @click="hide">Register</b-nav-item>
+              <b-nav-item to="/login_page" @click="hide">Login</b-nav-item>
             </b-nav>
           </nav>        
         </div>
