@@ -15,7 +15,7 @@
       <b-container fluid style="max-width: 1800px;">
         <b-row align-h="center">
           <div v-for="(a, index ) in articles" :key="index">
-            <b-col lg="">
+            <b-col>
               <b-card :title="a.articles" tag="article" style="max-width: 28rem; min-width: 20rem; font-size:large"
                 class="mb-4" bg-variant="dark" text-variant="light">
                 <b-card-text style="font-size:medium">Writer: {{  a.writer  }}</b-card-text>
@@ -97,7 +97,7 @@ export default {
       try {
         const res = await fetch(this.url + "/getarticle")
         const getarticledata = await res.json()
-        console.log(`getarticledata: ` + getarticledata)
+        // console.log(`getarticledata: ` + getarticledata)
         return getarticledata
       }
       catch (error) { console.log(`get article failed: ${error}`) }
