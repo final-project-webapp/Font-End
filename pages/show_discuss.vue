@@ -31,11 +31,12 @@
                 <b-row align-h="between">
                   <b-col cols="4">
                     <b-card-text style="font-size:medium">View: {{  a.view  }} </b-card-text>
+                    <b-card-text style="font-size:medium">ID: {{  a.article_id  }} </b-card-text>
                   </b-col>
 
                   <b-col cols="2.5">
                     <b-button>
-                      <NuxtLink class="" :to="{ name: 'articles-articleid', params: {articleid: a.id} }">
+                      <NuxtLink class="" :to="{ name: 'articles-articleid', params: {articleid: a.article_id} }">
                         <b-icon icon="chat-left-text" variant="primary" font-scale="1"></b-icon>
                       </NuxtLink>
                     </b-button>
@@ -83,8 +84,8 @@ export default {
   async created() {
     this.articles = await this.getArticles()
 
-    // console.log('Articles:')
-    // console.log(this.articles[0])
+    console.log('Articles:')
+    console.log(this.articles[2])
 
     // this.userData = await this.getUser();
     // this.userRole = this.userData.data.role

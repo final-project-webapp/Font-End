@@ -56,7 +56,7 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
 
@@ -76,17 +76,19 @@ export default {
                 
             },
             defaultview: 1,
-            testuser: 2
+            testuser: 1
         };
     },
     validations: {
         form: {
             title: {
-                required
+                required,
+                maxLength: maxLength(1000)
             },
             wname: {
                 required,
-                minLength: minLength(3)
+                minLength: minLength(3),
+                maxLength: maxLength(20)
             },
             wdate: {
                 required,

@@ -10,25 +10,25 @@
             </b-row>
         </b-container>
 
-        <div class="pt-20 flex">
+        <div class="pt-20 flex" v-for="(a, index ) in article" :key="index">
             <b-container fluid style="max-width: 1200px; min-height: auto;">
 
                 <b-card border-variant="primary" bg-variant="secondary">
                     <b-card-text>
-                        xxxx xxxx xxxx xxxx
+                        {{a.articles}}
                     </b-card-text>
                 </b-card>
 
                 <b-card border-variant="primary" bg-variant="dark">
                     
-                    <div v-for="(c, index ) in comment" :key="index">
+                    <div >
                         <!-- <b-col lg=""> -->
                         <b-row align-h="center" class="">
                         
-                            <b-card :title="c.writer" tag="article"
+                            <b-card :title="a.writer" tag="article"
                                 style="height: 100px; max-width: 1000px; min-width: 1000px; font-size:small" class="mb-4 overflow-y-scroll"
                                 bg-variant="secondary" text-variant="light" border-variant="primary">
-                                <b-card-text style="font-size:medium">: {{  c.text  }}</b-card-text>
+                                <b-card-text style="font-size:medium">: {{  a.text  }}</b-card-text>
                                 <!-- <b-row>
                                     <b-col cols="4">
                                         <b-card-text style="font-size:medium">: {{  c.id }} </b-card-text>
@@ -92,11 +92,11 @@
                 console.log('url:')
                 console.log(this.url)
                 // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
-                const data = axios.get(`${this.url}/moviesid/${this.$route.params.articleid}`)
+                const data = axios.get(`${this.url}/getsinglearticle/${this.$route.params.articleid}`)
     
                 const result = await data;
                 console.log('single result:')
-                console.log(result.data)
+                console.log(data)
     
                 this.article = result.data;
     
