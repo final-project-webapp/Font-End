@@ -1,6 +1,6 @@
 <template>
   <div class="bg-zinc-800 min-h-screen">
-    <SlideBar class="ml-2 pt-20 lg:pl-20 xl:pl-44"/>
+    <SlideBar class="pt-20 sm:pl-4 md:pl-12 lg:pl-24 xl:pl-48"/>
 
     <MemberList class="pt-20" />
   </div>

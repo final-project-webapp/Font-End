@@ -23,7 +23,7 @@
                             :state="validateState('password')" aria-describedby="feedback_pass">
                         </b-form-input>
                         <b-form-invalid-feedback id="feedback_pass">This is a required field and must be at
-                            least 8 characters and not more than 24 characters..</b-form-invalid-feedback>
+                            least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
                     </b-form-group>
 
                     <b-form-group id="input_group_3" label="DOB:" label-for="input_3">
