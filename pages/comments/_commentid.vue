@@ -118,17 +118,10 @@ export default {
     },
     data() {
         return {
-<<<<<<< HEAD
-            comments: [],          
-            url: 'https://backend-final.azurewebsites.net'
-=======
-            comments: [],
-            // movies: [],
+            comments: [],            
             moviearticle: [],
             namedata: '',           
-            url: 'https://backend-final.azurewebsites.net',
-            // url: 'http://localhost:3000'
->>>>>>> f16170a84c54d85cb73cf73ab5a719d5022cd7a8
+            url: 'https://backend-final.azurewebsites.net'            
         }
     },
     async fetch() {
