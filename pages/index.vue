@@ -122,8 +122,7 @@ export default {
       searchInput: '',
       searchDummyInput: '',
       searchedMovies: [],
-      url: 'https://backend-final.azurewebsites.net'
-      // url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'    
     }
   },
   async fetch() {
