@@ -18,7 +18,7 @@
                             </b-form-invalid-feedback>
                         </b-col>
                         <b-col>
-                            <b-button type="submit" variant="primary" squared size="sm">
+                            <b-button  type="submit" variant="primary" squared size="sm">
                                 <b-icon icon="arrow-return-right" variant="light" font-scale="1"></b-icon>
                             </b-button>
                         </b-col>
@@ -49,7 +49,7 @@ export default {
                 comment: '',
             },
             defaultview: 1,
-            testuser: 1
+            user_user_id: 1
         };
     },
     validations: {
@@ -76,21 +76,23 @@ export default {
 
             const commentData = {
                 comment: this.form.comment,
-                userID: this.testuser
+                user_user_id: this.user_user_id
             }
             this.$emit('comment-data', commentData)
-            console.log('comment data:')
-            console.log(commentData)
-            console.log('Form:')
-            console.log(this.form.comment)
+            // console.log('comment data:')
+            // console.log(commentData)
+            // console.log('Form:')
+            // console.log(this.form.comment)
 
-
-            alert(JSON.stringify(this.form))
-
+            // alert(JSON.stringify(this.form))
+            // alert('Post Success')
+        
             this.form.comment = ''
             this.$nextTick(() => {
                 this.$v.$reset();
             });
+            
+            
 
         },
     }

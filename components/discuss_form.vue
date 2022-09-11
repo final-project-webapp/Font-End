@@ -2,6 +2,7 @@
     <div class="pt-20 flex">
         <b-container style="max-width: 1000px;">
             <b-card border-variant="primary" bg-variant="dark">
+                <p>{{ this.$route.params.moviename }}</p>
                 <b-form @submit.prevent="onSubmit" @reset="onReset">
                     <b-form-group id="input_group_1" label="Article Title:" label-for="input_1">
                         <b-form-textarea id="input_1" v-model="form.title" type="text" placeholder=""
@@ -25,12 +26,12 @@
                         <b-form-invalid-feedback id="feedback_3">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group id="input_group_4" label="Movie Name:" label-for="input_4">
+                    <!-- <b-form-group id="input_group_4" label="Movie Name:" label-for="input_4">
                         <b-form-input id="input_4" v-model="form.mname" type="text" placeholder=""
                             :state="validateState('mname')" aria-describedby="feedback_4">
                         </b-form-input>
                         <b-form-invalid-feedback id="feedback_4">This is a required field.</b-form-invalid-feedback>
-                    </b-form-group>
+                    </b-form-group> -->                    
 
                     <b-form-group id="input_group_5" label="Language:">
                         <b-form-checkbox-group id="checkbox_group_1" v-model="form.lang" :state="validateState('lang')"
@@ -40,16 +41,29 @@
                         </b-form-checkbox-group>
                         <b-form-invalid-feedback id="feedback_5">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
-
-                    <b-button type="submit" variant="primary">Submit</b-button>
-                    <b-button type="reset" variant="danger">Reset</b-button>
+                    
+                    <div>
+                    <div class="absolute bottom-5 left-5">
+                        <b-button type="submit" variant="primary">Submit</b-button>                
+                        <b-button type="reset" variant="danger">Reset</b-button>
+                    </div>
+                   
+                    <div class="flex justify-end">
+                        <b-button id="own-discuss" variant="primary">
+                            <nuxt-link class="" to="/show_discuss">
+                                Back
+                            </nuxt-link>
+                        </b-button>
+                    </div>
+                </div>
+                
                 </b-form>
             </b-card>
-            <div>
+            <!-- <div>
                 <b-card class="mt-3" header="Form Data Result">
                     <pre class="m-0">{{ form }}</pre>
                 </b-card>
-            </div>
+            </div> -->
         </b-container>
     </div>
 </template>
@@ -71,9 +85,9 @@ export default {
                 title: '',
                 wname: '',
                 wdate: '',
-                mname: '',
+                mname: this.$route.params.moviename,
                 lang: [],
-                
+
             },
             defaultview: 1,
             testuser: 1
@@ -113,7 +127,7 @@ export default {
             if (this.$v.form.$anyError) {
                 return;
             }
-            
+
             const discussData = {
                 articles: this.form.title,
                 writer: this.form.wname,
@@ -128,9 +142,9 @@ export default {
             console.log(discussData)
             console.log('Form:')
             console.log(this.form.title, this.form.wname, this.form.wdate, this.form.mname, this.form.lang, this.defaultview)
+
             
-            
-            alert(JSON.stringify(this.form))
+            // alert(JSON.stringify(this.form))
 
             this.form.title = ''
             this.form.wname = ''
@@ -140,7 +154,7 @@ export default {
             this.$nextTick(() => {
                 this.$v.$reset();
             });
-
+            alert('Submit Complete')
         },
 
         onReset(event) {

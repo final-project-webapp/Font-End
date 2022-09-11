@@ -1,13 +1,14 @@
 <template>
   <div class="bg-zinc-800 min-h-screen text-white">
+    <!-- <Loading v-if="$fetchState.pending" /> -->
     <b-container fluid>
       <b-row align-h="between">
         <b-col cols="9" xl="10" lg="10" md="10" sm="10">
           <SlideBar class="pt-20 sm:pl-4 md:pl-12 lg:pl-24 xl:pl-48" />
         </b-col>
-        <b-col cols="3" xl="2" lg="2" md="2" sm="2">
+        <!-- <b-col cols="3" xl="2" lg="2" md="2" sm="2">
           <OD class="pr-2 pt-20" />
-        </b-col>
+        </b-col> -->
       </b-row>
     </b-container>
 
@@ -15,42 +16,43 @@
       <b-container fluid style="max-width: 2000px;">
         <b-row align-h="center">
           <div v-for="(a, index ) in articles" :key="index">
-            <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-              <b-card :title="a.articles" tag="article" style="max-width: 600px; min-width: 200px; font-size:large"
-                class="mb-4" bg-variant="dark" text-variant="light">
-                
-               
+            <div>
+              <b-col cols="12" xl="12" lg="12" md="12" sm="12">
 
-                <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
-                <b-card-text class="text-sm"> {{
-                new Date(a.date).toLocaleString('en-us', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric',
-                })
-                
-                }}</b-card-text>
-                <b-card-text class="text-sm">Language: {{ a.language }}</b-card-text>
+                <b-card :header="a.movie_name" header-text-variant="white" header-bg-variant="secondary" header-tag="header" :title="a.articles"
+                  tag="article"
+                  style="max-width: 600px; min-width: 200px; min-height:400px; max-width: 600px; font-size:large"
+                  class="mb-4 p-4" bg-variant="dark" text-variant="light">
+                  <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
+                  <b-card-text class="text-sm"> {{
+                  new Date(a.date).toLocaleString('en-us', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                  })
+                  
+                  }}</b-card-text>
+                  <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
+                  <b-card-text class="text-sm">Language: {{ a.language }}</b-card-text>
+                  <b-card-text class="text-sm">View: {{ a.view }} </b-card-text>
+                  <!-- <b-card-text class="text-sm">ID: {{ a.article_id }} </b-card-text> -->
+                </b-card>
 
-                
-                <b-card-text class="text-sm">View: {{ a.view }} </b-card-text>
-                <b-card-text class="text-sm">ID: {{ a.article_id }} </b-card-text>
-                
                 <div class="static">
-                  <div class="absolute top-4 right-4">
+                  <div class="absolute top-3 right-6">
                     <b-dropdown size="sm" no-caret>
                       <template #button-content>
                         <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
                         </b-icon>
                       </template>
-                      <b-dropdown-item-button variant="dark" class="px-0 text-xs">
+                      <b-dropdown-item-button variant="dark" class="px-0 text-xs" @click="deleteArticle(a.article_id)">
                         <b-icon icon="trash-fill" variant="dark" font-scale="1" class="flex justify-end"></b-icon>
                         Delete
                       </b-dropdown-item-button>
                     </b-dropdown>
                   </div>
 
-                  <div class="absolute bottom-4 right-4">
+                  <div class="absolute bottom-3 right-6">
                     <b-button>
                       <NuxtLink class="" :to="{ name: 'articles-articleid', params: {articleid: a.article_id} }">
                         <b-icon icon="chat-left-text" variant="primary" font-scale="1"></b-icon>
@@ -58,9 +60,9 @@
                     </b-button>
                   </div>
                 </div>
-                
-              </b-card>
-            </b-col>
+              </b-col>
+            </div>
+
           </div>
         </b-row>
       </b-container>
@@ -73,14 +75,16 @@
 
 <script>
 import SlideBar from '@/components/slide_bar.vue'
-import OD from '@/components/own_discuss.vue'
+// import OD from '@/components/own_discuss.vue'
+// import Loading from '@/components/Loading.vue'
 
 
 export default {
   name: 'ShowDiscuss',
   components: {
     SlideBar,
-    OD,
+    // OD,
+    // Loading
 
   },
   data() {
@@ -109,8 +113,9 @@ export default {
 
     //  console.log(`type: ${this.userData.data}`)
   },
-
+  // fetchDelay: 2000,
   methods: {
+    // GET
     async getArticles() {
       try {
         const res = await fetch(this.url + "/getarticle")
@@ -120,6 +125,23 @@ export default {
       }
       catch (error) { console.log(`get article failed: ${error}`) }
     },
+
+    // DELETE
+    async deleteArticle(articleId) {
+      try {
+        await fetch(`${this.url}/deletearticle/${articleId}`, {
+          method: 'DELETE',
+        })
+        this.reloadArticle()
+      }
+      catch (error) {
+        console.log(`delete failed: ${error}`)
+      }
+    },
+
+    async reloadArticle() {
+      this.articles = await this.getArticles()
+    }
   }
 
 

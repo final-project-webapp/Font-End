@@ -81,7 +81,7 @@
               </NuxtLink>
             </b-button>
             <b-button variant="outline-primary">
-              <NuxtLink class="" :to="{ name: 'comments-commentid', params: { commentid: movie.id } }">
+              <NuxtLink class="" :to="{ name: 'comments-commentid', params: {commentid: movie.id, moviename: movie.title} } ">
                 See Comment
               </NuxtLink>
             </b-button>
