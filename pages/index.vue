@@ -81,7 +81,7 @@
               </NuxtLink>
             </b-button>
             <b-button variant="outline-primary">
-              <NuxtLink class="" :to="{ name: 'comments-commentid', params: { commentid: movie.id } }">
+              <NuxtLink class="" :to="{ name: 'comments-commentid', params: {commentid: movie.id, moviename: movie.title} } ">
                 See Comment
               </NuxtLink>
             </b-button>
@@ -92,12 +92,12 @@
 
     <!-- page botton -->    
     <div class="justify-center flex gap-2 pb-8">
-      <b-button >
+      <!-- <b-button >
         <b-icon icon="arrow-left" font-scale="1"></b-icon>
       </b-button>
       <b-button >
         <b-icon icon="arrow-right" font-scale="1"></b-icon>
-      </b-button>
+      </b-button> -->
     </div>
     
   </div>
@@ -122,8 +122,13 @@ export default {
       searchInput: '',
       searchDummyInput: '',
       searchedMovies: [],
+<<<<<<< HEAD
       url: 'https://backend-final.azurewebsites.net'
 
+=======
+      // url: 'https://backend-final.azurewebsites.net',
+      url: 'http://localhost:3000'
+>>>>>>> f16170a84c54d85cb73cf73ab5a719d5022cd7a8
     }
   },
   async fetch() {
