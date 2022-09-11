@@ -2,7 +2,7 @@
 
   <div class="bg-zinc-800 min-h-screen text-white">
 
-    <SlideBar class="ml-2 pt-20 lg:pl-20 xl:pl-44" />
+    <SlideBar class="pt-20 sm:pl-4 md:pl-12 lg:pl-24 xl:pl-48" />
     <div class="justify-center flex">
       <div class=" mt-20 mx-2 p-2 border-solid border-2 border-primary rounded-md h-auto w-60 lg:w-max md:w-max">
         <!-- <div class="grid grid-cols-2 gap-20 justify-center md:grid-cols-2 cols sm:grid-cols-1"> -->
@@ -33,9 +33,6 @@
       </div>
     </div>
 
-
-
-
   </div>
 
 
@@ -43,7 +40,7 @@
 
 <script>
 
-import SlideBar from '@/components/slide-bar.vue'
+import SlideBar from '@/components/slide_bar.vue'
 export default {
   name: "AboutPage",
   components: {

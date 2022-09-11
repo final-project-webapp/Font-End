@@ -19,6 +19,10 @@
             <h1 class="pt-20"><span>Now</span> Playing</h1>
             <b-button variant="" size="sm" >
             <a href="#movie-grid" class="view">View Movies</a>
+            </b-button>
+            <b-button variant="" size="sm" >
+               <nuxt-link class="view" to="/show_discuss">More Discuss</nuxt-link>
+            <a href="#movie-grid" class="view"></a>
             </b-button>            
          </div>
       </div>
@@ -26,7 +30,7 @@
 </template>
 
 <script>
-import SlideBar from '@/components/slide-bar.vue'
+import SlideBar from '@/components/slide_bar.vue'
 export default {
    components: {
       SlideBar
