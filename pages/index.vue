@@ -92,12 +92,12 @@
 
     <!-- page botton -->    
     <div class="justify-center flex gap-2 pb-8">
-      <b-button >
+      <!-- <b-button >
         <b-icon icon="arrow-left" font-scale="1"></b-icon>
       </b-button>
       <b-button >
         <b-icon icon="arrow-right" font-scale="1"></b-icon>
-      </b-button>
+      </b-button> -->
     </div>
     
   </div>

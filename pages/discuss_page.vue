@@ -11,12 +11,14 @@
             </b-row>
         </b-container>
 
+        <!-- <DF :moviename="this.namedata" @discuss-data="addArticle" /> -->
         <DF @discuss-data="addArticle" />
 
     </div>
 </template>
 
 <script>
+// import axios from "axios"
 import SlideBar from '@/components/slide_bar.vue'
 import DF from '@/components/discuss_form.vue'
 
@@ -31,10 +33,48 @@ export default {
     data() {
         return {
             // articles: [],
-            url: 'http://localhost:3000'
+            // url: 'http://localhost:3000',
+            url: 'https://backend-final.azurewebsites.net'
+            // namedata: ''            
         }
     },
+    // async fetch() {        
+    //     await this.getMovieName();
+
+    // },
     methods: {
+        // GET
+        // async getMovieName() {
+        //     try {
+        //         const dataId = axios.get(`${this.url}/moviessearchId/${this.$route.params.commentid}`)
+        //         console.log('SearchMovieID')
+        //         console.log(this.$route.params.commentid)
+
+        //         const resultId = await dataId
+        //         console.log('Searchmovies2:')
+        //         console.log(resultId.data.data)
+
+        //         this.namedata = resultId.data.data.title;
+                
+
+
+        //         console.log('NameData Dis:')
+        //         console.log(this.namedata)
+                
+                
+                
+        //         // this.$emit('name-data', namedata)
+
+        //         // console.log('cid')
+        //         // console.log(this.$route.params.commentid)
+        //         // console.log('mname')
+        //         // console.log(this.$route.params.moviename)
+
+        //     }
+
+        //     catch (error) { console.log(`get MovieName failed: ${error}`) }
+        // },
+
         // Post
         async addArticle(discussData) {
             console.log('data2')

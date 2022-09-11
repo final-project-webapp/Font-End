@@ -2,7 +2,10 @@
     <div class="pt-20 flex">
         <b-container style="max-width: 1000px;">
             <b-card border-variant="primary" bg-variant="dark">
+                <div class="text-lg">
+                <!-- <p>{{ movienameshow }}</p> -->
                 <p>{{ this.$route.params.moviename }}</p>
+                </div>
                 <b-form @submit.prevent="onSubmit" @reset="onReset">
                     <b-form-group id="input_group_1" label="Article Title:" label-for="input_1">
                         <b-form-textarea id="input_1" v-model="form.title" type="text" placeholder=""
@@ -49,10 +52,10 @@
                     </div>
                    
                     <div class="flex justify-end">
-                        <b-button id="own-discuss" variant="primary">
-                            <nuxt-link class="" to="/show_discuss">
+                        <b-button id="own-discuss" variant="primary" @click="to">
+                            <!-- <nuxt-link class="" :to="{ name: 'comments-commentid' }"> -->
                                 Back
-                            </nuxt-link>
+                            <!-- </nuxt-link> -->
                         </b-button>
                     </div>
                 </div>
@@ -73,7 +76,7 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
 export default {
-
+    // props: [moviename],
     name: 'DiscussForm',
     components: {
 
@@ -90,7 +93,8 @@ export default {
 
             },
             defaultview: 1,
-            testuser: 1
+            testuser: 1,
+            // movienameshow:moviename,
         };
     },
     validations: {
@@ -116,6 +120,9 @@ export default {
         }
     },
     methods: {
+        to() {
+        this.$router.go(-1)
+    },
         validateState(wname) {
             const { $dirty, $error } = this.$v.form[wname];
             return $dirty ? !$error : null;
@@ -163,7 +170,7 @@ export default {
             this.form.title = ''
             this.form.wname = ''
             this.form.wdate = ''
-            this.form.mname = ''
+            // this.form.mname = ''
             this.form.lang = []
             // Trick to reset/clear native browser form validation state
             this.$nextTick(() => {

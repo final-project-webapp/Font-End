@@ -19,7 +19,7 @@
             <div>
               <b-col cols="12" xl="12" lg="12" md="12" sm="12">
 
-                <b-card :header="a.movie_name" header-text-variant="white" header-bg-variant="secondary" header-tag="header" :title="a.articles"
+                <b-card :header="a.movie_name" header-text-variant="white" header-bg-variant="dark" header-border-variant="primary" header-tag="header" :title="a.articles"
                   tag="article"
                   style="max-width: 600px; min-width: 200px; min-height:400px; max-width: 600px; font-size:large"
                   class="mb-4 p-4" bg-variant="dark" text-variant="light">
@@ -96,7 +96,8 @@ export default {
       //   { title: "xxx", writer: "xxxxx xxxxx", nor: "13", id: 4 }
       // ],
       articles: [],
-      url: 'http://localhost:3000'
+      // url: 'http://localhost:3000',
+      url: 'https://backend-final.azurewebsites.net'
 
 
     }
