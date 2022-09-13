@@ -18,11 +18,11 @@
           <p class="movie-fact">
             <span>Released:</span>
             {{
-                new Date(movie.release_date).toLocaleString('en-us', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
+            new Date(movie.release_date).toLocaleString('en-us', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            })
             }}
           </p>
           <p class="movie-fact">
@@ -31,43 +31,43 @@
           <p class="movie-fact">
             <span>Revenue:</span>
             {{
-                movie.revenue.toLocaleString('en-us', {
-                  style: 'currency',
-                  currency: 'USD',
-                })
+            movie.revenue.toLocaleString('en-us', {
+            style: 'currency',
+            currency: 'USD',
+            })
             }}
           </p>
           <p class="movie-fact">
             <span>Overview:</span>
             {{ movie.overview }}
-          </p>        
+          </p>
           <div class="movie-fact">
-            <span>Watch Provider:</span>                                  
+            <span>Watch Provider:</span>
             <div class="flex gap-8">
               <div>
                 <p>TH</p>
-                <div class="w-20 mt-2">
-                  <div v-if="this.nonTHprovider == ''">
-                  <img :src="`https://image.tmdb.org/t/p/w500/${THprovider.TH.flatrate[0].logo_path}`" />
+                <div class=" mt-2 ">
+                  <div v-if="this.nonTHprovider == ''" class="w-20">
+                    <img :src="`https://image.tmdb.org/t/p/w500/${THprovider.TH.flatrate[0].logo_path}`" />
                   </div>
-                  <div v-else class="border-2 border-red-600 bg-red-600 pl-1">
-                  <p class="text-white font-bold"> {{ nonTHprovider }}</p>
+                  <div v-else class=" border-2 border-red-600 bg-red-600 pl-1 w-20">                    
+                    <p class="text-white font-bold "> {{ nonTHprovider }}</p>                  
                   </div>
                 </div>
               </div>
               <div>
                 <p>US</p>
-                <div class="w-20 mt-2">
-                  <div v-if="this.nonENprovider == ''">
-                  <img :src="`https://image.tmdb.org/t/p/w500/${ENprovider.US.flatrate[0].logo_path}`" />
+                <div class=" mt-2">
+                  <div v-if="this.nonENprovider == ''" class="w-20">
+                    <img :src="`https://image.tmdb.org/t/p/w500/${ENprovider.US.flatrate[0].logo_path}`" />
                   </div>
-                  <div v-else class="border-2 border-red-600 bg-red-600 pl-1">
-                  <p class="text-white font-bold"> {{ nonENprovider }}</p>
+                  <div v-else class="border-2 border-red-600 bg-red-600 pl-1 w-20">
+                    <p class="text-white font-bold"> {{ nonENprovider }}</p>
                   </div>
                 </div>
               </div>
-            </div>       
-          </div>         
+            </div>
+          </div>
         </div>
 
 
@@ -94,7 +94,7 @@ export default {
       THprovider: null,
       ENprovider: null,
       nonTHprovider: '',
-      nonENprovider: '',     
+      nonENprovider: '',
       url: 'https://backend-final.azurewebsites.net'
       // url: 'http://localhost:3000'
     }
@@ -103,7 +103,7 @@ export default {
     await this.getSingleMovie();
     await this.getTHProvider();
     await this.getENProvider();
-    
+
   },
   fetchDelay: 2000,
   methods: {
@@ -112,7 +112,7 @@ export default {
       console.log(this.url)
       // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
       const data = axios.get(`${this.url}/moviesid/${this.$route.params.movieid}`)
-      
+
       const result = await data;
       console.log('single result:')
       console.log(result.data)
@@ -122,19 +122,19 @@ export default {
       console.log('singlemovie:')
       console.log(this.movie)
     },
-    
+
     async getTHProvider() {
       // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
       const data = axios.get(`${this.url}/moviesproth/${this.$route.params.movieid}`)
-      
+
       const result = await data;
 
       console.log('TH provider result:')
       console.log(result.data.results)
       console.log('message result:')
       console.log(result.data.message)
-        
-      if(result.data.status !== 404){
+
+      if (result.data.status !== 404) {
         this.THprovider = result.data.results;
         console.log('THprovider:')
         console.log(this.THprovider)
@@ -148,15 +148,15 @@ export default {
     async getENProvider() {
       // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
       const data = axios.get(`${this.url}/moviesprous/${this.$route.params.movieid}`)
-      
+
       const result = await data;
 
       console.log('EN provider result:')
       console.log(result.data.results)
       console.log('message result:')
       console.log(result.data.message)
-        
-      if(result.data.status !== 404){
+
+      if (result.data.status !== 404) {
         this.ENprovider = result.data.results;
         console.log('ENprovider:')
         console.log(this.ENprovider)
@@ -166,7 +166,7 @@ export default {
         console.log(this.nonENprovider)
       };
     },
-    
+
   },
 
 }

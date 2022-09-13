@@ -96,8 +96,8 @@ export default {
       //   { title: "xxx", writer: "xxxxx xxxxx", nor: "13", id: 4 }
       // ],
       articles: [],
-      // url: 'http://localhost:3000',
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
 
 
     }

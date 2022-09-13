@@ -121,7 +121,8 @@ export default {
             comments: [],            
             moviearticle: [],
             namedata: '',           
-            url: 'https://backend-final.azurewebsites.net'            
+            // url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'            
         }
     },
     async fetch() {

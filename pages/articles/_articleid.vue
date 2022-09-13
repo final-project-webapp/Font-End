@@ -96,9 +96,10 @@ export default {
             ],
             article: '',
             articleComment: [],
+            articleId: '',
             // url: 'http://localhost:3000',
-            url: 'https://backend-final.azurewebsites.net',
-            articleId: ''
+            url: 'https://backend-final.azurewebsites.net'
+            
 
 
         }
