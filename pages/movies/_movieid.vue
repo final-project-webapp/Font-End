@@ -96,7 +96,6 @@ export default {
       nonTHprovider: '',
       nonENprovider: '',
       url: 'https://backend-final.azurewebsites.net'
-      // url: 'http://localhost:3000'
     }
   },
   async fetch() {
