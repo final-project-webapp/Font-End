@@ -6,12 +6,13 @@
                 <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
 
                 <NuxtLink class="button"
-                    :to="{ name: 'discuss_page', params: { commentid: this.$route.params.commentid, moviename: this.namedata } }">Write your
+                    :to="{ name: 'discuss_page', params: { commentid: this.$route.params.commentid, moviename: this.titleById } }">
+                    Write your
                     article</NuxtLink>
             </div>
             <div class="movie-info">
                 <div class="movie-content">
-                    <h1> Title: {{ this.namedata }} </h1>
+                    <h1> Title: {{ this.titleById }} </h1>
                 </div>
             </div>
 
@@ -118,17 +119,19 @@ export default {
     },
     data() {
         return {
-            comments: [],            
+            comments: [],
             moviearticle: [],
-            namedata: '',           
+            titleById: '',
+            // namedata: '',
             // url: 'https://backend-final.azurewebsites.net'
-            url: 'http://localhost:3000'            
+            url: 'http://localhost:3000'
         }
     },
     async fetch() {
         await this.getComment();
-        await this.getSingleArticle();
         await this.getMovieName();
+        await this.getSingleArticle();
+
 
     },
     // fetchDelay: 2000,
@@ -136,11 +139,11 @@ export default {
         async getSingleArticle() {
             try {
                 // console.log('url:')
-                console.log('namedata2')
-                console.log(this.namedata)
+                console.log('titleById2')
+                console.log(this.titleById)
                 console.log(this.comments)
                 // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
-                const data = axios.get(`${this.url}/getsinglearticlename/${this.test}`)
+                const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
 
                 const result = await data;
                 console.log('single movie:')
@@ -155,8 +158,8 @@ export default {
         },
 
         async getComment() {
-            console.log('namedata3')
-            console.log(this.namedata)
+            console.log('titleById3')
+            console.log(this.titleById)
             try {
                 // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.commentid}/reviews?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
                 const data = axios.get(`${this.url}/moviesreviews/${this.$route.params.commentid}`)
@@ -169,25 +172,6 @@ export default {
                     console.log('comments:')
                     console.log(this.comments)
                 })
-
-
-                // const dataId = axios.get(`${this.url}/moviessearchId/${this.$route.params.commentid}`)
-                // console.log('SearchMovieID')
-                // console.log(this.$route.params.commentid)
-
-                // const resultId = await dataId
-                // console.log('Searchmovies2:')
-                // console.log(this.dataId)
-                // resultId.data.title.forEach((movietitle) => {
-                //     this.Moviename2.push(movietitle)
-
-                // })
-
-                // console.log('cid')
-                // console.log(this.$route.params.commentid)
-                // console.log('mname')
-                // console.log(this.$route.params.moviename)
-
             }
             catch (error) { console.log(`get comment failed: ${error}`) }
         },
@@ -199,76 +183,49 @@ export default {
                 console.log(this.$route.params.commentid)
 
                 const resultId = await dataId
-                console.log('Searchmovies2:')
-                console.log(resultId.data.data)
+                console.log('SearchmoviesName:')
+                console.log(resultId.data.data.title)
 
-                this.namedata = resultId.data.data.title;
-                
+                this.titleById = resultId.data.data.title;
 
+                console.log('titleByIdTest:')
+                console.log(this.titleById)
 
-                console.log('NameData:')
-                console.log(this.namedata)
-
-                const data = axios.get(`${this.url}/getsinglearticlename/${this.namedata}`)
+                const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
 
                 const result = await data;
                 console.log('single movie:')
-                console.log(result)
+                console.log(result.data)
 
                 this.moviearticle = result.data;
-
-
-                // console.log('cid')
-                // console.log(this.$route.params.commentid)
-                // console.log('mname')
-                // console.log(this.$route.params.moviename)
-
             }
 
             catch (error) { console.log(`get MovieName failed: ${error}`) }
         },
-        // async getMovies() {
-        //     console.log(this.url)
-        //     try {
-        //         // const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
-        //         const data = axios.get(this.url + "/movies/1")
 
-        //         const result = await data
+        // DELETE
+        async deleteArticle(articleId) {
+            try {
+                await fetch(`${this.url}/deletearticle/${articleId}`, {
+                    method: 'DELETE',
+                })
+                const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
 
-        //         console.log('movie:')
-        //         console.log(result.data.data.results)
-        //         console.log('movies:')
+                const result = await data;
+                console.log('Delete single movie:')
+                console.log(result.data)
 
-        //         result.data.data.results.forEach((movie) => {
-        //             this.movies.push(movie)
-        //         })
-        //         console.log(this.movies)
-        //     }
-        //     catch (error) { console.log(`get movie failed: ${error}`) }
-        // },
+                this.moviearticle = result.data;
+            }
+            catch (error) {
+                console.log(`delete failed: ${error}`)
+            }
+        },
 
-
-        // GET
-        // async getSingleArticle() {
-        //     try {
-        //     // console.log('url:')
-        //     console.log('namedata2')
-        //     console.log(this.namedata)
-        //     console.log(this.comment)
-        //     // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
-        //     const data = axios.get(`${this.url}/getsinglearticlename/${this.namedata}`)
-
-        //     const result = await data;
-        //     console.log('single movie:')
-        //     console.log(result)
-
-        //     this.moviearticle = result.data;
-
-        //     console.log('singlearticle:')
-        //     console.log(this.moviearticle)
+        // async reloadArticle() {
+        //     this.moviearticle = await this.getSingleArticle()
         // }
-        //     catch (error) { console.log(`getSingleArticle: ${error}`) }
-        // },
+
 
     },
 
