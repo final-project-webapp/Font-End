@@ -107,7 +107,7 @@ export default {
     this.articles = await this.getArticles()
 
     console.log('Articles:')
-    console.log(this.articles[2])
+    // console.log(this.articles[2])
 
     // this.userData = await this.getUser();
     // this.userRole = this.userData.data.role
