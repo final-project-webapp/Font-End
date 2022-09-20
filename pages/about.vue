@@ -11,12 +11,12 @@
           POWERED BY:
         </p>
         <div class="flex mt-4">
-          <div class="p-2 flex-auto w-40" bg-variant="dark">
+          <div class="p-2 flex-auto w-80" bg-variant="dark">
             <img src="@/assests/image/TMDB.svg" alt="TMDB" />
           </div>
         </div>
 
-        <div class="flex mt-4">
+        <!-- <div class="flex mt-4">
           <div class="p-2 flex-auto w-40" bg-variant="dark">
             <img src="@/assests/image/colored-white-text.svg" alt="NUXT" />
           </div>
@@ -24,20 +24,7 @@
           <div class="p-2 flex-auto w-80" bg-variant="dark">
             <img src="@/assests/image/tailwindcss-logotype-white.svg" alt="Tailwind" />
           </div>
-        </div>
-
-
-        <!-- <b-col col lg="6" md="6" sm="1">
-            <b-card class="p-2" bg-variant="dark" text-variant="light" cols="1">
-              <b-card-text cols="1">
-                A place for movies and people who want to comment on the subject so that people can decide whether or
-                not
-                to watch the movies.
-              </b-card-text>
-            </b-card>
-          </b-col> -->
-        <!-- </b-row> -->
-        <!-- </div> -->
+        </div> -->
 
       </div>
     </div>

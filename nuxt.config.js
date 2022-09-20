@@ -15,7 +15,9 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    '@sweetalert2/theme-dark'
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -37,6 +39,8 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/toast',
+    'vue-sweetalert2/nuxt/no-css'
   ],
   bootstrapVue: {
     // Install the `IconsPlugin` plugin (in addition to `BootstrapVue` plugin)
@@ -49,6 +53,21 @@ export default {
     baseURL: '/',
     proxy: true,
   },
+
+  toast: {
+    position: 'top-center',
+    duration : 2000,
+    fullWidth : false,
+    register: [ // Register custom toasts
+      {
+        name: 'my-error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
+},
 
   
   proxy: {

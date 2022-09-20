@@ -19,8 +19,11 @@
 
 <script>
 // import axios from "axios"
+import swal from 'sweetalert2/dist/sweetalert2.js'
+
 import SlideBar from '@/components/slide_bar.vue'
 import DF from '@/components/discuss_form.vue'
+
 
 export default {
     emits: ['discuss-data'],
@@ -55,14 +58,14 @@ export default {
         //         console.log(resultId.data.data)
 
         //         this.namedata = resultId.data.data.title;
-                
+
 
 
         //         console.log('NameData Dis:')
         //         console.log(this.namedata)
-                
-                
-                
+
+
+
         //         // this.$emit('name-data', namedata)
 
         //         // console.log('cid')
@@ -105,9 +108,17 @@ export default {
                         language: discussData.language,
                         view: discussData.view,
                         user_user_id: discussData.userID
-                    })
+                    }),
                     //   body: formData
                 })
+                // this.$toast.success('Successfully submit')
+                swal.fire({
+                    title: 'Submit Success!',
+                    // text: 'Do you want to continue',
+                    icon: 'success',
+                    confirmButtonText: 'Done'
+                })
+
                 // console.log('data3')
                 // console.log(body)
                 // const resdata = await res.json()
@@ -115,7 +126,9 @@ export default {
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)
+                // this.$toast.error('Error while submit')
             }
+
         },
     }
 
