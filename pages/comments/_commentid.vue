@@ -6,7 +6,7 @@
                 <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
 
                 <NuxtLink class="button"
-                    :to="{ name: 'discuss_page', params: { commentid: this.$route.params.commentid, moviename: this.titleById } }">
+                    :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
                     Write your
                     article</NuxtLink>
             </div>
@@ -40,7 +40,7 @@
             </b-card>
             <b-card bg-variant="dark" class="h-80 overflow-y-scroll pr-2 mt-8">
                 <div class="py-8 flex">
-                    <b-container fluid style="max-width: 1000px;">
+                    <b-container fluid style="max-width: 1800px;">
                         <b-row align-h="center">
                             <div v-for="(a, index ) in moviearticle" :key="index">
                                 <div>
@@ -49,7 +49,7 @@
                                         <b-card :header="a.movie_name" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
                                             :title="a.articles" tag="article"
-                                            style="max-width: 400px; min-width: 200px; min-height:400px; max-width: 600px; font-size:large"
+                                            style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
                                             class="pt-8 pl-4 pr-4 pb-4  mb-4" bg-variant="dark" border-variant="primary"
                                             text-variant="light">
                                             <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
@@ -122,6 +122,7 @@ export default {
             comments: [],
             moviearticle: [],
             titleById: '',
+            idById: '',
             // namedata: '',
             // url: 'https://backend-final.azurewebsites.net'
             url: 'http://localhost:3000'
@@ -131,7 +132,7 @@ export default {
         await this.getComment();
         await this.getMovieName();
         await this.getSingleArticle();
-
+        await this.getMovieID();
 
     },
     // fetchDelay: 2000,
@@ -201,6 +202,25 @@ export default {
             }
 
             catch (error) { console.log(`get MovieName failed: ${error}`) }
+        },
+
+        async getMovieID() {
+            try {
+                const movieId = axios.get(`${this.url}/moviessearchId/${this.$route.params.commentid}`)
+                console.log('SearchID')
+                console.log(this.$route.params.commentid)
+
+                const resultId = await movieId
+                console.log('SearchmoviesID:')
+                console.log(resultId.data.data.id)
+
+                this.idById = resultId.data.data.id;
+
+                console.log('idByIdTest:')
+                console.log(this.idById)
+                
+            }
+            catch (error) { console.log(`get MovieID failed: ${error}`) }
         },
 
         // DELETE

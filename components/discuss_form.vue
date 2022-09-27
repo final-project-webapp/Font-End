@@ -4,7 +4,8 @@
             <b-card border-variant="primary" bg-variant="dark">
                 <div class="text-lg">
                     <!-- <p>{{ movienameshow }}</p> -->
-                    <p>{{ this.$route.params.moviename }}</p>
+                    <p>{{ this.$route.params.movieid }}</p>
+                    <p>{{ this.titleById }}</p>
                 </div>
                 <b-form @submit.prevent="onSubmit" @reset="onReset">
                     <b-form-group id="input_group_1" label="Article Title:" label-for="input_1">
@@ -67,6 +68,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 
@@ -87,11 +89,17 @@ export default {
                 lang: [],
 
             },
+            titleById: '',
             defaultview: 1,
             testuser: 1,
-            showDismissibleAlert: false
+            showDismissibleAlert: false,
+            // url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
             // movienameshow:moviename,
         };
+    },
+    async fetch() {        
+        await this.getMovieName();        
     },
     validations: {
         form: {
@@ -172,7 +180,27 @@ export default {
             this.$nextTick(() => {
                 this.$v.$reset();
             });
-        }
+        },
+
+        // GET
+        async getMovieName() {
+            try {
+                const dataId = axios.get(`${this.url}/moviessearchId/${this.$route.params.movieid}`)
+                console.log('SearchMovieID(Form)')
+                console.log(this.$route.params.movieid)
+
+                const resultId = await dataId
+                console.log('SearchmoviesName(Form):')
+                console.log(resultId.data.data.title)
+
+                this.titleById = resultId.data.data.title;
+
+                console.log('titleByIdTest(Form):')
+                console.log(this.titleById)                
+            }
+
+            catch (error) { console.log(`get MovieName(Form) failed: ${error}`) }
+        },
     }
 }
 </script>
