@@ -11,7 +11,7 @@
             </b-row>
         </b-container>
 
-        <div class="mt-20 flex">
+        <div class="py-20 flex">
             <b-container style="max-width: 1000px;">
                 <b-card border-variant="primary" bg-variant="dark">
                     <div class="text-lg">
@@ -74,7 +74,6 @@
                     </b-card>
                 </div> -->
             </b-container>
-
         </div>
 
         <!-- <DF :moviename="this.namedata" @discuss-data="addArticle" /> -->
@@ -100,7 +99,6 @@ export default {
     components: {
         SlideBar,
         // DF
-
     },
     mixins: [validationMixin],
     data() {
@@ -179,15 +177,14 @@ export default {
                         language: this.form.lang,
                         view: this.defaultview,
                         user_user_id: this.testuser
-                    }),
-                    //   body: formData
-                })
-                // this.$toast.success('Successfully submit')
+                    }),                    
+                })               
                 swal.fire({
                     title: 'Submit Success!',
                     // text: 'Do you want to continue',
                     icon: 'success',
-                    confirmButtonText: 'Done'
+                    confirmButtonText: 'Done',
+                    confirmButtonColor: '#007bff'
                 })
                 setTimeout(() => { this.$router.go(-1) }, 2000);
                 console.log('Form:')
@@ -204,7 +201,8 @@ export default {
                     title: 'Submit Error!',
                     // text: '${error}',
                     icon: 'error',
-                    confirmButtonText: 'Cancel'
+                    confirmButtonText: 'Cancel',
+                    confirmButtonColor: '#007bff'
                 })
                 // this.$toast.error('Error while submit')
             }
@@ -232,8 +230,7 @@ export default {
             this.form.lang = []
             this.$nextTick(() => {
                 this.$v.$reset();
-            });
-            // alert('Submit Complete')
+            });            
         },
 
         onReset(event) {

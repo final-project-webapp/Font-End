@@ -11,27 +11,31 @@
             </b-row>
         </b-container>
 
-        <LF />
+        <loginForm @login-user="login"></loginForm>
 
     </div>
 </template>
 
 <script>
 import SlideBar from '@/components/slide_bar.vue'
-import LF from '@/components/login_form.vue'
+import loginForm from '@/components/login_form.vue'
 
 export default {
     name: 'LoginPage',
     components: {
         SlideBar,
-        LF
+        loginForm
 
     },
+    emits: ['login-user'],
     data() {
         return {
-            
+            url: 'http://localhost:3000'
         }
     },
+    methods: {
+        
+    }
     
 }
 

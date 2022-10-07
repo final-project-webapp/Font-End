@@ -5,8 +5,7 @@
             <div class="flex justify-between">
                 <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
 
-                <NuxtLink class="button"
-                    :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
+                <NuxtLink class="button" :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
                     Write your
                     article</NuxtLink>
             </div>
@@ -85,7 +84,7 @@
                                             </div>
 
                                             <div class="absolute bottom-3 right-6">
-                                                <b-button>
+                                                <b-button @click="countView(a.article_id)">
                                                     <NuxtLink class=""
                                                         :to="{ name: 'articles-articleid', params: {articleid: a.article_id} }">
                                                         <b-icon icon="chat-left-text" variant="primary" font-scale="1">
@@ -218,9 +217,26 @@ export default {
 
                 console.log('idByIdTest:')
                 console.log(this.idById)
-                
+
             }
             catch (error) { console.log(`get MovieID failed: ${error}`) }
+        },
+
+        // POST
+        async countView(articleId) {
+            try {
+                await fetch(this.url + "", {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({                        
+                        view: articleId
+                    }),
+                })
+            } catch (error) {
+                console.log(`countview failed: ${error}`)
+            }
         },
 
         // DELETE
