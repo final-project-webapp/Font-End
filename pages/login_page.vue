@@ -13,10 +13,13 @@
 
         <loginForm @login-user="login"></loginForm>
 
+        <b-button @click="logOut">Logout</b-button>
+
     </div>
 </template>
 
 <script>
+import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
 import loginForm from '@/components/login_form.vue'
 
@@ -34,9 +37,60 @@ export default {
         }
     },
     methods: {
-        
+        async login(loginData) {
+            console.log('logindata_page')
+            console.log(loginData)
+            try {
+                const res = await fetch(this.url + "/login", {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        emailaddress: loginData.emailAddress,
+                        password: loginData.password,
+                    })
+                })
+                console.log('Done!!')
+                // console.log(loginData)
+
+                const resdata = await res.json()
+                if (resdata.data == 1) {
+                    swal.fire({
+                        title: 'Login Success!',
+                        // text: 'Your has been registered.',
+                        icon: 'success',
+                        confirmButtonColor: '#007bff',
+                        confirmButtonText: 'Done',
+                    })
+                    // setTimeout(() => { this.$router.push('/login_page') }, 2000);
+                }
+            }
+            catch (error) {
+                console.log(`LoginFalse!!! ${error}`)
+            }
+        },
+
+         async logOut() {
+            console.log('Logout!!:')
+            try {
+                await fetch(this.url + "/logout", {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include',
+                })
+                // this.$emit('logout')
+                // this.$router.go(0);
+                console.log('Logout Complete!!')
+            }
+            catch (error) { console.log(`Log Out failed: ${error}`) }
+        },
+
     }
-    
+
 }
 
 

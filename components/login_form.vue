@@ -2,10 +2,10 @@
     <div class="pt-20 flex">
         <b-container style="max-width: 400px;">
             <b-card border-variant="primary" bg-variant="dark">
-                <b-form @submit="onSubmit">
+                <b-form @submit.prevent="onSubmit">
 
                     <b-form-group id="input_group_1" label="Email:" label-for="input_1">
-                        <b-form-input id="input_email" v-model="form.email" type="email" placeholder=""
+                        <b-form-input id="input_email" v-model="form.emailaddress" type="email" placeholder=""
                             :state="validateState('emailaddress')" aria-describedby="feedback_1">
                         </b-form-input>
                         <b-form-invalid-feedback id="feedback_1">This is a required field and must be at
@@ -45,8 +45,6 @@
                         </b-row>
                     </div>
                 </b-form>
-
-
             </b-card>
             <div>
 
@@ -94,17 +92,26 @@ export default {
             const { $dirty, $error } = this.$v.form[emailaddress];
             return $dirty ? !$error : null;
         },
-        onSubmit(event) {
-            event.preventDefault()
-
+        onSubmit() {        
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
             }
+
+            const loginData = {                    
+                    emailAddress: this.form.emailaddress,
+                    password: this.form.password,                   
+                }
             this.$emit('login-user', loginData)
             console.log('logindata:')
             console.log(loginData)
-            alert(JSON.stringify(this.form))
+            // alert(JSON.stringify(this.form))
+
+            this.form.emailaddress = ''
+            this.form.password = ''
+            this.$nextTick(() => {
+                    this.$v.$reset();
+                });
 
         },
         // onReset(event) {

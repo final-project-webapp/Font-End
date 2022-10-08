@@ -107,14 +107,18 @@ export default {
                     swal.fire({
                         title: 'Registered!',
                         text: 'Your has been registered.',
-                        icon: 'success'
+                        icon: 'success',
+                        confirmButtonColor: '#007bff',
+                        confirmButtonText: 'Done',
                     })
                     setTimeout(() => { this.$router.push('/login_page') }, 2000);
                 } else {
                     swal.fire({
                         title: 'Register Failed!',
                         text: 'Your email has been used.',
-                        icon: 'error'
+                        icon: 'error',
+                        confirmButtonColor: '#dc2626',
+                        confirmButtonText: 'Cancel',
                     })
                 }                              
             }

@@ -225,15 +225,17 @@ export default {
         // POST
         async countView(articleId) {
             try {
-                await fetch(this.url + "", {
+                await fetch(this.url + "/addview", {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({                        
-                        view: articleId
-                    }),
+                        article_id: articleId
+                    })
                 })
+                // console.log('view:')
+                // console.log(articleId)
             } catch (error) {
                 console.log(`countview failed: ${error}`)
             }

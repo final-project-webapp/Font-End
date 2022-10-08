@@ -53,7 +53,6 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength, email } from "vuelidate/lib/validators";
-// import swal from 'sweetalert2/dist/sweetalert2.js'
 
 export default {    
     components: {
@@ -111,7 +110,6 @@ export default {
                 this.$emit('register-user', registerData)
                 console.log('regisdata:')
                 console.log(registerData)
-
 
                 this.form.uname = ''
                 this.form.emailaddress = ''
