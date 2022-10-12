@@ -11,9 +11,7 @@
             </b-row>
         </b-container>
 
-        <loginForm @login-user="login"></loginForm>
-
-        <b-button @click="logOut">Logout</b-button>
+        <loginForm @login-user="login"></loginForm>        
 
     </div>
 </template>
@@ -63,34 +61,16 @@ export default {
                         icon: 'success',
                         confirmButtonColor: '#007bff',
                         confirmButtonText: 'Done',
-                    })
-                    // setTimeout(() => { this.$router.push('/login_page') }, 2000);
+                    })                
                 }
+                // this.$router.go(0)
+                setTimeout(() => { this.$router.push('/') }, 2000);
             }
             catch (error) {
                 console.log(`LoginFalse!!! ${error}`)
             }
-        },
-
-         async logOut() {
-            console.log('Logout!!:')
-            try {
-                await fetch(this.url + "/logout", {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    credentials: 'include',
-                })
-                // this.$emit('logout')
-                // this.$router.go(0);
-                console.log('Logout Complete!!')
-            }
-            catch (error) { console.log(`Log Out failed: ${error}`) }
-        },
-
+        },         
     }
-
 }
 
 
