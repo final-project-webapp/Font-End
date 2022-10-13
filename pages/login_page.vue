@@ -11,28 +11,71 @@
             </b-row>
         </b-container>
 
-        <LF />
+        <loginForm @login-user="login"></loginForm>
 
     </div>
 </template>
 
 <script>
+import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
-import LF from '@/components/login_form.vue'
+import loginForm from '@/components/login_form.vue'
 
 export default {
     name: 'LoginPage',
     components: {
         SlideBar,
-        LF
+        loginForm
 
     },
+    emits: ['login-user'],
     data() {
         return {
-            
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
-    
+    methods: {
+        async login(loginData) {
+            console.log('logindata_page')
+            console.log(loginData)
+            try {
+                const res = await fetch(this.url + "/login", {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        emailaddress: loginData.emailAddress,
+                        password: loginData.password,
+                    })
+                })
+                console.log('Done!!')
+                // console.log(loginData)
+
+                const resdata = await res.json()
+                if (resdata.data == 1) {
+                    swal.fire({
+                        title: 'Login Success!',
+                        // text: 'Your has been registered.',
+                        icon: 'success',
+                        confirmButtonColor: '#007bff',
+                        confirmButtonText: 'Done',
+                    // }).then((result) => {
+                    //     if (result.isConfirmed) {
+                            
+                    //     }
+                    })
+                }
+                setTimeout(() => { this.$router.push('/') }, 2000);
+                // this.$router.go(0)                
+            }
+            catch (error) {
+                console.log(`LoginFalse!!! ${error}`)
+            }
+        },
+    }
 }
 
 
