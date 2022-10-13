@@ -36,9 +36,9 @@
 
                                         <b-card-text class="text-sm">: {{ ac.comment }}</b-card-text>
                                         <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
+                                        <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text>
 
-                                        <div class="absolute top-4 right-4">
-
+                                        <div class="absolute top-4 right-4" v-if="ac.user_id == userID">
                                             <b-dropdown size="sm" no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
@@ -51,7 +51,6 @@
                                                     Delete
                                                 </b-dropdown-item-button>
                                             </b-dropdown>
-
                                         </div>
 
                                     </b-card>
@@ -94,14 +93,47 @@ export default {
                 { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx", id: 3 },
                 { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx", id: 4 },
             ],
+            userID: '',
+            userData: null,
+            userRole: '',
             article: '',
             articleComment: [],
             articleId: '',
             url: 'http://localhost:3000'
             // url: 'https://backend-final.azurewebsites.net'
-            
 
 
+
+        }
+    },
+    async mounted() {
+        console.log('Process 1:')
+        console.log(this.userData)
+        if (document.cookie == null) { return }
+
+        try {
+            console.log('Process 2:')
+            const res = await fetch(this.url + "/getsingleuser", {
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            const getuserdata = await res.json()
+            this.userData = getuserdata
+            console.log('Userdata:')
+            console.log(this.userData)
+            console.log('Process 3:')
+            this.userRole = getuserdata.data.role
+            console.log('Userrole:')
+            console.log(this.userRole)
+            this.userID = getuserdata.data.user_id
+            console.log('UserID:')
+            console.log(this.userID)
+            // return getuserdata
+        }
+        catch (error) {
+            console.log(`get user failed: ${error}`)
         }
     },
     async fetch() {
@@ -110,9 +142,7 @@ export default {
     },
     methods: {
         // GET
-        async getSingleArticle() {
-            console.log('url:')
-            console.log(this.url)
+        async getSingleArticle() {            
             // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
             const data = axios.get(`${this.url}/getsinglearticle/${this.$route.params.articleid}`)
 
@@ -156,7 +186,7 @@ export default {
                     },
                     body: JSON.stringify({
                         comment: commentData.comment,
-                        user_user_id: commentData.user_user_id,
+                        user_user_id: this.userID,
                         article_user_user_id: this.article[0].user_user_id,
                         article_article_id: this.$route.params.articleid
                     })

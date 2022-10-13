@@ -35,8 +35,7 @@ export default {
       auth: false,
       userName: '',
       userData: null,
-      userRole: '',
-      Role:'',
+      userRole: '',     
       url: 'http://localhost:3000'
     }
   },
@@ -44,8 +43,7 @@ export default {
   async mounted() {
     console.log('Process 1:')
     console.log(this.userData)
-      if (document.cookie == null) { return } 
-      
+      if (document.cookie == null) { return }       
         try {
         console.log('Process 2:')
         const res = await fetch(this.url + "/getsingleuser", {
@@ -71,11 +69,6 @@ export default {
         console.log(`get user failed: ${error}`)
       }
   },
-  // mounted() {
-  //   this.$nuxt.$on('auth', auth => {
-  //     this.auth = auth;
-  //   })
-  // },
   // async created() {
   //   this.userData = await this.getUser();
   //   console.log('Userdata:')
@@ -131,10 +124,15 @@ export default {
             icon: 'success',
             confirmButtonColor: '#007bff',
             confirmButtonText: 'Done',
+          // }).then((result) => {
+          //   if(result.isConfirmed){
+              
+          //   }
           })
         }
-        // this.$router.go(0)
         setTimeout(() => { this.$router.go(0) }, 2000);
+        // this.$router.go(0)
+        
       }
       catch (error) { console.log(`Log Out failed: ${error}`) }
     },

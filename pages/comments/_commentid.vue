@@ -5,9 +5,18 @@
             <div class="flex justify-between">
                 <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
 
-                <NuxtLink class="button" :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
-                    Write your
-                    article</NuxtLink>
+
+                <NuxtLink v-if="userRole == 1" class="button"
+                    :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
+                    Write your article
+                </NuxtLink>
+
+                <div v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
+                    <b-button disabled class="button"> Write your article
+                    </b-button>
+                    <!-- <b-tooltip target="disabled-wrapper" triggers="hover">Login Please.</b-tooltip> -->
+                </div>
+
             </div>
             <div class="movie-info">
                 <div class="movie-content">
@@ -41,19 +50,19 @@
                 <div class="py-8 flex">
                     <b-container fluid style="max-width: 1800px;">
                         <b-row align-h="center">
-                            <div v-for="(a, index ) in moviearticle" :key="index">
+                            <div v-for="(ma, index ) in moviearticle" :key="index">
                                 <div>
                                     <b-col cols="12" xl="12" lg="12" md="12" sm="12">
 
-                                        <b-card :header="a.movie_name" header-text-variant="white"
+                                        <b-card :header="ma.movie_name" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                            :title="a.articles" tag="article"
+                                            :title="ma.articles" tag="article"
                                             style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
                                             class="pt-8 pl-4 pr-4 pb-4  mb-4" bg-variant="dark" border-variant="primary"
                                             text-variant="light">
-                                            <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
+                                            <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
                                             <b-card-text class="text-sm"> {{
-                                            new Date(a.date).toLocaleString('en-us', {
+                                            new Date(ma.date).toLocaleString('en-us', {
                                             month: 'long',
                                             day: 'numeric',
                                             year: 'numeric',
@@ -61,13 +70,13 @@
                                             
                                             }}</b-card-text>
                                             <!-- <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text> -->
-                                            <b-card-text class="text-sm">Language: {{ a.language }}</b-card-text>
-                                            <b-card-text class="text-sm">View: {{ a.view }} </b-card-text>
-                                            <!-- <b-card-text class="text-sm">ID: {{ a.article_id }} </b-card-text> -->
+                                            <b-card-text class="text-sm">Language: {{ ma.language }}</b-card-text>
+                                            <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>
+                                            <b-card-text class="text-sm">WrittterID: {{ ma.user_user_id }} </b-card-text>
                                         </b-card>
 
                                         <div class="static">
-                                            <div class="absolute top-3 right-6">
+                                            <div class="absolute top-3 right-6" v-if="ma.user_user_id === userID">
                                                 <b-dropdown size="sm" no-caret>
                                                     <template #button-content>
                                                         <b-icon icon="three-dots-vertical" variant="light"
@@ -75,7 +84,7 @@
                                                         </b-icon>
                                                     </template>
                                                     <b-dropdown-item-button variant="dark" class="px-0 text-xs"
-                                                        @click="deleteArticle(a.article_id)">
+                                                        @click="deleteArticle(ma.article_id)">
                                                         <b-icon icon="trash-fill" variant="dark" font-scale="1"
                                                             class="flex justify-end"></b-icon>
                                                         Delete
@@ -83,14 +92,22 @@
                                                 </b-dropdown>
                                             </div>
 
-                                            <div class="absolute bottom-3 right-6">
-                                                <b-button @click="countView(a.article_id)">
+                                            <div class="absolute bottom-3 right-6" v-if="userRole == 1">
+                                                <b-button @click="countView(ma.article_id)">
                                                     <NuxtLink class=""
-                                                        :to="{ name: 'articles-articleid', params: {articleid: a.article_id} }">
+                                                        :to="{ name: 'articles-articleid', params: {articleid: ma.article_id} }">
                                                         <b-icon icon="chat-left-text" variant="primary" font-scale="1">
                                                         </b-icon>
                                                     </NuxtLink>
                                                 </b-button>
+                                            </div>
+
+                                            <div class="absolute bottom-3 right-6" v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
+                                                <b-button disabled>
+                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
+                                                        </b-icon>
+                                                </b-button>
+                                                <!-- <b-tooltip target="disabled-wrapper" triggers="hover">Login Please.</b-tooltip> -->
                                             </div>
                                         </div>
                                     </b-col>
@@ -122,9 +139,42 @@ export default {
             moviearticle: [],
             titleById: '',
             idById: '',
+            userID: '',
+            userData: null,
+            userRole: '',
             // namedata: '',
             // url: 'https://backend-final.azurewebsites.net'
             url: 'http://localhost:3000'
+        }
+    },
+    async mounted() {
+        console.log('Process 1:')
+        console.log(this.userData)
+        if (document.cookie == null) { return }
+
+        try {
+            console.log('Process 2:')
+            const res = await fetch(this.url + "/getsingleuser", {
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            const getuserdata = await res.json()
+            this.userData = getuserdata
+            console.log('Userdata:')
+            console.log(this.userData)
+            console.log('Process 3:')
+            this.userRole = getuserdata.data.role
+            console.log('Userrole:')
+            console.log(this.userRole)
+            this.userID = getuserdata.data.user_id
+            console.log('UserID:')
+            console.log(this.userID)
+            // return getuserdata
+        }
+        catch (error) {
+            console.log(`get user failed: ${error}`)
         }
     },
     async fetch() {
@@ -230,12 +280,12 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
-                    body: JSON.stringify({                        
+                    body: JSON.stringify({
                         article_id: articleId
                     })
                 })
-                // console.log('view:')
-                // console.log(articleId)
+                console.log('countview:')
+                console.log(articleId)
             } catch (error) {
                 console.log(`countview failed: ${error}`)
             }

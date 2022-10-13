@@ -111,6 +111,9 @@ export default {
                 lang: [],
 
             },
+            userID: '',
+            userData: null,
+            userRole: '',
             // titleById: '',
             defaultview: 1,
             testuser: 1,
@@ -120,6 +123,36 @@ export default {
             url: 'http://localhost:3000'
             // url: 'https://backend-final.azurewebsites.net'
             // namedata: ''            
+        }
+    },
+    async mounted() {
+        console.log('Process 1:')
+        console.log(this.userData)
+        if (document.cookie == null) { return }
+
+        try {
+            console.log('Process 2:')
+            const res = await fetch(this.url + "/getsingleuser", {
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                credentials: 'include'
+            })
+            const getuserdata = await res.json()
+            this.userData = getuserdata
+            console.log('Userdata:')
+            console.log(this.userData)
+            console.log('Process 3:')
+            this.userRole = getuserdata.data.role
+            console.log('Userrole:')
+            console.log(this.userRole)
+            this.userID = getuserdata.data.user_id
+            console.log('UserID:')
+            console.log(this.userID)
+            // return getuserdata
+        }
+        catch (error) {
+            console.log(`get user failed: ${error}`)
         }
     },
     async fetch() {
@@ -156,9 +189,7 @@ export default {
             return $dirty ? !$error : null;
         },
         // POST
-        async onSubmit() {
-            // event.preventDefault()
-
+        async onSubmit() {         
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
@@ -176,9 +207,9 @@ export default {
                         movie_name: this.form.mname,
                         language: this.form.lang,
                         view: this.defaultview,
-                        user_user_id: this.testuser
-                    }),                    
-                })               
+                        user_user_id: this.userID
+                    }),
+                })
                 swal.fire({
                     title: 'Submit Success!',
                     // text: 'Do you want to continue',
@@ -230,7 +261,7 @@ export default {
             this.form.lang = []
             this.$nextTick(() => {
                 this.$v.$reset();
-            });            
+            });
         },
 
         onReset(event) {

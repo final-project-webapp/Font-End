@@ -11,7 +11,7 @@
             </b-row>
         </b-container>
 
-        <loginForm @login-user="login"></loginForm>        
+        <loginForm @login-user="login"></loginForm>
 
     </div>
 </template>
@@ -61,15 +61,19 @@ export default {
                         icon: 'success',
                         confirmButtonColor: '#007bff',
                         confirmButtonText: 'Done',
-                    })                
+                    // }).then((result) => {
+                    //     if (result.isConfirmed) {
+                            
+                    //     }
+                    })
                 }
-                // this.$router.go(0)
                 setTimeout(() => { this.$router.push('/') }, 2000);
+                // this.$router.go(0)                
             }
             catch (error) {
                 console.log(`LoginFalse!!! ${error}`)
             }
-        },         
+        },
     }
 }
 
