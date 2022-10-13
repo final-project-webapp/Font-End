@@ -104,9 +104,7 @@ export default {
                 }
             this.$emit('login-user', loginData)
             console.log('logindata:')
-            console.log(loginData)
-            // alert(JSON.stringify(this.form))
-
+            console.log(loginData)         
             this.form.emailaddress = ''
             this.form.password = ''
             this.$nextTick(() => {

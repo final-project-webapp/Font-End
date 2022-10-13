@@ -36,7 +36,8 @@ export default {
       userName: '',
       userData: null,
       userRole: '',     
-      url: 'http://localhost:3000'
+      // url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
     }
   },
 
@@ -68,43 +69,8 @@ export default {
       catch (error) {
         console.log(`get user failed: ${error}`)
       }
-  },
-  // async created() {
-  //   this.userData = await this.getUser();
-  //   console.log('Userdata:')
-  //   console.log(this.userData)
-
-    // this.userName = this.userData.data.name
-
-    // this.userRole = await this.getRole();
-    // console.log('Userrole:')
-    // console.log(this.userRole)
-
-    // this.Role = this.userRole.data.role
-    // console.log('role:')
-    // console.log(this.Role)
-  // },
-
-  methods: {
-    // async getUser() {
-      
-        
-    // },
-
-    // async getRole() {
-    //   if (document.cookie == null) { return }
-    //   try {
-    //     const res = await fetch(this.url + "/getsingleuser", {
-    //       credentials: 'include'
-    //     })
-    //     const getuserdata = await res.json()        
-    //     return getuserdata
-    //   }
-    //   catch (error) {
-    //     console.log(`get user failed: ${error}`)
-    //   }
-    // },
-
+  }, 
+  methods: {   
     async logOut() {      
       try {
         const res = await fetch(this.url + "/logout", {

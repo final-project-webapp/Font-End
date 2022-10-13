@@ -88,16 +88,10 @@ export default {
 
   },
   data() {
-    return {
-      // discuss: [
-      //   { title: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", writer: "xxxxx xxxxx", nor: "10", id: 1 },
-      //   { title: "xxx", writer: "xxxxx xxxxx", nor: "11", id: 2 },
-      //   { title: "xxx", writer: "xxxxx xxxxx", nor: "12", id: 3 },
-      //   { title: "xxx", writer: "xxxxx xxxxx", nor: "13", id: 4 }
-      // ],
+    return {      
       articles: [],
-      url: 'http://localhost:3000'
-      // url: 'https://backend-final.azurewebsites.net'
+      // url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
 
 
     }
@@ -107,14 +101,8 @@ export default {
     this.articles = await this.getArticles()
 
     console.log('Articles:')
-    // console.log(this.articles[2])
-
-    // this.userData = await this.getUser();
-    // this.userRole = this.userData.data.role
-
-    //  console.log(`type: ${this.userData.data}`)
   },
-  // fetchDelay: 2000,
+  
   methods: {
     // GET
     async getArticles() {

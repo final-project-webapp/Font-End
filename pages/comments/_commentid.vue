@@ -143,8 +143,8 @@ export default {
             userData: null,
             userRole: '',
             // namedata: '',
-            // url: 'https://backend-final.azurewebsites.net'
-            url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
         }
     },
     async mounted() {
@@ -183,16 +183,13 @@ export default {
         await this.getSingleArticle();
         await this.getMovieID();
 
-    },
-    // fetchDelay: 2000,
+    },    
     methods: {
         async getSingleArticle() {
-            try {
-                // console.log('url:')
+            try {                
                 console.log('titleById2')
                 console.log(this.titleById)
-                console.log(this.comments)
-                // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
+                console.log(this.comments)            
                 const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
 
                 const result = await data;
@@ -210,8 +207,7 @@ export default {
         async getComment() {
             console.log('titleById3')
             console.log(this.titleById)
-            try {
-                // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.commentid}/reviews?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
+            try {                
                 const data = axios.get(`${this.url}/moviesreviews/${this.$route.params.commentid}`)
                 const result = await data;
                 console.log('comment:')
@@ -249,7 +245,6 @@ export default {
 
                 this.moviearticle = result.data;
             }
-
             catch (error) { console.log(`get MovieName failed: ${error}`) }
         },
 

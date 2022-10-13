@@ -95,8 +95,8 @@ export default {
       ENprovider: null,
       nonTHprovider: '',
       nonENprovider: '',
-      // url: 'https://backend-final.azurewebsites.net'
-      url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
+      // url: 'http://localhost:3000'
     }
   },
   async fetch() {
@@ -109,8 +109,7 @@ export default {
   methods: {
     async getSingleMovie() {
       console.log('url:')
-      console.log(this.url)
-      // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
+      console.log(this.url)      
       const data = axios.get(`${this.url}/moviesid/${this.$route.params.movieid}`)
 
       const result = await data;
@@ -123,10 +122,8 @@ export default {
       console.log(this.movie)
     },
 
-    async getTHProvider() {
-      // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
+    async getTHProvider() {      
       const data = axios.get(`${this.url}/moviesproth/${this.$route.params.movieid}`)
-
       const result = await data;
 
       console.log('TH provider result:')
@@ -145,8 +142,7 @@ export default {
       };
     },
 
-    async getENProvider() {
-      // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}/watch/providers?api_key=855c67ea42890d4442543dfe2e92447f`)
+    async getENProvider() {      
       const data = axios.get(`${this.url}/moviesprous/${this.$route.params.movieid}`)
 
       const result = await data;

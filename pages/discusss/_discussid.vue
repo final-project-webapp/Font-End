@@ -113,15 +113,13 @@ export default {
             },
             userID: '',
             userData: null,
-            userRole: '',
-            // titleById: '',
+            userRole: '',            
             defaultview: 1,
             testuser: 1,
             showDismissibleAlert: false,
-            // articles: [],
-            // titleById: '',
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // articles: [],            
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
             // namedata: ''            
         }
     },
@@ -219,12 +217,7 @@ export default {
                 })
                 setTimeout(() => { this.$router.go(-1) }, 2000);
                 console.log('Form:')
-                console.log(this.form.title, this.form.wname, this.form.wdate, this.form.mname, this.form.lang, this.defaultview)
-
-                // console.log('data3')
-                // console.log(body)
-                // const resdata = await res.json()
-                // this.articles = [...this.articless, resdata]
+                console.log(this.form.title, this.form.wname, this.form.wdate, this.form.mname, this.form.lang, this.defaultview)               
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)
@@ -236,25 +229,7 @@ export default {
                     confirmButtonColor: '#007bff'
                 })
                 // this.$toast.error('Error while submit')
-            }
-
-            // const discussData = {
-            //     articles: this.form.title,
-            //     writer: this.form.wname,
-            //     date: this.form.wdate,
-            //     movieName: this.form.mname,
-            //     language: this.form.lang,
-            //     view: this.defaultview,
-            //     userID: this.testuser
-            // }
-            // this.$emit('discuss-data', discussData)
-            // console.log('data:')
-            // console.log(discussData)
-
-
-
-            // alert(JSON.stringify(this.form))
-
+            }           
             this.form.title = ''
             this.form.wname = ''
             this.form.wdate = ''
@@ -288,14 +263,11 @@ export default {
                 console.log('SearchmoviesName(Page):')
                 console.log(resultId.data.data.title)
 
-                // this.titleById = resultId.data.data.title;
                 this.form.mname = resultId.data.data.title;
 
-                console.log('titleByIdTest(Page):')
-                // console.log(this.titleById)
+                console.log('titleByIdTest(Page):')                
                 console.log(this.form.mname)
             }
-
             catch (error) { console.log(`get MovieName(Page) failed: ${error}`) }
         },
 

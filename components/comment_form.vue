@@ -114,10 +114,7 @@ export default {
             // console.log('comment data:')
             // console.log(commentData)
             // console.log('Form:')
-            // console.log(this.form.comment)
-
-            // alert(JSON.stringify(this.form))
-            // alert('Post Success')
+            // console.log(this.form.comment)          
 
             this.form.comment = ''
             this.$nextTick(() => {

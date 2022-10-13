@@ -86,24 +86,15 @@ export default {
 
 
     data() {
-        return {
-            comment: [
-                { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx", id: 1 },
-                { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx xxxxx", id: 2 },
-                { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx", id: 3 },
-                { writer: "xxx", text: "xxxxx xxxxx xxxxx xxxxx xxxxx", id: 4 },
-            ],
+        return {           
             userID: '',
             userData: null,
             userRole: '',
             article: '',
             articleComment: [],
             articleId: '',
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
-
-
-
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     async mounted() {
@@ -130,7 +121,7 @@ export default {
             this.userID = getuserdata.data.user_id
             console.log('UserID:')
             console.log(this.userID)
-            // return getuserdata
+           
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
@@ -142,10 +133,8 @@ export default {
     },
     methods: {
         // GET
-        async getSingleArticle() {            
-            // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
+        async getSingleArticle() {                        
             const data = axios.get(`${this.url}/getsinglearticle/${this.$route.params.articleid}`)
-
             const result = await data;
             console.log('single result:')
             console.log(data)
@@ -156,18 +145,9 @@ export default {
             console.log(this.article)
         },
 
-        async getCommentArticle() {
-            // console.log('articleId')
-            // console.log(this.$route.params.articleid)
-            // console.log('url2:')
-            // console.log(this.url)
-            // const data = axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.movieid}?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US`)
+        async getCommentArticle() {        
             const data = axios.get(`${this.url}/getcommentinarticle/${this.$route.params.articleid}`)
-
-            const result = await data;
-            // console.log('Comment Article:')
-            // console.log(data.JSON)
-
+            const result = await data;           
             this.articleComment = result.data;
             this.articleId = this.$route.params.articleid
 
@@ -190,21 +170,7 @@ export default {
                         article_user_user_id: this.article[0].user_user_id,
                         article_article_id: this.$route.params.articleid
                     })
-                })
-                // console.log('article_user_user_id')
-                // console.log(this.article[0].user_user_id)
-                // console.log('RESdata') 
-                // console.log(res.data) 
-                // const resdata = await res.json()
-
-                // this.articleComment = [...this.articleComment, resdata]
-
-                // console.log('First ArticleComment') 
-                // console.log(this.articleComment)
-                // this.articleComment = await this.getCommentArticle()  
-                // console.log(this.article[0].user_user_id)
-                // console.log('Second ArticleComment') 
-                // console.log(this.articleComment)
+                })                
                 console.log('Post Your comment success')
                 const data = axios.get(`${this.url}/getcommentinarticle/${this.articleId}`)
                 const result = await data;
@@ -229,10 +195,9 @@ export default {
                 console.log('DeleteResult')
                 console.log(result)
 
-                this.articleComment = result.data;
-                // await this.getCommentArticle()
+                this.articleComment = result.data;            
                 console.log('Your comment delete success')
-                // alert('Delete Success')
+             
             }
             catch (error) {
                 console.log(`delete failed: ${error}`)
