@@ -26,7 +26,7 @@
                             least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group id="input_group_3" label="DOB:" label-for="input_3">
+                    <b-form-group id="input_group_4" label="DOB:" label-for="input_4">
                         <b-form-input id="input_DOB" v-model="form.date" type="date" placeholder="" rows="8"
                         :state="validateState('date')" aria-describedby="feedback_4">
                         </b-form-input>

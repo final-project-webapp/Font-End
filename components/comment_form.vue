@@ -47,44 +47,10 @@ export default {
         return {
             form: {
                 comment: '',
-            },
-            // userID: '',
-            // userData: null,
-            // userRole: '',
-            defaultview: 1,
-            // user_user_id: 1
+            },            
+            defaultview: 1,            
         };
-    },
-    // async mounted() {
-    //     console.log('Process 1:')
-    //     console.log(this.userData)
-    //     if (document.cookie == null) { return }
-
-    //     try {
-    //         console.log('Process 2:')
-    //         const res = await fetch(this.url + "/getsingleuser", {
-    //             headers: {
-    //                 'Content-type': 'application/json'
-    //             },
-    //             credentials: 'include'
-    //         })
-    //         const getuserdata = await res.json()
-    //         this.userData = getuserdata
-    //         console.log('Userdata:')
-    //         console.log(this.userData)
-    //         console.log('Process 3:')
-    //         this.userRole = getuserdata.data.role
-    //         console.log('Userrole:')
-    //         console.log(this.userRole)
-    //         this.userID = getuserdata.data.user_id
-    //         console.log('UserID:')
-    //         console.log(this.userID)
-    //         // return getuserdata
-    //     }
-    //     catch (error) {
-    //         console.log(`get user failed: ${error}`)
-    //     }
-    // },
+    },    
     validations: {
         form: {
             comment: {

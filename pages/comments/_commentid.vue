@@ -58,7 +58,7 @@
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
                                             :title="ma.articles" tag="article"
                                             style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
-                                            class="pt-8 pl-4 pr-4 pb-4  mb-4" bg-variant="dark" border-variant="primary"
+                                            class="pt-8 pl-4 pr-4 pb-4 mb-4" bg-variant="dark" border-variant="primary"
                                             text-variant="light">
                                             <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
                                             <b-card-text class="text-sm"> {{
@@ -86,7 +86,8 @@
                                                     <b-dropdown-item-button variant="dark" class="px-0 text-xs"
                                                         @click="deleteArticle(ma.article_id)">
                                                         <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                            class="flex justify-end"></b-icon>
+                                                            class="flex justify-end">
+                                                        </b-icon>
                                                         Delete
                                                     </b-dropdown-item-button>
                                                 </b-dropdown>
@@ -143,8 +144,8 @@ export default {
             userData: null,
             userRole: '',
             // namedata: '',
-            url: 'https://backend-final.azurewebsites.net'
-            // url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
         }
     },
     async mounted() {

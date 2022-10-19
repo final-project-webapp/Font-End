@@ -1,6 +1,6 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
-        <b-container fluid>
+        <b-container>
             <b-row align-h="between">
                 <b-col cols="4">
                     <SlideBar class="ml-2 pt-20 lg:pl-20 xl:pl-44" />
@@ -118,8 +118,8 @@ export default {
             testuser: 1,
             showDismissibleAlert: false,
             // articles: [],            
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
             // namedata: ''            
         }
     },

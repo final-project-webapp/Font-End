@@ -14,7 +14,7 @@
               <b-nav-item to="/member" @click="hide">Member</b-nav-item>
               <b-nav-item to="/register_page" @click="hide" v-if="userData == null">Register</b-nav-item>              
               <b-nav-item to="/login_page" @click="hide" v-if="userData == null">Login</b-nav-item>
-              <b-nav-item to="/manage_page" @click="hide" v-if="userRole == 2">Manage</b-nav-item>                            
+              <b-nav-item to="/manage_page" @click="hide" v-if="userRole == 1">Manage</b-nav-item>                            
               <b-nav-item to="/" @click="logOut" v-if="userData != null">Logout</b-nav-item>                    
               <b-nav-item to="/userInfo_page" v-if="userName != null" class="absolute bottom-0"> {{userName}} </b-nav-item>
             </b-nav>
@@ -31,13 +31,12 @@ import swal from 'sweetalert2/dist/sweetalert2.js'
 export default {
   name: 'SlideBar',
   data() {
-    return {
-      auth: false,
+    return {      
       userName: '',
       userData: null,
       userRole: '',     
-      // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
     }
   },
 
