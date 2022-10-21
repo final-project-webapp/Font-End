@@ -13,10 +13,11 @@
         <div class="mt-20">
             <b-container>
                 <b-card bg-variant="dark" border-variant="primary">
-                    <b-row align-h="center">                       
-                            <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
-                                <b-container style="max-width:700px;">
-                                    <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 470px; width: 700px;">
+                    <b-row align-h="center">
+                        <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
+                            <b-container style="max-width:700px;">
+                                <b-card bg-variant="dark" class="overflow-y-scroll"
+                                    style="height: 470px; width: 700px;">
                                     <div v-for="(a, index ) in articles" :key="index">
                                         <b-card :header="a.articles" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
@@ -52,12 +53,12 @@
                                         </b-card>
                                     </div>
                                 </b-card>
-                                </b-container>
-                            </b-col>
-                        
+                            </b-container>
+                        </b-col>
+
                         <b-col class="mb-4" cols="12" xl="" lg="12" md="12" sm="12">
                             <b-container style="max-width: 700px;">
-                                <b-card bg-variant="dark" class="pb-4">                                    
+                                <b-card bg-variant="dark" class="pb-4">
                                     <b-form @submit.prevent="onSubmit" @reset="onReset">
                                         <b-form-group id="input_group_1" label="Article:" label-for="input_1">
                                             <b-form-textarea id="input_1" v-model="form.title" type="text"
@@ -144,7 +145,7 @@ export default {
             const getuserdata = await res.json()
             this.articles = getuserdata
             console.log('Userdata:')
-            console.log(this.articles)           
+            console.log(this.articles)
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
@@ -155,7 +156,7 @@ export default {
         validateState(title) {
             const { $dirty, $error } = this.$v.form[title];
             return $dirty ? !$error : null;
-        },        
+        },
         // EDIT
         showArticleInfo(articleInfo) {
             this.editArticleID = articleInfo.article_id
@@ -196,8 +197,13 @@ export default {
                     confirmButtonColor: '#007bff'
                 })
                 // setTimeout(() => { this.$router.go(-1) }, 2000);
-                console.log('EditForm:')
-                console.log(this.form.title, this.editArticleID)
+                // console.log('EditForm:')
+                // console.log(this.form.title, this.editArticleID)
+                this.editArticleID = ''
+                this.form.title = ''
+                this.$nextTick(() => {
+                    this.$v.$reset();
+                });
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)
@@ -210,11 +216,7 @@ export default {
                 })
                 // this.$toast.error('Error while submit')
             }
-            this.editArticleID = ''
-            this.form.title = ''
-            this.$nextTick(() => {
-                this.$v.$reset();
-            });
+
         },
 
         onReset(event) {

@@ -83,8 +83,6 @@ export default {
             this.userList = await this.getAllUser()
         },
 
-
-
         // POST
         async registerUser(registerData) {
             console.log('regisdata2')
