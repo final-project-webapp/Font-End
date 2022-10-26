@@ -13,7 +13,7 @@
         <div class="mt-20 flex justify-center">
 
             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-                <b-container style="max-width: 1000px;">
+                <b-container style="max-width: 1000px;" class="mb-8">
 
                     <div v-for="(a, index ) in article" :key="index">
                         <b-card border-variant="primary" bg-variant="secondary">
@@ -28,6 +28,9 @@
 
                     <b-card border-variant="primary" bg-variant="dark" class="mt-8 overflow-y-scroll"
                         style="height: 380px;">
+                        <div v-if="articleComment == ''" class="flex justify-center">
+                            <p class="text-2xl">No Comment Yet.</p>
+                        </div>
                         <b-row align-h="center" class="w-auto">
                             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                                 <div v-for="(ac, index ) in articleComment" :key="index">
@@ -60,14 +63,75 @@
                                             </b-dropdown>
                                         </div>
 
+                                        <div class="absolute top-4 right-4" v-if="userRole == 2">
+                                            <b-dropdown size="sm" no-caret>
+                                                <template #button-content>
+                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                                    </b-icon>
+                                                </template>
+                                                <b-dropdown-item-button variant="dark" class="text-xs"
+                                                    @click="deleteComment(ac.comment_id)">
+                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                        class="flex justify-end"></b-icon>
+                                                    Delete
+                                                </b-dropdown-item-button>                                                
+                                            </b-dropdown>
+                                        </div>
+
                                     </b-card>
+
+                                    <!-- <b-card :title="ac.name" tag="article" style="" class="mb-2 text-xs"
+                                        bg-variant="secondary" text-variant="primary" border-variant="primary" v-if="ac.role == 2">
+
+
+                                        <b-card-text class="text-sm">: {{ ac.comment }}</b-card-text>
+                                        <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
+                                        <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text>
+
+                                        <div class="absolute top-4 right-4" v-if="ac.user_id == userID">
+                                            <b-dropdown size="sm" no-caret>
+                                                <template #button-content>
+                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                                    </b-icon>
+                                                </template>
+                                                <b-dropdown-item-button variant="dark" class="text-xs"
+                                                    @click="deleteComment(ac.comment_id)">
+                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                        class="flex justify-end"></b-icon>
+                                                    Delete
+                                                </b-dropdown-item-button>
+                                                <b-dropdown-item-button variant="dark" class="text-xs"
+                                                    @click="showCommentInfo(ac)">
+                                                    <b-icon icon="pencil-square" variant="dark" font-scale="1"
+                                                        class="flex justify-end"></b-icon>
+                                                    Edit
+                                                </b-dropdown-item-button>
+                                            </b-dropdown>
+                                        </div>
+
+                                        <div class="absolute top-4 right-4" v-if="userRole == 2">
+                                            <b-dropdown size="sm" no-caret>
+                                                <template #button-content>
+                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                                    </b-icon>
+                                                </template>
+                                                <b-dropdown-item-button variant="dark" class="text-xs"
+                                                    @click="deleteComment(ac.comment_id)">
+                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                        class="flex justify-end"></b-icon>
+                                                    Delete
+                                                </b-dropdown-item-button>                                                
+                                            </b-dropdown>
+                                        </div>
+
+                                    </b-card> -->
                                 </div>
                             </b-col>
                         </b-row>
                     </b-card>
 
                 </b-container>
-                <b-container style="max-width: 1000px;" class="mt-8">
+                <b-container style="max-width: 1000px;">
 
                     <b-card border-variant="primary" bg-variant="dark" class="">
 

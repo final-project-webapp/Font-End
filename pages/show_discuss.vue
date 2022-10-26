@@ -19,8 +19,8 @@
             <div>
               <b-col cols="12" xl="12" lg="12" md="12" sm="12">
 
-                <b-card :header="a.movie_name" header-text-variant="white" header-bg-variant="dark" header-border-variant="primary" header-tag="header" :title="a.articles"
-                  tag="article"
+                <b-card :header="a.movie_name" header-text-variant="white" header-bg-variant="dark"
+                  header-border-variant="primary" header-tag="header" :title="a.articles" tag="article"
                   style="max-width: 600px; min-width: 200px; min-height:400px; max-width: 600px; font-size:large"
                   class="mb-4 p-4" bg-variant="dark" text-variant="light">
                   <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
@@ -52,12 +52,20 @@
                     </b-dropdown>
                   </div>
 
-                  <div class="absolute bottom-3 right-6">
-                    <b-button>
+                  <div class="absolute bottom-3 right-6" v-if="userRole == 1">
+                    <b-button @click="countView(a.article_id)">
                       <NuxtLink class="" :to="{ name: 'articles-articleid', params: {articleid: a.article_id} }">
                         <b-icon icon="chat-left-text" variant="primary" font-scale="1"></b-icon>
                       </NuxtLink>
                     </b-button>
+                  </div>
+
+                  <div class="absolute bottom-3 right-6" v-if="userData == null"
+                    v-b-tooltip.hover.bottom="'Please Login.'">
+                    <b-button disabled>
+                      <b-icon icon="chat-left-text" variant="primary" font-scale="1">
+                      </b-icon>
+                    </b-button>                  
                   </div>
                 </div>
               </b-col>
@@ -76,24 +84,49 @@
 <script>
 import SlideBar from '@/components/slide_bar.vue'
 // import OD from '@/components/own_discuss.vue'
-// import Loading from '@/components/Loading.vue'
-
 
 export default {
   name: 'ShowDiscuss',
   components: {
     SlideBar,
-    // OD,
-    // Loading
-
+    // OD,    
   },
   data() {
-    return {      
+    return {
       articles: [],
+      userID: '',
+      userData: null,
+      userRole: '',
       url: 'http://localhost:3000'
       // url: 'https://backend-final.azurewebsites.net'
 
 
+    }
+  },
+  async mounted() {
+    if (document.cookie == null) { return }
+
+    try {
+      const res = await fetch(this.url + "/getsingleuser", {
+        headers: {
+          'Content-type': 'application/json'
+        },
+        credentials: 'include'
+      })
+      const getuserdata = await res.json()
+      this.userData = getuserdata
+      console.log('Userdata:')
+      console.log(this.userData)
+      this.userRole = getuserdata.data.role
+      console.log('Userrole:')
+      console.log(this.userRole)
+      this.userID = getuserdata.data.user_id
+      console.log('UserID:')
+      console.log(this.userID)
+
+    }
+    catch (error) {
+      console.log(`get user failed: ${error}`)
     }
   },
 
@@ -102,7 +135,7 @@ export default {
 
     console.log('Articles:')
   },
-  
+
   methods: {
     // GET
     async getArticles() {
@@ -114,6 +147,25 @@ export default {
       }
       catch (error) { console.log(`get article failed: ${error}`) }
     },
+
+    // POST
+    async countView(articleId) {
+            try {
+                await fetch(this.url + "/addview", {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        article_id: articleId
+                    })
+                })
+                console.log('countview:')
+                console.log(articleId)
+            } catch (error) {
+                console.log(`countview failed: ${error}`)
+            }
+        },
 
     // DELETE
     async deleteArticle(articleId) {

@@ -4,39 +4,6 @@
   </div>
 </template>
 
-<!-- <script>
-
-export default {
-  name: 'layout',
-  data() {
-    return {
-      userName: '',
-      url: 'http://localhost:3000'
-    }
-  },
-  async mounted() {
-    try {
-      const res = await fetch(this.url + "/Product", {
-        headers: {
-          'Content-type': 'application/json'
-        },
-        credentials: 'include'
-      })
-      const resdata = await res.json()
-      console.log('User:')
-      console.log(resdata);
-      this.userName = resdata.name
-      console.log('Username:')
-      console.log(this.userName);
-      this.$nuxt.$emit('auth', true);
-    } catch (error) {
-      console.log(`get user failed: ${error}`)
-      this.$nuxt.$emit('auth', false);
-    }
-  }
-}
-</script> -->
-
 <style lang="scss" scoped>
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;300;400;500;600&display=swap');
 

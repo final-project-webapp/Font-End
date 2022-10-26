@@ -49,11 +49,13 @@
             <b-card bg-variant="dark" class="h-80 overflow-y-scroll pr-2 mt-8">
                 <div class="py-8 flex">
                     <b-container fluid style="max-width: 1800px;">
-                        <b-row align-h="center">
+                        <div v-if="moviearticle == ''" class="flex justify-center">
+                            <p class="font-bold text-4xl">No Articles Yet.</p>
+                        </div>
+                        <b-row align-h="center">                            
                             <div v-for="(ma, index ) in moviearticle" :key="index">
-                                <div>
-                                    <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-
+                                
+                                    <b-col cols="12" xl="12" lg="12" md="12" sm="12">                                        
                                         <b-card :header="ma.movie_name" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
                                             :title="ma.articles" tag="article"
@@ -93,7 +95,34 @@
                                                 </b-dropdown>
                                             </div>
 
+                                            <div class="absolute top-3 right-6" v-if="userRole == 2">
+                                                <b-dropdown size="sm" no-caret>
+                                                    <template #button-content>
+                                                        <b-icon icon="three-dots-vertical" variant="light"
+                                                            font-scale="1">
+                                                        </b-icon>
+                                                    </template>
+                                                    <b-dropdown-item-button variant="dark" class="px-0 text-xs"
+                                                        @click="deleteArticle(ma.article_id)">
+                                                        <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                            class="flex justify-end">
+                                                        </b-icon>
+                                                        Delete
+                                                    </b-dropdown-item-button>
+                                                </b-dropdown>
+                                            </div>
+
                                             <div class="absolute bottom-3 right-6" v-if="userRole == 1">
+                                                <b-button @click="countView(ma.article_id)">
+                                                    <NuxtLink class=""
+                                                        :to="{ name: 'articles-articleid', params: {articleid: ma.article_id} }">
+                                                        <b-icon icon="chat-left-text" variant="primary" font-scale="1">
+                                                        </b-icon>
+                                                    </NuxtLink>
+                                                </b-button>
+                                            </div>
+
+                                            <div class="absolute bottom-3 right-6" v-if="userRole == 2">
                                                 <b-button @click="countView(ma.article_id)">
                                                     <NuxtLink class=""
                                                         :to="{ name: 'articles-articleid', params: {articleid: ma.article_id} }">
@@ -111,8 +140,7 @@
                                                 <!-- <b-tooltip target="disabled-wrapper" triggers="hover">Login Please.</b-tooltip> -->
                                             </div>
                                         </div>
-                                    </b-col>
-                                </div>
+                                    </b-col>                                
 
                             </div>
                         </b-row>
@@ -186,6 +214,7 @@ export default {
 
     },    
     methods: {
+        // GET
         async getSingleArticle() {
             try {                
                 console.log('titleById2')
