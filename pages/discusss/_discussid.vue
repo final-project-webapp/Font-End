@@ -129,8 +129,7 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include',
-                withCredentials: true
+                credentials: 'include'              
             })
             const getuserdata = await res.json()
             this.userData = getuserdata
@@ -194,6 +193,7 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
+                    credentials: 'include', 
                     body: JSON.stringify({
                         articles: this.form.title,
                         writer: this.form.wname,
@@ -211,7 +211,7 @@ export default {
                     confirmButtonText: 'Done',
                     confirmButtonColor: '#007bff'
                 })
-                setTimeout(() => { this.$router.go(-1) }, 2000);
+                // setTimeout(() => { this.$router.go(-1) }, 1000);
                 console.log('Form:')
                 console.log(this.form.title, this.form.wname, this.form.wdate, this.form.mname, this.form.lang, this.defaultview)               
             }

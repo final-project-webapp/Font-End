@@ -146,8 +146,7 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include',
-                withCredentials: true
+                credentials: 'include'               
             })
             const getarticlebyid = await res.json()
             this.articles = getarticlebyid.data
@@ -230,6 +229,7 @@ export default {
             try {
                 await fetch(`${this.url}/deletearticle/${articleId}`, {
                     method: 'DELETE',
+                    credentials: 'include'
                 })
 
                 const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)

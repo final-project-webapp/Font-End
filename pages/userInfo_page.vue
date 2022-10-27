@@ -146,8 +146,7 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include',
-                withCredentials: true
+                credentials: 'include'                
             })
             const getuserdata = await res.json()
             this.articles = getuserdata
@@ -231,6 +230,7 @@ export default {
             try {
                 await fetch(`${this.url}/deletearticle/${articleId}`, {
                     method: 'DELETE',
+                    credentials: 'include'
                 })
 
                 const res = await fetch(this.url + "/getarticleowner", {

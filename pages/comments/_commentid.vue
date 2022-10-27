@@ -33,10 +33,10 @@
                         </div>
                         <div>
                             <span class="text-sm"> {{ new Date(comment.updated_at).toLocaleString('en-us', {
-                            month: 'long',
-                            day: 'numeric',
-                            year: 'numeric',
-                            })
+                                    month: 'long',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })
                             }} </span>
                         </div>
                         <div class="h-20 overflow-y-scroll pr-2">
@@ -52,95 +52,94 @@
                         <div v-if="moviearticle == ''" class="flex justify-center">
                             <p class="font-bold text-4xl">No Articles Yet.</p>
                         </div>
-                        <b-row align-h="center">                            
+                        <b-row align-h="center">
                             <div v-for="(ma, index ) in moviearticle" :key="index">
-                                
-                                    <b-col cols="12" xl="12" lg="12" md="12" sm="12">                                        
-                                        <b-card :header="ma.movie_name" header-text-variant="white"
-                                            header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                            :title="ma.articles" tag="article"
-                                            style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
-                                            class="pt-8 pl-4 pr-4 pb-4 mb-4" bg-variant="dark" border-variant="primary"
-                                            text-variant="light">
-                                            <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
-                                            <b-card-text class="text-sm"> {{
-                                            new Date(ma.date).toLocaleString('en-us', {
-                                            month: 'long',
-                                            day: 'numeric',
-                                            year: 'numeric',
-                                            })
-                                            
-                                            }}</b-card-text>
-                                            <!-- <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text> -->
-                                            <b-card-text class="text-sm">Language: {{ ma.language }}</b-card-text>
-                                            <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>
-                                            <b-card-text class="text-sm">WrittterID: {{ ma.user_user_id }} </b-card-text>
-                                        </b-card>
 
-                                        <div class="static">
-                                            <div class="absolute top-3 right-6" v-if="ma.user_user_id === userID">
-                                                <b-dropdown size="sm" no-caret>
-                                                    <template #button-content>
-                                                        <b-icon icon="three-dots-vertical" variant="light"
-                                                            font-scale="1">
-                                                        </b-icon>
-                                                    </template>
-                                                    <b-dropdown-item-button variant="dark" class="px-0 text-xs"
-                                                        @click="deleteArticle(ma.article_id)">
-                                                        <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Delete
-                                                    </b-dropdown-item-button>
-                                                </b-dropdown>
-                                            </div>
+                                <b-col cols="12" xl="12" lg="12" md="12" sm="12">
+                                    <b-card :header="ma.movie_name" header-text-variant="white"
+                                        header-border-variant="primary" header-bg-variant="dark" header-tag="header"
+                                        :title="ma.articles" tag="article"
+                                        style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
+                                        class="pt-8 pl-4 pr-4 pb-4 mb-4" bg-variant="dark" border-variant="primary"
+                                        text-variant="light">
+                                        <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
+                                        <b-card-text class="text-sm"> {{
+                                                new Date(ma.date).toLocaleString('en-us', {
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                    year: 'numeric',
+                                                })
+                                        
+                                        }}</b-card-text>
+                                        <!-- <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text> -->
+                                        <b-card-text class="text-sm">Language: {{ ma.language }}</b-card-text>
+                                        <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>
+                                        <!-- <b-card-text class="text-sm">WrittterID: {{ ma.user_user_id }} </b-card-text> -->
+                                    </b-card>
 
-                                            <div class="absolute top-3 right-6" v-if="userRole == 2">
-                                                <b-dropdown size="sm" no-caret>
-                                                    <template #button-content>
-                                                        <b-icon icon="three-dots-vertical" variant="light"
-                                                            font-scale="1">
-                                                        </b-icon>
-                                                    </template>
-                                                    <b-dropdown-item-button variant="dark" class="px-0 text-xs"
-                                                        @click="deleteArticle(ma.article_id)">
-                                                        <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Delete
-                                                    </b-dropdown-item-button>
-                                                </b-dropdown>
-                                            </div>
-
-                                            <div class="absolute bottom-3 right-6" v-if="userRole == 1">
-                                                <b-button @click="countView(ma.article_id)">
-                                                    <NuxtLink class=""
-                                                        :to="{ name: 'articles-articleid', params: {articleid: ma.article_id} }">
-                                                        <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                        </b-icon>
-                                                    </NuxtLink>
-                                                </b-button>
-                                            </div>
-
-                                            <div class="absolute bottom-3 right-6" v-if="userRole == 2">
-                                                <b-button @click="countView(ma.article_id)">
-                                                    <NuxtLink class=""
-                                                        :to="{ name: 'articles-articleid', params: {articleid: ma.article_id} }">
-                                                        <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                        </b-icon>
-                                                    </NuxtLink>
-                                                </b-button>
-                                            </div>
-
-                                            <div class="absolute bottom-3 right-6" v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
-                                                <b-button disabled>
-                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                        </b-icon>
-                                                </b-button>
-                                                <!-- <b-tooltip target="disabled-wrapper" triggers="hover">Login Please.</b-tooltip> -->
-                                            </div>
+                                    <div class="static">
+                                        <div class="absolute top-3 right-6" v-if="ma.user_user_id === userID">
+                                            <b-dropdown size="sm" no-caret>
+                                                <template #button-content>
+                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                                    </b-icon>
+                                                </template>
+                                                <b-dropdown-item-button variant="dark" class="px-0 text-xs"
+                                                    @click="deleteArticle(ma.article_id)">
+                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                        class="flex justify-end">
+                                                    </b-icon>
+                                                    Delete
+                                                </b-dropdown-item-button>
+                                            </b-dropdown>
                                         </div>
-                                    </b-col>                                
+
+                                        <div class="absolute top-3 right-6" v-if="userRole == 2">
+                                            <b-dropdown size="sm" no-caret>
+                                                <template #button-content>
+                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                                    </b-icon>
+                                                </template>
+                                                <b-dropdown-item-button variant="dark" class="px-0 text-xs"
+                                                    @click="deleteArticle(ma.article_id)">
+                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                        class="flex justify-end">
+                                                    </b-icon>
+                                                    Delete
+                                                </b-dropdown-item-button>
+                                            </b-dropdown>
+                                        </div>
+
+                                        <div class="absolute bottom-3 right-6" v-if="userRole == 1">
+                                            <b-button @click="countView(ma.article_id)">
+                                                <NuxtLink class=""
+                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id } }">
+                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
+                                                    </b-icon>
+                                                </NuxtLink>
+                                            </b-button>
+                                        </div>
+
+                                        <div class="absolute bottom-3 right-6" v-if="userRole == 2">
+                                            <b-button @click="countView(ma.article_id)">
+                                                <NuxtLink class=""
+                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id } }">
+                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
+                                                    </b-icon>
+                                                </NuxtLink>
+                                            </b-button>
+                                        </div>
+
+                                        <div class="absolute bottom-3 right-6" v-if="userData == null"
+                                            v-b-tooltip.hover.bottom="'Please Login.'">
+                                            <b-button disabled>
+                                                <b-icon icon="chat-left-text" variant="primary" font-scale="1">
+                                                </b-icon>
+                                            </b-button>
+                                            <!-- <b-tooltip target="disabled-wrapper" triggers="hover">Login Please.</b-tooltip> -->
+                                        </div>
+                                    </div>
+                                </b-col>
 
                             </div>
                         </b-row>
@@ -187,8 +186,7 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include',
-                withCredentials: true
+                credentials: 'include'
             })
             const getuserdata = await res.json()
             this.userData = getuserdata
@@ -202,6 +200,13 @@ export default {
             console.log('UserID:')
             console.log(this.userID)
             // return getuserdata
+
+            const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
+            const result = await data;
+            this.moviearticle = result.data;
+
+            console.log('singlearticle:')
+            console.log(this.moviearticle)
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
@@ -210,35 +215,35 @@ export default {
     async fetch() {
         await this.getComment();
         await this.getMovieName();
-        await this.getSingleArticle();
+        // await this.getSingleArticle();
         await this.getMovieID();
 
-    },    
+    },
     methods: {
         // GET
-        async getSingleArticle() {
-            try {                
-                console.log('titleById2')
-                console.log(this.titleById)
-                console.log(this.comments)            
-                const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
+        // async getSingleArticle() {
+        //     try {
+        //         // console.log('titleById2')
+        //         // console.log(this.titleById)
+        //         console.log(this.comments)
+        //         const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
 
-                const result = await data;
-                console.log('single movie:')
-                console.log(result)
+        //         const result = await data;
+        //         // console.log('single movie:')
+        //         // console.log(result)
 
-                this.moviearticle = result.data;
+        //         this.moviearticle = result.data;
 
-                console.log('singlearticle:')
-                console.log(this.moviearticle)
-            }
-            catch (error) { console.log(`getSingleArticle: ${error}`) }
-        },
+        //         console.log('singlearticle:')
+        //         console.log(this.moviearticle)
+        //     }
+        //     catch (error) { console.log(`getSingleArticle: ${error}`) }
+        // },
 
         async getComment() {
             console.log('titleById3')
             console.log(this.titleById)
-            try {                
+            try {
                 const data = axios.get(`${this.url}/moviesreviews/${this.$route.params.commentid}`)
                 const result = await data;
                 console.log('comment:')
@@ -306,6 +311,7 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         article_id: articleId
                     })
@@ -322,6 +328,7 @@ export default {
             try {
                 await fetch(`${this.url}/deletearticle/${articleId}`, {
                     method: 'DELETE',
+                    credentials: 'include',
                 })
                 const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
 
