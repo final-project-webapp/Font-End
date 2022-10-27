@@ -20,9 +20,9 @@
                             <b-card-text class="text-lg">
                                 {{ a.articles }}
                             </b-card-text>
-                            <!-- <b-card-text class="text-lg">
-                                {{ a.article_id }}
-                            </b-card-text> -->
+                            <b-card-text class="text-sm">
+                                Writer: {{ a.writer }}
+                            </b-card-text>
                         </b-card>
                     </div>
 
@@ -34,15 +34,15 @@
                         <b-row align-h="center" class="w-auto">
                             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                                 <div v-for="(ac, index ) in articleComment" :key="index">
-                                    <b-card :title="ac.name" tag="article" style="" class="mb-2 text-xs"
+                                    <b-card :title="ac.comment_writer" tag="article" style="" class="mb-2 text-xs"
                                         bg-variant="secondary" text-variant="light" border-variant="primary">
 
 
                                         <b-card-text class="text-sm">: {{ ac.comment }}</b-card-text>
-                                        <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
-                                        <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text>
+                                        <!-- <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
+                                        <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text> -->
 
-                                        <div class="absolute top-4 right-4" v-if="ac.user_id == userID">
+                                        <div class="absolute top-4 right-4" v-if="ac.user_user_id == userID">
                                             <b-dropdown size="sm" no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
@@ -193,6 +193,7 @@ export default {
             userID: '',
             userData: null,
             userRole: '',
+            userName:'',
             article: '',
             articleComment: [],
             articleId: '',
@@ -225,6 +226,9 @@ export default {
             this.userID = getuserdata.data.user_id
             console.log('UserID:')
             console.log(this.userID)
+            this.userName = getuserdata.data.name
+            console.log('UserName:')
+            console.log(this.userName)
 
         }
         catch (error) {
@@ -293,9 +297,11 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
+                    credentials: 'include',                
                     body: JSON.stringify({
                         comment: this.form.comment,
                         user_user_id: this.userID,
+                        comment_writer: this.userName,
                         article_user_user_id: this.article[0].user_user_id,
                         article_article_id: this.$route.params.articleid
                     })
@@ -322,6 +328,7 @@ export default {
             try {
                 await fetch(`${this.url}/deletecomment/${commentId}`, {
                     method: 'DELETE',
+                    credentials: 'include'                    
                 })
                 const data = axios.get(`${this.url}/getcommentinarticle/${this.articleId}`)
                 const result = await data;
@@ -352,7 +359,7 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
-                    credentials: 'include',
+                    credentials: 'include',            
                     body: JSON.stringify({
                         comment_id: this.editCommentID,
                         comment: this.form.comment

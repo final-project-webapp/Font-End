@@ -124,6 +124,7 @@ export default {
             try {
                 await fetch(`${this.url}/deleteuser/${userId}`, {
                     method: 'DELETE',
+                    credentials: 'include'
                 })
                 // const data = axios.get(`${this.url}/getalluser`)
                 // const result = await data;

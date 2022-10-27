@@ -93,6 +93,7 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({
                         name: registerData.userName,
                         emailaddress: registerData.emailAddress,
