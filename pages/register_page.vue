@@ -33,8 +33,8 @@ export default {
     data() {
         return {
             userList: [],
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://mediare.azurewebsites.net'
         }
     },
     async created() {
@@ -107,8 +107,10 @@ export default {
                         title: 'Registered!',
                         text: 'Your has been registered.',
                         icon: 'success',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Done',
+                        // confirmButtonColor: '#007bff',
+                        // confirmButtonText: 'Done',
+                        showConfirmButton: false,
+                        timer: 2000
                     })
                     setTimeout(() => { this.$router.push('/login_page') }, 2000);
                 } else {

@@ -90,15 +90,11 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
 
-// import DF from '@/components/discuss_form.vue'
-
-
 export default {
     emits: ['discuss-data'],
     name: 'DiscussPage',
     components: {
-        SlideBar,
-        // DF
+        SlideBar,        
     },
     mixins: [validationMixin],
     data() {
@@ -118,9 +114,8 @@ export default {
             testuser: 1,
             showDismissibleAlert: false,
             // articles: [],            
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
-            // namedata: ''            
+            // url: 'http://localhost:3000'
+            url: 'https://mediare.azurewebsites.net'            
         }
     },
     async mounted() {

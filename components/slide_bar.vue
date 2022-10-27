@@ -36,13 +36,13 @@ export default {
       userName: '',
       userData: null,
       userRole: null,
-      url: 'http://localhost:3000'
-      // url: 'https://backend-final.azurewebsites.net'
+      // url: 'http://localhost:3000'
+      url: 'https://mediare.azurewebsites.net'
     }
   },
 
   async mounted() {
-    console.log('UserData')
+    console.log('UserData_Sliebar')
     console.log(this.userData)
     if (document.cookie == null) { return }
     try {
@@ -56,14 +56,12 @@ export default {
       this.userData = getuserdata
 
       console.log(this.userData)
-
       this.userRole = getuserdata.data.role
 
       console.log(this.userRole)
       this.userName = getuserdata.data.name
 
       console.log(this.userName)
-
       console.log("getUser Center")
     }
     catch (error) {
