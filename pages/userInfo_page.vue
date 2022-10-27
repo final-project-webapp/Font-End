@@ -125,7 +125,7 @@ export default {
             userInfo: '',
             editArticleID: '',
             // url: 'http://localhost:3000'
-            url: 'https://mediare.azurewebsites.net'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     // async fetch() {

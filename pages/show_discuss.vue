@@ -98,7 +98,7 @@ export default {
       userData: null,
       userRole: '',
       // url: 'http://localhost:3000'
-      url: 'https://mediare.azurewebsites.net'
+      url: 'https://backend-final.azurewebsites.net'
 
 
     }
