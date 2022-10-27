@@ -124,8 +124,8 @@ export default {
             userData: '',
             userInfo: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     // async fetch() {
@@ -146,7 +146,8 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include'
+                credentials: 'include',
+                withCredentials: true
             })
             const getuserdata = await res.json()
             this.articles = getuserdata

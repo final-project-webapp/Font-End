@@ -18,6 +18,8 @@
               <b-nav-item to="/" @click="logOut" v-if="userData != null">Logout</b-nav-item>
               <b-nav-item to="/userInfo_page" v-if="userRole == 1" class="absolute bottom-0"> {{ userName }}
               </b-nav-item>
+              <b-nav-text v-if="userRole == 2" class="absolute bottom-0 left-8 texl-xl font-bold"> Admin
+              </b-nav-text>
             </b-nav>
           </nav>
         </div>
@@ -36,8 +38,8 @@ export default {
       userName: '',
       userData: null,
       userRole: null,
-      // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
     }
   },
 
@@ -50,6 +52,7 @@ export default {
         headers: {
           'Content-type': 'application/json'
         },
+        withCredentials: true,
         credentials: 'include'
       })
       const getuserdata = await res.json()
@@ -91,8 +94,8 @@ export default {
             timer: 2000
           })
           // setTimeout(() => { this.$router.go(0) }, 1000);
-          
-          setTimeout(() => { this.$router.push({name: 'index'}) }, 2000);
+          setTimeout(() => { this.$router.push({name: 'index'}) }, 1000);
+          setTimeout(() => { this.$router.go(0) }, 2000);
         }
 
       }

@@ -97,8 +97,8 @@ export default {
       userID: '',
       userData: null,
       userRole: '',
-      // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
 
 
     }
@@ -111,7 +111,8 @@ export default {
         headers: {
           'Content-type': 'application/json'
         },
-        credentials: 'include'
+        credentials: 'include',
+        withCredentials: true
       })
       const getuserdata = await res.json()
       this.userData = getuserdata

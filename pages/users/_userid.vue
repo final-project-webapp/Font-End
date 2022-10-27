@@ -14,11 +14,12 @@
                 <b-card bg-variant="dark" border-variant="primary">
                     <b-row align-h="center">
                         <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
-                            <b-container style="max-width:700px;">
+                            <b-container style="max-width:700px;">                                
                                 <b-card bg-variant="dark" class="overflow-y-scroll"
                                     style="height: 470px; width: 700px;">
                                     <p> {{ this.articles.data }} </p>
                                     <div v-for="(a, index ) in articles" :key="index">
+                                        
                                         <b-card :header="a.articles" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
                                             tag="article" class="mb-4 px-4 text-xl break-all"
@@ -120,8 +121,8 @@ export default {
             userData: '',
             userInfo: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     validations: {
@@ -145,7 +146,8 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include'
+                credentials: 'include',
+                withCredentials: true
             })
             const getarticlebyid = await res.json()
             this.articles = getarticlebyid.data
