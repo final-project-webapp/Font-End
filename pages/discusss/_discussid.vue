@@ -115,7 +115,7 @@ export default {
             showDismissibleAlert: false,
             // articles: [],            
             // url: 'http://localhost:3000'
-            url: 'https://mediare.azurewebsites.net'            
+            url: 'https://backend-final.azurewebsites.net'            
         }
     },
     async mounted() {
