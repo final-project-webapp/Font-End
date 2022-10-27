@@ -146,7 +146,8 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include'
+                credentials: 'include',
+                withCredentials: true
             })
             const getuserdata = await res.json()
             this.articles = getuserdata

@@ -65,8 +65,8 @@ export default {
                         // confirmButtonText: 'Done',                    
                     })
                     // setTimeout(() => { this.$router.go(0) }, 1000);                    
-                    setTimeout(() => { this.$router.push({name: 'index'}) }, 2000);
-                    
+                    setTimeout(() => { this.$router.push({name: 'index'}) }, 1000);
+                    setTimeout(() => { this.$router.go(0) }, 2000);
                 }
                 
                 // this.$router.go(0)                
