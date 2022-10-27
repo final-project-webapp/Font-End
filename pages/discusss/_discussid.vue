@@ -1,6 +1,6 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
-        <b-container fluid>
+        <b-container>
             <b-row align-h="between">
                 <b-col cols="4">
                     <SlideBar class="ml-2 pt-20 lg:pl-20 xl:pl-44" />
@@ -90,15 +90,11 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
 
-// import DF from '@/components/discuss_form.vue'
-
-
 export default {
     emits: ['discuss-data'],
     name: 'DiscussPage',
     components: {
-        SlideBar,
-        // DF
+        SlideBar,        
     },
     mixins: [validationMixin],
     data() {
@@ -119,8 +115,7 @@ export default {
             showDismissibleAlert: false,
             // articles: [],            
             // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
-            // namedata: ''            
+            url: 'https://mediare.azurewebsites.net'            
         }
     },
     async mounted() {

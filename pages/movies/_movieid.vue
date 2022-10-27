@@ -95,7 +95,7 @@ export default {
       ENprovider: null,
       nonTHprovider: '',
       nonENprovider: '',
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'hhttps://mediare.azurewebsites.net'
       // url: 'http://localhost:3000'
     }
   },
@@ -107,15 +107,10 @@ export default {
   },
   fetchDelay: 2000,
   methods: {
-    async getSingleMovie() {
-      console.log('url:')
-      console.log(this.url)      
+    async getSingleMovie() {         
       const data = axios.get(`${this.url}/moviesid/${this.$route.params.movieid}`)
 
-      const result = await data;
-      console.log('single result:')
-      console.log(result.data)
-
+      const result = await data;     
       this.movie = result.data;
 
       console.log('singlemovie:')

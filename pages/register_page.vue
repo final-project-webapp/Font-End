@@ -34,7 +34,7 @@ export default {
         return {
             userList: [],
             // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'https://mediare.azurewebsites.net'
         }
     },
     async created() {
@@ -83,8 +83,6 @@ export default {
             this.userList = await this.getAllUser()
         },
 
-
-
         // POST
         async registerUser(registerData) {
             console.log('regisdata2')
@@ -109,8 +107,10 @@ export default {
                         title: 'Registered!',
                         text: 'Your has been registered.',
                         icon: 'success',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Done',
+                        // confirmButtonColor: '#007bff',
+                        // confirmButtonText: 'Done',
+                        showConfirmButton: false,
+                        timer: 2000
                     })
                     setTimeout(() => { this.$router.push('/login_page') }, 2000);
                 } else {

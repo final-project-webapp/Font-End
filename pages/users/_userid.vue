@@ -17,6 +17,7 @@
                             <b-container style="max-width:700px;">
                                 <b-card bg-variant="dark" class="overflow-y-scroll"
                                     style="height: 470px; width: 700px;">
+                                    <p> {{ this.articles.data }} </p>
                                     <div v-for="(a, index ) in articles" :key="index">
                                         <b-card :header="a.articles" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
@@ -25,12 +26,13 @@
                                             text-variant="light" border-variant="primary">
                                             <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
                                             <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
-                                            <b-card-text class="text-sm">Date: {{new
-                                            Date(a.date).toLocaleString('en-us', {
-                                            month: 'long',
-                                            day: 'numeric',
-                                            year: 'numeric',
-                                            }) }}</b-card-text>
+                                            <b-card-text class="text-sm">Date: {{ new
+                                                    Date(a.date).toLocaleString('en-us', {
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                        year: 'numeric',
+                                                    })
+                                            }}</b-card-text>
 
                                             <div class="absolute bottom-3 right-3">
                                                 <b-dropdown size="sm" no-caret>
@@ -78,7 +80,7 @@
                                         <div>
                                             <div class="absolute bottom-3 left-5">
                                                 <b-button type="submit" variant="primary"
-                                                    @click="showDismissibleAlert=true">Submit
+                                                    @click="showDismissibleAlert = true">Submit
                                                 </b-button>
                                                 <b-button type="reset" variant="danger">Reset</b-button>
                                             </div>
@@ -86,31 +88,24 @@
 
                                     </b-form>
                                 </b-card>
-                                <!-- <div>
-                                    <b-card class="mt-3" header="Form Data Result">
-                                        <pre class="m-0">{{ form }}</pre>
-                                    </b-card>
-                                </div> -->
                             </b-container>
                         </b-col>
                     </b-row>
                 </b-card>
             </b-container>
         </div>
-
-
     </div>
 </template>
 
 <script>
-// import axios from "axios"
 import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
+import axios from "axios"
 import SlideBar from '@/components/slide_bar.vue'
 
 export default {
-    name: 'userInfoPage',
+    name: 'UserPage',
     components: {
         SlideBar
     },
@@ -121,6 +116,7 @@ export default {
             form: {
                 title: ''
             },
+            singleUser: '',
             userData: '',
             userInfo: '',
             editArticleID: '',
@@ -128,9 +124,6 @@ export default {
             url: 'https://mediare.azurewebsites.net'
         }
     },
-    // async fetch() {
-    //     await this.getAllArticles();
-    // },
     validations: {
         form: {
             title: {
@@ -140,25 +133,33 @@ export default {
         }
     },
     async mounted() {
-        if (document.cookie == null) { return }
         try {
-            const res = await fetch(this.url + "/getarticleowner", {
+            // const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
+            // const result = await data;    
+            // this.articles = result.data.data;
+
+            // console.log('_userArticle:')
+            // console.log(this.articles)
+
+            const res = await fetch(this.url + "/getarticlebyidparam/" + this.$route.params.userid, {
                 headers: {
                     'Content-type': 'application/json'
                 },
                 credentials: 'include'
             })
-            const getuserdata = await res.json()
-            this.articles = getuserdata
-            console.log('Userdata:')
+            const getarticlebyid = await res.json()
+            this.articles = getarticlebyid.data
+            console.log('_userArticle:')
             console.log(this.articles)
         }
-        catch (error) {
-            console.log(`get user failed: ${error}`)
-        }
+        catch (error) { console.log(`getArticleUser F: ${error}`) }
     },
-    methods: {
 
+    // async fetch() {
+    //     await this.getAllUser();        
+
+    // },
+    methods: {
         validateState(title) {
             const { $dirty, $error } = this.$v.form[title];
             return $dirty ? !$error : null;
@@ -174,6 +175,8 @@ export default {
                 return;
             }
             try {
+                console.log('_userFormTitle:')
+                console.log(this.form.title)
                 await fetch(this.url + "/editarticle1", {
                     method: 'PUT',
                     headers: {
@@ -185,16 +188,12 @@ export default {
                         articles: this.form.title
                     }),
                 })
-                const res = await fetch(this.url + "/getarticleowner", {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    credentials: 'include'
-                })
-                const getuserdata = await res.json()
-                this.articles = getuserdata
-                console.log('Reloaddata:')
-                console.log(this.articles)
+                const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
+                const result = await data;
+                this.articles = result.data.data;
+
+                console.log('_refreshUserArticle:')
+                console.log(this.aticles)
                 swal.fire({
                     title: 'Submit Success!',
                     // text: 'Do you want to continue',
@@ -219,27 +218,24 @@ export default {
                     icon: 'error',
                     confirmButtonText: 'Cancel',
                     confirmButtonColor: '#007bff'
-                })                
+                })
             }
         },
-
         // DELETE
         async deleteArticle(articleId) {
             console.log("Delete ID")
-            console.log(articleId)    
+            console.log(articleId)
             try {
                 await fetch(`${this.url}/deletearticle/${articleId}`, {
                     method: 'DELETE',
                 })
 
-                const res = await fetch(this.url + "/getarticleowner", {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    credentials: 'include'
-                })
-                const getuserdata = await res.json()
-                this.articles = getuserdata                
+                const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
+                const result = await data;
+                this.singleUser = result.data;
+
+                console.log('RefreshAfterDeleteArticle:')
+                console.log(this.singleUser)
             }
             catch (error) {
                 console.log(`delete failed: ${error}`)
@@ -258,5 +254,4 @@ export default {
         },
     }
 }
-
 </script>

@@ -12,13 +12,14 @@
               <b-nav-item to="show_discuss" @click="hide">Articles</b-nav-item>
               <b-nav-item to="/about" @click="hide">About</b-nav-item>
               <b-nav-item to="/member" @click="hide">Member</b-nav-item>
-              <b-nav-item to="/register_page" @click="hide" v-if="userData == null">Register</b-nav-item>              
+              <b-nav-item to="/register_page" @click="hide" v-if="userData == null">Register</b-nav-item>
               <b-nav-item to="/login_page" @click="hide" v-if="userData == null">Login</b-nav-item>
-              <b-nav-item to="/manage_page" @click="hide" v-if="userRole == 2">Manage</b-nav-item>                            
-              <b-nav-item to="/" @click="logOut" v-if="userData != null">Logout</b-nav-item>                    
-              <b-nav-item to="/userInfo_page" v-if="userName != null" class="absolute bottom-0"> {{userName}} </b-nav-item>
+              <b-nav-item to="/manage_page" @click="hide" v-if="userRole == 2">Manage</b-nav-item>
+              <b-nav-item to="/" @click="logOut" v-if="userData != null">Logout</b-nav-item>
+              <b-nav-item to="/userInfo_page" v-if="userRole == 1" class="absolute bottom-0"> {{ userName }}
+              </b-nav-item>
             </b-nav>
-          </nav>          
+          </nav>
         </div>
       </template>
     </b-sidebar>
@@ -32,46 +33,43 @@ export default {
   name: 'SlideBar',
   data() {
     return {
-      auth: false,
       userName: '',
       userData: null,
-      userRole: '',     
+      userRole: null,
       // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'https://mediare.azurewebsites.net'
     }
   },
 
   async mounted() {
-    console.log('Process 1:')
+    console.log('UserData_Sliebar')
     console.log(this.userData)
-      if (document.cookie == null) { return }       
-        try {
-        console.log('Process 2:')
-        const res = await fetch(this.url + "/getsingleuser", {
-          headers: {
+    if (document.cookie == null) { return }
+    try {
+      const res = await fetch(this.url + "/getsingleuser", {
+        headers: {
           'Content-type': 'application/json'
         },
-          credentials: 'include'
-        })
-        const getuserdata = await res.json()        
-        this.userData = getuserdata
-        console.log('Userdata:')
-        console.log(this.userData)
-        console.log('Process 3:')
-        this.userRole = getuserdata.data.role
-        console.log('Userrole:')
-        console.log(this.userRole)
-        this.userName = getuserdata.data.name
-        console.log('Username:')
-        console.log(this.userName)
-        // return getuserdata
-      }
-      catch (error) {
-        console.log(`get user failed: ${error}`)
-      }
-  }, 
-  methods: {   
-    async logOut() {      
+        credentials: 'include'
+      })
+      const getuserdata = await res.json()
+      this.userData = getuserdata
+
+      console.log(this.userData)
+      this.userRole = getuserdata.data.role
+
+      console.log(this.userRole)
+      this.userName = getuserdata.data.name
+
+      console.log(this.userName)
+      console.log("getUser Center")
+    }
+    catch (error) {
+      console.log(`get user failed: ${error}`)
+    }
+  },
+  methods: {
+    async logOut() {
       try {
         const res = await fetch(this.url + "/logout", {
           method: 'POST',
@@ -80,30 +78,37 @@ export default {
           },
           credentials: 'include'
         })
-        // this.$emit('logout')
-        // this.$router.go(0);
         const resdata = await res.json()
         console.log('Logout Complete!!:')
+        console.log(this.userData)
         if (resdata.data == 1) {
           swal.fire({
             title: 'Logout Completed!',
             icon: 'success',
-            confirmButtonColor: '#007bff',
-            confirmButtonText: 'Done',
-          // }).then((result) => {
-          //   if(result.isConfirmed){
-              
-          //   }
+            // confirmButtonColor: '#007bff',
+            // confirmButtonText: 'Done',
+            showConfirmButton: false,
+            timer: 2000
           })
+          // setTimeout(() => { this.$router.go(0) }, 1000);
+          
+          setTimeout(() => { this.$router.push({name: 'index'}) }, 2000);
         }
-        setTimeout(() => { this.$router.go(0) }, 2000);
-        // this.$router.go(0)
-        
+
       }
-      catch (error) { console.log(`Log Out failed: ${error}`) }
+      catch (error) {
+        console.log(`Log Out failed: ${error}`)
+        swal.fire({
+          title: 'Logout Failed!',
+          // text: 'Your has been registered.',
+          icon: 'error',
+          confirmButtonColor: '#007bff',
+          confirmButtonText: 'Done',
+        })
+      }
     },
   },
-  
+
 }
 
 </script>

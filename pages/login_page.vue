@@ -32,7 +32,7 @@ export default {
     data() {
         return {
             // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'https://mediare.azurewebsites.net'
         }
     },
     methods: {
@@ -52,27 +52,34 @@ export default {
                     })
                 })
                 console.log('Done!!')
-                // console.log(loginData)
-
+              
                 const resdata = await res.json()
                 if (resdata.data == 1) {
                     swal.fire({
                         title: 'Login Success!',
                         // text: 'Your has been registered.',
-                        icon: 'success',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Done',
-                    // }).then((result) => {
-                    //     if (result.isConfirmed) {
-                            
-                    //     }
+                        icon: 'success',                        
+                        showConfirmButton: false,
+                        timer: 2000
+                        // confirmButtonColor: '#007bff',
+                        // confirmButtonText: 'Done',                    
                     })
+                    // setTimeout(() => { this.$router.go(0) }, 1000);                    
+                    setTimeout(() => { this.$router.push({name: 'index'}) }, 2000);
+                    
                 }
-                setTimeout(() => { this.$router.push('/') }, 2000);
+                
                 // this.$router.go(0)                
             }
             catch (error) {
                 console.log(`LoginFalse!!! ${error}`)
+                swal.fire({
+                        title: 'Login Failed!',
+                        // text: 'Your has been registered.',
+                        icon: 'error',
+                        confirmButtonColor: '#007bff',
+                        confirmButtonText: 'Done',                    
+                    })
             }
         },
     }

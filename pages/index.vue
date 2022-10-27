@@ -122,7 +122,7 @@ export default {
       searchInput: '',
       searchDummyInput: '',
       searchedMovies: [],
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'https://mediare.azurewebsites.net'
       // url: 'http://localhost:3000'    
     }
   },
