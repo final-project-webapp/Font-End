@@ -199,15 +199,15 @@ export default {
             articleId: '',
             editCommetID: '',
             editMode: false,
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     async mounted() {
         if (document.cookie == null) { return }
 
         try {
-            console.log('Process 2:')
+            // console.log('Process 2:')
             const res = await fetch(this.url + "/getsingleuser", {
                 headers: {
                     'Content-type': 'application/json'
@@ -219,7 +219,7 @@ export default {
             this.userData = getuserdata
             console.log('Userdata:')
             console.log(this.userData)
-            console.log('Process 3:')
+            // console.log('Process 3:')
             this.userRole = getuserdata.data.role
             console.log('Userrole:')
             console.log(this.userRole)

@@ -52,17 +52,17 @@
 
                         <div>
                             <div class="absolute bottom-5 left-5">
-                                <b-button type="submit" variant="primary" @click="showDismissibleAlert=true">Submit
+                                <b-button type="submit" variant="primary" @click="showDismissibleAlert = true">Submit
                                 </b-button>
                                 <b-button type="reset" variant="danger">Reset</b-button>
                             </div>
 
                             <div class="flex justify-end">
-                                <b-button id="own-discuss" variant="primary" @click="to">
+                                <b-button id="own-discuss" variant="primary" @click="backID">
                                     <!-- <nuxt-link class="" :to="{ name: 'comments-commentid' }"> -->
                                     Back
                                     <!-- </nuxt-link> -->
-                                </b-button>
+                                </b-button>                                                                
                             </div>
                         </div>
 
@@ -94,7 +94,7 @@ export default {
     emits: ['discuss-data'],
     name: 'DiscussPage',
     components: {
-        SlideBar,        
+        SlideBar,
     },
     mixins: [validationMixin],
     data() {
@@ -109,13 +109,14 @@ export default {
             },
             userID: '',
             userData: null,
-            userRole: '',            
+            userRole: '',
+            dissIdById: '',
             defaultview: 1,
             testuser: 1,
             showDismissibleAlert: false,
             // articles: [],            
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'            
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'            
         }
     },
     async mounted() {
@@ -129,7 +130,7 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include'              
+                credentials: 'include'
             })
             const getuserdata = await res.json()
             this.userData = getuserdata
@@ -150,6 +151,7 @@ export default {
     },
     async fetch() {
         await this.getMovieName();
+        await this.getMovieID()
     },
     validations: {
         form: {
@@ -174,15 +176,38 @@ export default {
         }
     },
     methods: {
-        to() {
-            this.$router.go(-1)
+        // to() {
+        //     this.$router.go(-1)
+        // },
+        backID() {
+            this.$router.push({ name: 'comments-commentid', params: { commentid: this.dissIdById } })
+            console.log('backID2')
         },
         validateState(wname) {
             const { $dirty, $error } = this.$v.form[wname];
             return $dirty ? !$error : null;
         },
+        // GET
+        async getMovieID() {
+            try {
+                const movieId = axios.get(`${this.url}/moviessearchId/${this.$route.params.discussid}`)
+                console.log('dissmovieID:')
+                console.log(this.$route.params.discussid)
+
+                const resultId = await movieId
+                console.log('dissmovieID2:')
+                console.log(resultId.data.data.id)
+
+                this.dissIdById = resultId.data.data.id;
+
+                console.log('dissIdById:')
+                console.log(this.dissIdById)
+
+            }
+            catch (error) { console.log(`get MovieID failed: ${error}`) }
+        },
         // POST
-        async onSubmit() {         
+        async onSubmit() {
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
@@ -193,7 +218,7 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
-                    credentials: 'include', 
+                    credentials: 'include',
                     body: JSON.stringify({
                         articles: this.form.title,
                         writer: this.form.wname,
@@ -211,9 +236,10 @@ export default {
                     confirmButtonText: 'Done',
                     confirmButtonColor: '#007bff'
                 })
-                // setTimeout(() => { this.$router.go(-1) }, 1000);
+                setTimeout(() => { this.$router.push({ name: 'comments-commentid', params: { commentid: this.dissIdById } }) }, 1000);
+                setTimeout(() => { this.$router.go(0) }, 2000);
                 console.log('Form:')
-                console.log(this.form.title, this.form.wname, this.form.wdate, this.form.mname, this.form.lang, this.defaultview)               
+                console.log(this.form.title, this.form.wname, this.form.wdate, this.form.mname, this.form.lang, this.defaultview)
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)
@@ -225,7 +251,7 @@ export default {
                     confirmButtonColor: '#007bff'
                 })
                 // this.$toast.error('Error while submit')
-            }           
+            }
             this.form.title = ''
             this.form.wname = ''
             this.form.wdate = ''
@@ -261,7 +287,7 @@ export default {
 
                 this.form.mname = resultId.data.data.title;
 
-                console.log('titleByIdTest(Page):')                
+                console.log('titleByIdTest(Page):')
                 console.log(this.form.mname)
             }
             catch (error) { console.log(`get MovieName(Page) failed: ${error}`) }
