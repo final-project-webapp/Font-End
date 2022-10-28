@@ -31,8 +31,8 @@ export default {
     emits: ['login-user'],
     data() {
         return {
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     methods: {

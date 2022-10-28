@@ -171,8 +171,8 @@ export default {
             userData: null,
             userRole: '',
             // namedata: '',
-            // url: 'https://backend-final.azurewebsites.net'
-            url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
         }
     },
     async mounted() {
@@ -202,13 +202,13 @@ export default {
             // return getuserdata
 
             // MOUNT Articles
-            const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
-            const result = await data;
-            this.moviearticle = result.data;
+            // const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
+            // const result = await data;
+            // this.moviearticle = result.data;
 
             
-            console.log('singlearticle:')
-            console.log(this.moviearticle)
+            // console.log('singlearticle:')
+            // console.log(this.moviearticle)
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
