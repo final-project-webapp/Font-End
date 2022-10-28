@@ -201,12 +201,14 @@ export default {
             console.log(this.userID)
             // return getuserdata
 
-            const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
-            const result = await data;
-            this.moviearticle = result.data;
+            // MOUNT Articles
+            // const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
+            // const result = await data;
+            // this.moviearticle = result.data;
 
-            console.log('singlearticle:')
-            console.log(this.moviearticle)
+            
+            // console.log('singlearticle:')
+            // console.log(this.moviearticle)
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
@@ -215,30 +217,26 @@ export default {
     async fetch() {
         await this.getComment();
         await this.getMovieName();
-        // await this.getSingleArticle();
+        await this.getSingleArticle();
         await this.getMovieID();
 
     },
     methods: {
         // GET
-        // async getSingleArticle() {
-        //     try {
-        //         // console.log('titleById2')
-        //         // console.log(this.titleById)
-        //         console.log(this.comments)
-        //         const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
+        async getSingleArticle() {
+            try {
+                const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
+            const result = await data;
+            this.moviearticle = result.data;
 
-        //         const result = await data;
-        //         // console.log('single movie:')
-        //         // console.log(result)
+            
+            console.log('singlearticle:')
+            
+            console.log(this.moviearticle)
 
-        //         this.moviearticle = result.data;
-
-        //         console.log('singlearticle:')
-        //         console.log(this.moviearticle)
-        //     }
-        //     catch (error) { console.log(`getSingleArticle: ${error}`) }
-        // },
+            }
+            catch (error) { console.log(`getSingleArticle: ${error}`) }
+        },
 
         async getComment() {
             console.log('titleById3')
@@ -273,6 +271,8 @@ export default {
                 console.log('titleByIdTest:')
                 console.log(this.titleById)
 
+                setTimeout(() => { this.$router.go(0) }, 1000);
+
                 const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
 
                 const result = await data;
@@ -280,6 +280,7 @@ export default {
                 console.log(result.data)
 
                 this.moviearticle = result.data;
+                // this.$router.go(0)
             }
             catch (error) { console.log(`get MovieName failed: ${error}`) }
         },
