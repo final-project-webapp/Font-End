@@ -1,5 +1,10 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
+        <b-container v-if="userRole != 2">
+            <div class="bg-black min-h-screen ">
+                <p>NO!</p>
+            </div>
+        </b-container>
         <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
