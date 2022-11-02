@@ -11,10 +11,9 @@
 
         <div class="mt-20">
 
-            <b-container style="max-width: 1800px; height: 470px;">
-                <b-card bg-variant="dark" class="overflow-y-scroll pr-2 mt-8"
-                style="height: 470px;">
-                    <b-row align-h="center">
+            <b-container style="width: 1800px; height: auto;">
+                <b-card bg-variant="dark" class="overflow-y-scroll mt-8" style="height: 500px;">
+                    <b-row align-h="around">
                         <div v-for="(au, index ) in allUser" :key="index">
 
                             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
@@ -31,27 +30,35 @@
                                                 year: 'numeric',
                                             })
                                     
-                                    }}</b-card-text>                                   
+                                    }}</b-card-text>
                                 </b-card>
 
                                 <div class="static">
-                                    <div class="absolute top-3 right-6">
+                                    <div class="absolute bottom-3 right-6">
                                         <b-dropdown size="sm" no-caret>
                                             <template #button-content>
                                                 <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
                                                 </b-icon>
                                             </template>
-                                            <b-dropdown-item-button variant="dark" class="px-0 text-xs"
+                                            <b-dropdown-item-button variant="dark" class="text-xs"
                                                 @click="deleteUser(au.user_id)">
                                                 <b-icon icon="trash-fill" variant="dark" font-scale="1"
                                                     class="flex justify-end">
                                                 </b-icon>
                                                 Delete
                                             </b-dropdown-item-button>
+                                            <b-dropdown-item-button variant="dark" class="text-xs flex">
+                                                <NuxtLink class=""
+                                                    :to="{ name: 'users-userid', params: { userid: au.user_id } }">
+                                                    <b-icon icon="info-square-fill" font-scale="1">
+                                                    </b-icon>
+                                                    Info
+                                                </NuxtLink>                                                
+                                            </b-dropdown-item-button>
                                         </b-dropdown>
                                     </div>
 
-                                    <div class="absolute bottom-3 right-6">
+                                    <!-- <div class="absolute top-3 right-6">
                                         <b-button size="sm">
                                             <NuxtLink class=""
                                                 :to="{ name: 'users-userid', params: { userid: au.user_id } }">
@@ -59,7 +66,7 @@
                                                 </b-icon>
                                             </NuxtLink>
                                         </b-button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </b-col>
                         </div>
@@ -85,8 +92,8 @@ export default {
             // userData: '',
             // userInfo: '',
             // editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     // async fetch() {
@@ -110,9 +117,9 @@ export default {
                 // })               
                 const res = await fetch(this.url + "/getalluser")
                 const getuserdata = await res.json()
-                this.allUser = getuserdata.data      
+                this.allUser = getuserdata.data
                 console.log('Alluser:')
-                console.log(this.allUser)                          
+                console.log(this.allUser)
             }
             catch (error) { console.log(`getAllUser: ${error}`) }
         },
@@ -135,7 +142,7 @@ export default {
                 // })
                 const res = await fetch(this.url + "/getalluser")
                 const getuserdata = await res.json()
-                this.allUser = getuserdata.data 
+                this.allUser = getuserdata.data
                 console.log('REAlluser:')
                 console.log(this.allUser)
             }

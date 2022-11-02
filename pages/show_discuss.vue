@@ -39,7 +39,7 @@
                 </b-card>
 
                 <div class="static">
-                  <div class="absolute top-3 right-6">
+                  <!-- <div class="absolute top-3 right-6">
                     <b-dropdown size="sm" no-caret>
                       <template #button-content>
                         <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
@@ -50,7 +50,7 @@
                         Delete
                       </b-dropdown-item-button>
                     </b-dropdown>
-                  </div>
+                  </div> -->
 
                   <div class="absolute bottom-3 right-6" v-if="userRole == 1">
                     <b-button @click="countView(a.article_id)">
@@ -97,8 +97,8 @@ export default {
       userID: '',
       userData: null,
       userRole: '',
-      // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
 
 
     }
@@ -161,6 +161,7 @@ export default {
                         article_id: articleId
                     })
                 })
+                this.getArticles()
                 console.log('countview:')
                 console.log(articleId)
             } catch (error) {

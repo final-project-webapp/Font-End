@@ -10,62 +10,65 @@
         </b-container>
 
         <div class="mt-20">
-            <b-container>
-                <b-card bg-variant="dark" border-variant="primary">
-                    <b-row align-h="center">
-                        <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
-                            <b-container style="max-width:700px;">                                
-                                <b-card bg-variant="dark" class="overflow-y-scroll"
-                                    style="height: 470px; width: 700px;">
-                                    <p> {{ this.articles.data }} </p>
-                                    <div v-for="(a, index ) in articles" :key="index">
-                                        
-                                        <b-card :header="a.articles" header-text-variant="white"
-                                            header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                            tag="article" class="mb-4 px-4 text-xl break-all"
-                                            style="height: auto; max-width: 700px; " bg-variant="dark"
-                                            text-variant="light" border-variant="primary">
-                                            <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
-                                            <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
-                                            <b-card-text class="text-sm">Date: {{ new
-                                                    Date(a.date).toLocaleString('en-us', {
-                                                        month: 'long',
-                                                        day: 'numeric',
-                                                        year: 'numeric',
-                                                    })
-                                            }}</b-card-text>
+            <b-container style="height: auto; width: 1800px;">
+                <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 600px;">
+                    <div v-if="articles == ''" class="flex justify-center">
+                        <p class="font-bold text-4xl">User has no articles.</p>
+                    </div>
+                    <b-row align-h="around">
+                        <div v-for="(a, index ) in articles" :key="index">
+                            <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
+                                <!-- <b-container style="max-width:700px;"> -->
+                                <!-- <b-card bg-variant="dark" > -->
+                                <!-- <p> {{ this.articles.data }} </p> -->
 
-                                            <div class="absolute bottom-3 right-3">
-                                                <b-dropdown size="sm" no-caret>
-                                                    <template #button-content>
-                                                        <b-icon icon="three-dots-vertical" variant="light"
-                                                            font-scale="1">
-                                                        </b-icon>
-                                                    </template>
-                                                    <b-dropdown-item-button variant="dark" class="px-0 text-xs"
-                                                        @click="deleteArticle(a.article_id)">
-                                                        <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Delete
-                                                    </b-dropdown-item-button>
-                                                    <b-dropdown-item-button variant="dark" class="text-xs flex"
-                                                        @click="showArticleInfo(a)">
-                                                        <b-icon icon="pencil-square" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Edit
-                                                    </b-dropdown-item-button>
-                                                </b-dropdown>
-                                            </div>
 
-                                        </b-card>
+                                <b-card :header="a.articles" header-text-variant="white" header-border-variant="primary"
+                                    header-bg-variant="dark" header-tag="header" tag="article"
+                                    class="mb-4 px-4 text-xl break-words" style="height: auto; width: 400px;"
+                                    bg-variant="dark" text-variant="light" border-variant="primary">
+                                    <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
+                                    <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
+                                    <b-card-text class="text-sm">Date: {{ new
+                                            Date(a.date).toLocaleString('en-us', {
+                                                month: 'long',
+                                                day: 'numeric',
+                                                year: 'numeric',
+                                            })
+                                    }}</b-card-text>
+
+                                    <div class="absolute bottom-3 right-3">
+                                        <b-dropdown size="sm" no-caret>
+                                            <template #button-content>
+                                                <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                                </b-icon>
+                                            </template>
+                                            <b-dropdown-item-button variant="dark" class="text-xs"
+                                                @click="deleteArticle(a.article_id)">
+                                                <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                    class="flex justify-end">
+                                                </b-icon>
+                                                Delete
+                                            </b-dropdown-item-button>
+                                            <b-dropdown-item-button variant="dark" class="text-xs flex">
+                                                <NuxtLink class=""
+                                                    :to="{ name: 'articles-articleid', params: { articleid: a.article_id } }">
+                                                    <b-icon icon="chat-left-text" font-scale="1">
+                                                    </b-icon>
+                                                    See comment
+                                                </NuxtLink>                                                
+                                            </b-dropdown-item-button>                                            
+                                        </b-dropdown>
                                     </div>
-                                </b-card>
-                            </b-container>
-                        </b-col>
 
-                        <b-col class="mb-4" cols="12" xl="" lg="12" md="12" sm="12">
+                                </b-card>
+
+                                <!-- </b-card> -->
+                                <!-- </b-container> -->
+                            </b-col>
+                        </div>
+
+                        <!-- <b-col class="mb-4" cols="12" xl="" lg="12" md="12" sm="12">
                             <b-container style="max-width: 700px;">
                                 <b-card bg-variant="dark" class="pb-4">
                                     <b-form @submit.prevent="onSubmit" @reset="onReset">
@@ -90,7 +93,7 @@
                                     </b-form>
                                 </b-card>
                             </b-container>
-                        </b-col>
+                        </b-col> -->
                     </b-row>
                 </b-card>
             </b-container>
@@ -99,9 +102,9 @@
 </template>
 
 <script>
-import { validationMixin } from "vuelidate";
-import { required, maxLength } from "vuelidate/lib/validators";
-import swal from 'sweetalert2/dist/sweetalert2.js'
+// import { validationMixin } from "vuelidate";
+// import { required, maxLength } from "vuelidate/lib/validators";
+// import swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from "axios"
 import SlideBar from '@/components/slide_bar.vue'
 
@@ -110,29 +113,29 @@ export default {
     components: {
         SlideBar
     },
-    mixins: [validationMixin],
+    // mixins: [validationMixin],
     data() {
         return {
             articles: [],
-            form: {
-                title: ''
-            },
+            // form: {
+            //     title: ''
+            // },
             singleUser: '',
             userData: '',
             userInfo: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
-    validations: {
-        form: {
-            title: {
-                required,
-                maxLength: maxLength(1000)
-            }
-        }
-    },
+    // validations: {
+    //     form: {
+    //         title: {
+    //             required,
+    //             maxLength: maxLength(1000)
+    //         }
+    //     }
+    // },
     async mounted() {
         try {
             // const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
@@ -146,7 +149,7 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include'               
+                credentials: 'include'
             })
             const getarticlebyid = await res.json()
             this.articles = getarticlebyid.data
@@ -161,67 +164,67 @@ export default {
 
     // },
     methods: {
-        validateState(title) {
-            const { $dirty, $error } = this.$v.form[title];
-            return $dirty ? !$error : null;
-        },
+        // validateState(title) {
+        //     const { $dirty, $error } = this.$v.form[title];
+        //     return $dirty ? !$error : null;
+        // },
         // EDIT
-        showArticleInfo(articleInfo) {
-            this.editArticleID = articleInfo.article_id
-            this.form.title = articleInfo.articles
-        },
-        async onSubmit() {
-            this.$v.form.$touch();
-            if (this.$v.form.$anyError) {
-                return;
-            }
-            try {
-                console.log('_userFormTitle:')
-                console.log(this.form.title)
-                await fetch(this.url + "/editarticle1", {
-                    method: 'PUT',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    credentials: 'include',
-                    body: JSON.stringify({
-                        article_id: this.editArticleID,
-                        articles: this.form.title
-                    }),
-                })
-                const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
-                const result = await data;
-                this.articles = result.data.data;
+        // showArticleInfo(articleInfo) {
+        //     this.editArticleID = articleInfo.article_id
+        //     this.form.title = articleInfo.articles
+        // },
+        // async onSubmit() {
+        //     this.$v.form.$touch();
+        //     if (this.$v.form.$anyError) {
+        //         return;
+        //     }
+        //     try {
+        //         console.log('_userFormTitle:')
+        //         console.log(this.form.title)
+        //         await fetch(this.url + "/editarticle1", {
+        //             method: 'PUT',
+        //             headers: {
+        //                 'Content-type': 'application/json'
+        //             },
+        //             credentials: 'include',
+        //             body: JSON.stringify({
+        //                 article_id: this.editArticleID,
+        //                 articles: this.form.title
+        //             }),
+        //         })
+        //         const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
+        //         const result = await data;
+        //         this.articles = result.data.data;
 
-                console.log('_refreshUserArticle:')
-                console.log(this.aticles)
-                swal.fire({
-                    title: 'Submit Success!',
-                    // text: 'Do you want to continue',
-                    icon: 'success',
-                    confirmButtonText: 'Done',
-                    confirmButtonColor: '#007bff'
-                })
-                // setTimeout(() => { this.$router.go(-1) }, 2000);
-                // console.log('EditForm:')
-                // console.log(this.form.title, this.editArticleID)
-                this.editArticleID = ''
-                this.form.title = ''
-                this.$nextTick(() => {
-                    this.$v.$reset();
-                });
-            }
-            catch (error) {
-                console.log(`EditArticle False!!! ${error}`)
-                swal.fire({
-                    title: 'Submit Error!',
-                    // text: '${error}',
-                    icon: 'error',
-                    confirmButtonText: 'Cancel',
-                    confirmButtonColor: '#007bff'
-                })
-            }
-        },
+        //         console.log('_refreshUserArticle:')
+        //         console.log(this.aticles)
+        //         swal.fire({
+        //             title: 'Submit Success!',
+        //             // text: 'Do you want to continue',
+        //             icon: 'success',
+        //             confirmButtonText: 'Done',
+        //             confirmButtonColor: '#007bff'
+        //         })
+        //         // setTimeout(() => { this.$router.go(-1) }, 2000);
+        //         // console.log('EditForm:')
+        //         // console.log(this.form.title, this.editArticleID)
+        //         this.editArticleID = ''
+        //         this.form.title = ''
+        //         this.$nextTick(() => {
+        //             this.$v.$reset();
+        //         });
+        //     }
+        //     catch (error) {
+        //         console.log(`EditArticle False!!! ${error}`)
+        //         swal.fire({
+        //             title: 'Submit Error!',
+        //             // text: '${error}',
+        //             icon: 'error',
+        //             confirmButtonText: 'Cancel',
+        //             confirmButtonColor: '#007bff'
+        //         })
+        //     }
+        // },
         // DELETE
         async deleteArticle(articleId) {
             console.log("Delete ID")

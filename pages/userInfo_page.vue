@@ -25,12 +25,13 @@
                                             text-variant="light" border-variant="primary">
                                             <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
                                             <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
-                                            <b-card-text class="text-sm">Date: {{new
-                                            Date(a.date).toLocaleString('en-us', {
-                                            month: 'long',
-                                            day: 'numeric',
-                                            year: 'numeric',
-                                            }) }}</b-card-text>
+                                            <b-card-text class="text-sm">Date: {{ new
+                                                    Date(a.date).toLocaleString('en-us', {
+                                                        month: 'long',
+                                                        day: 'numeric',
+                                                        year: 'numeric',
+                                                    })
+                                            }}</b-card-text>
 
                                             <div class="absolute bottom-3 right-3">
                                                 <b-dropdown size="sm" no-caret>
@@ -78,7 +79,7 @@
                                         <div>
                                             <div class="absolute bottom-3 left-5">
                                                 <b-button type="submit" variant="primary"
-                                                    @click="showDismissibleAlert=true">Submit
+                                                    @click="showDismissibleAlert = true">Submit
                                                 </b-button>
                                                 <b-button type="reset" variant="danger">Reset</b-button>
                                             </div>
@@ -124,8 +125,8 @@ export default {
             userData: '',
             userInfo: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     // async fetch() {
@@ -146,7 +147,7 @@ export default {
                 headers: {
                     'Content-type': 'application/json'
                 },
-                credentials: 'include'                
+                credentials: 'include'
             })
             const getuserdata = await res.json()
             this.articles = getuserdata
@@ -219,14 +220,14 @@ export default {
                     icon: 'error',
                     confirmButtonText: 'Cancel',
                     confirmButtonColor: '#007bff'
-                })                
+                })
             }
         },
 
         // DELETE
         async deleteArticle(articleId) {
             console.log("Delete ID")
-            console.log(articleId)    
+            console.log(articleId)
             try {
                 await fetch(`${this.url}/deletearticle/${articleId}`, {
                     method: 'DELETE',
@@ -240,7 +241,7 @@ export default {
                     credentials: 'include'
                 })
                 const getuserdata = await res.json()
-                this.articles = getuserdata                
+                this.articles = getuserdata
             }
             catch (error) {
                 console.log(`delete failed: ${error}`)

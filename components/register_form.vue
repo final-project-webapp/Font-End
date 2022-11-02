@@ -11,24 +11,32 @@
                             least 3 characters and not more than 20 characters.</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group id="input_group_2" label="Email:" label-for="input_2">
+                    <b-form-group id="input_group_2" label="Penname:" label-for="input_2">
+                        <b-form-input id="input_penname" v-model="form.pname" type="text" placeholder=""
+                        :state="validateState('pname')" aria-describedby="feedback_2">
+                        </b-form-input>
+                        <b-form-invalid-feedback id="feedback_1">This is a required field and must be at
+                            least 3 characters and not more than 20 characters.</b-form-invalid-feedback>
+                    </b-form-group>
+
+                    <b-form-group id="input_group_3" label="Email:" label-for="input_3">
                         <b-form-input id="input_email" v-model="form.emailaddress" type="email" placeholder=""
-                        :state="validateState('emailaddress')" aria-describedby="feedback_2">
+                        :state="validateState('emailaddress')" aria-describedby="feedback_3">
                         </b-form-input>
                         <b-form-invalid-feedback id="feedback_2">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group id="input_group_3" label="Password:" label-for="input_3">
+                    <b-form-group id="input_group_4" label="Password:" label-for="input_4">
                         <b-form-input id="input_pass" v-model="form.password" type="password" placeholder="" rows="8"
-                        :state="validateState('password')" aria-describedby="feedback_3">
+                        :state="validateState('password')" aria-describedby="feedback_4">
                         </b-form-input>
                         <b-form-invalid-feedback id="feedback_3">This is a required field and must be at
                             least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group id="input_group_4" label="Birthdate:" label-for="input_4">
+                    <b-form-group id="input_group_5" label="Birthdate:" label-for="input_5">
                         <b-form-input id="input_DOB" v-model="form.date" type="date" placeholder="" rows="8"
-                        :state="validateState('date')" aria-describedby="feedback_4">
+                        :state="validateState('date')" aria-describedby="feedback_5">
                         </b-form-input>
                         <b-form-invalid-feedback id="feedback_4">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
@@ -43,9 +51,9 @@
             <div>
 
 
-                <!-- <b-card class="mt-3" header="Form Data Result">
+                <b-card class="mt-3" header="Form Data Result">
                     <pre class="m-0">{{ form }}</pre>
-                </b-card> -->
+                </b-card>
             </div>
         </b-container>
     </div>
@@ -63,6 +71,7 @@ export default {
         return {
             form: {
                 uname: '',
+                pname:'',
                 emailaddress: '',
                 password: '',
                 date: ''
@@ -72,6 +81,11 @@ export default {
     validations: {
         form: {
             uname: {
+                required,
+                minLength: minLength(3),
+                maxLength: maxLength(20),
+            },
+            pname: {
                 required,
                 minLength: minLength(3),
                 maxLength: maxLength(20),
@@ -103,6 +117,7 @@ export default {
 
                 const registerData = {
                     userName: this.form.uname,
+                    penname: this.form.pname,
                     emailAddress: this.form.emailaddress,
                     password: this.form.password,
                     dob: this.form.date
@@ -112,6 +127,7 @@ export default {
                 console.log(registerData)
 
                 this.form.uname = ''
+                this.form.pname = ''
                 this.form.emailaddress = ''
                 this.form.password = ''
                 this.form.date = ''

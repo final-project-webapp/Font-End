@@ -10,11 +10,18 @@
             </b-row>
         </b-container>
 
-        <div class="mt-20 flex justify-center">
+        <div class="mt-8 flex justify-center">
 
             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                 <b-container style="max-width: 1000px;" class="mb-8">
+                    
+                    <div v-for="(a, index ) in article" :key="index">
 
+                            <b-card-text class="text-2xl mb-2 font-bold">
+                                {{ a.movie_name }}
+                            </b-card-text>
+                        
+                    </div>
                     <div v-for="(a, index ) in article" :key="index">
                         <b-card border-variant="primary" bg-variant="secondary">
                             <b-card-text class="text-lg">
@@ -22,6 +29,9 @@
                             </b-card-text>
                             <b-card-text class="text-sm">
                                 Writer: {{ a.writer }}
+                            </b-card-text>
+                            <b-card-text class="text-sm">
+                                Movie name: {{ a.movie_name }}
                             </b-card-text>
                         </b-card>
                     </div>
@@ -74,7 +84,7 @@
                                                     <b-icon icon="trash-fill" variant="dark" font-scale="1"
                                                         class="flex justify-end"></b-icon>
                                                     Delete
-                                                </b-dropdown-item-button>                                                
+                                                </b-dropdown-item-button>
                                             </b-dropdown>
                                         </div>
 
@@ -131,7 +141,7 @@
                     </b-card>
 
                 </b-container>
-                <b-container style="max-width: 1000px;">
+                <b-container style="max-width: 1000px;" class="" >
 
                     <b-card border-variant="primary" bg-variant="dark" class="">
 
@@ -149,9 +159,17 @@
                                     </b-form-invalid-feedback>
                                 </b-col>
                                 <b-col>
-                                    <b-button type="submit" variant="primary" size="sm">
-                                        <b-icon icon="arrow-return-right" variant="light" font-scale="1"></b-icon>
-                                    </b-button>
+                                    <div v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
+                                        <b-button disabled type="submit" variant="primary" size="sm">
+                                            <b-icon icon="arrow-return-right" variant="light" font-scale="1"></b-icon>
+                                        </b-button>
+                                    </div>
+
+                                    <div v-if="userRole == 1">
+                                        <b-button type="submit" variant="primary" size="sm">
+                                            <b-icon icon="arrow-return-right" variant="light" font-scale="1"></b-icon>
+                                        </b-button>
+                                    </div>
                                 </b-col>
                             </b-row>
 
@@ -160,6 +178,7 @@
                     </b-card>
 
                 </b-container>
+                <b-container v-if="userRole == 2"></b-container>
                 <!-- <div>
                     <CF class="mt-8" @comment-data="addComment"
                     v-bind:oldCommentData="articleComment" />
@@ -190,17 +209,18 @@ export default {
             form: {
                 comment: '',
             },
+            titleById:'',
             userID: '',
             userData: null,
             userRole: '',
-            userName:'',
+            userName: '',
             article: '',
             articleComment: [],
             articleId: '',
             editCommetID: '',
             editMode: false,
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     async mounted() {
@@ -237,7 +257,8 @@ export default {
     },
     async fetch() {
         await this.getSingleArticle();
-        await this.getCommentArticle()
+        await this.getCommentArticle();
+        // await this.getMovieName();
     },
     validations: {
         form: {
@@ -284,6 +305,21 @@ export default {
             console.log(this.articleComment)
         },
 
+        // async getMovieName() {
+        //     try {
+        //         const dataId = axios.get(`${this.url}/moviessearchId/${this.$route.params.movieid}`)
+        //         console.log('MovieID')
+        //         console.log(this.$route.params.movieid)
+
+        //         const resultId = await dataId            
+        //         this.titleById = resultId.data.data.title;
+
+        //         console.log('titleById:')
+        //         console.log(this.titleById)
+        //     }
+        //     catch (error) { console.log(`get MovieName failed: ${error}`) }
+        // },
+
         // Post
         async postComment() {
             this.$v.form.$touch();
@@ -297,7 +333,7 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
-                    credentials: 'include',                
+                    credentials: 'include',
                     body: JSON.stringify({
                         comment: this.form.comment,
                         user_user_id: this.userID,
@@ -328,7 +364,7 @@ export default {
             try {
                 await fetch(`${this.url}/deletecomment/${commentId}`, {
                     method: 'DELETE',
-                    credentials: 'include'                    
+                    credentials: 'include'
                 })
                 const data = axios.get(`${this.url}/getcommentinarticle/${this.articleId}`)
                 const result = await data;
@@ -359,7 +395,7 @@ export default {
                     headers: {
                         'Content-type': 'application/json'
                     },
-                    credentials: 'include',            
+                    credentials: 'include',
                     body: JSON.stringify({
                         comment_id: this.editCommentID,
                         comment: this.form.comment
@@ -378,7 +414,7 @@ export default {
             }
             catch (error) {
                 console.log(`edit failed: ${error}`)
-            }            
+            }
         },
 
         async reloadComment() {

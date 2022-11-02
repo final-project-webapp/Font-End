@@ -11,7 +11,7 @@
               <b-nav-item to="/" @click="hide">Now Playing</b-nav-item>
               <b-nav-item to="show_discuss" @click="hide">Articles</b-nav-item>
               <b-nav-item to="/about" @click="hide">About</b-nav-item>
-              <b-nav-item to="/member" @click="hide">Member</b-nav-item>
+              <b-nav-item to="/member" @click="hide">Team</b-nav-item>
               <b-nav-item to="/register_page" @click="hide" v-if="userData == null">Register</b-nav-item>
               <b-nav-item to="/login_page" @click="hide" v-if="userData == null">Login</b-nav-item>
               <b-nav-item to="/manage_page" @click="hide" v-if="userRole == 2">Manage</b-nav-item>
@@ -40,8 +40,8 @@ export default {
       userName: '',
       userData: null,
       userRole: null,
-      // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
     }
   },
 
