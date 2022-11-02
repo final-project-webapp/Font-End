@@ -13,6 +13,9 @@
 
             <b-container style="width: 1800px; height: auto;">
                 <b-card bg-variant="dark" class="overflow-y-scroll mt-8" style="height: 500px;">
+                    <div v-if="userRole != 2" class="flex justify-center">
+                        <p class="font-bold text-4xl">You must be Admin.</p>
+                    </div>
                     <b-row align-h="around">
                         <div v-for="(au, index ) in allUser" :key="index">
 
@@ -29,7 +32,6 @@
                                                 day: 'numeric',
                                                 year: 'numeric',
                                             })
-                                    
                                     }}</b-card-text>
                                 </b-card>
 
@@ -53,7 +55,7 @@
                                                     <b-icon icon="info-square-fill" font-scale="1">
                                                     </b-icon>
                                                     Info
-                                                </NuxtLink>                                                
+                                                </NuxtLink>
                                             </b-dropdown-item-button>
                                         </b-dropdown>
                                     </div>
@@ -89,8 +91,8 @@ export default {
     data() {
         return {
             allUser: [],
-            // userData: '',
-            // userInfo: '',
+            userData: null,
+            userRole: null,
             // editArticleID: '',
             url: 'http://localhost:3000'
             // url: 'https://backend-final.azurewebsites.net'
@@ -101,12 +103,87 @@ export default {
 
     // },
     async created() {
-        await this.getAllUser()
+        console.log('Redirect1!')
+        await this.getSingleuser()
+        console.log('UserRole:')
+        console.log(this.userRole)
+        if (this.userRole != 2) {
+            this.$router.push({ name: 'index' })
+            console.log('Redirect2!')
+        } else {
+            
+            await this.getAllUser()
+        }
+
+
     },
+
+    // async mounted() {
+
+    //     if (document.cookie == null) { return }
+
+    //     try {
+    //         const res = await fetch(this.url + "/getsingleuser", {
+    //             headers: {
+    //                 'Content-type': 'application/json'
+    //             },
+    //             withCredentials: true,
+    //             credentials: 'include'
+    //         })
+    //         const getuserdata = await res.json()
+    //         this.userData = getuserdata
+    //         console.log('Not login2')
+
+    //         console.log(this.userData)
+    //         this.userRole = getuserdata.data.role
+
+    //         console.log(this.userRole)
+    //         this.userName = getuserdata.data.name
+
+    //     }
+    //     catch (error) {
+    //         console.log(`get user failed: ${error}`)
+    //     }
+
+    // },
 
     methods: {
         // GET
+        async getSingleuser() {
+            // if (document.cookie == null) { return }
+
+            try {
+                const res = await fetch(this.url + "/getsingleuser", {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    withCredentials: true,
+                    credentials: 'include'
+                })
+                const getuserdata = await res.json()
+                this.userData = getuserdata
+                console.log('Not login2')
+
+                console.log(this.userData)
+                this.userRole = getuserdata.data.role
+
+                console.log(this.userRole)
+                this.userName = getuserdata.data.name
+
+            }
+            catch (error) {
+                console.log(`get user failed: ${error}`)
+            }
+        },
+
         async getAllUser() {
+            // console.log('Redirect3!')
+            // if (this.userRole != 2) {
+            //     this.$router.push({ name: 'index' })
+            //     console.log('Redirect4!')
+            // } else {
+
+            // }
             try {
                 // const data = axios.get(`${this.url}/getalluser`)
                 // const result = await data;
