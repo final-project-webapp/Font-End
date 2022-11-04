@@ -1,30 +1,34 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
         <b-container>
-            <b-row>
-                <b-col cols="9" xl="10" lg="10" md="10" sm="10">
-                    <SlideBar class="ml-2 pt-20 xs:pl-20 sm:pl-20 md:pl-20 lg:pl-20 xl:pl-20" />
+            <b-row align-h="between">
+                <b-col cols="5" xl="10" lg="8" md="8" sm="8">
+                    <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
                 </b-col>
 
+                <b-col cols="7" xl="2" lg="4" md="4" sm="4">                    
+                    <UserBotton class="mr-2 mt-20"/>
+                </b-col>
             </b-row>
         </b-container>
 
         <div class="mt-20">
             <b-container>
-                <b-card bg-variant="dark" border-variant="primary">
+                <b-card bg-variant="dark" border-variant="primary" class="">
                     <b-row align-h="center">
                         <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
                             <b-container style="max-width:700px;">
                                 <b-card bg-variant="dark" class="overflow-y-scroll"
-                                    style="height: 470px; width: 700px;">
+                                    style="height: 470px; max-width: 700px;">
                                     <div v-for="(a, index ) in articles" :key="index">
                                         <b-card :header="a.articles" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                            tag="article" class="mb-4 px-4 text-xl break-all"
+                                            tag="article" class="mb-4 px-4 text-xl break-words"
                                             style="height: auto; max-width: 700px; " bg-variant="dark"
                                             text-variant="light" border-variant="primary">
-                                            <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
-                                            <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
+                                            <b-card-text class="text-sm break-words">Movie name: {{ a.movie_name }}
+                                            </b-card-text>
+                                            <b-card-text class="text-sm break-words">Writer: {{ a.writer }}</b-card-text>
                                             <b-card-text class="text-sm">Date: {{ new
                                                     Date(a.date).toLocaleString('en-us', {
                                                         month: 'long',
@@ -109,11 +113,13 @@ import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
+import UserBotton from '@/components/user_botton.vue'
 
 export default {
     name: 'userInfoPage',
     components: {
-        SlideBar
+        SlideBar,
+        UserBotton
     },
     mixins: [validationMixin],
     data() {

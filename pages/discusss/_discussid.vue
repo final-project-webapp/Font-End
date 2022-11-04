@@ -3,7 +3,7 @@
         <b-container>
             <b-row align-h="between">
                 <b-col cols="4">
-                    <SlideBar class="ml-2 pt-20 lg:pl-20 xl:pl-44" />
+                    <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
                 </b-col>
                 <b-col cols="2">
 

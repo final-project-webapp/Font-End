@@ -1,26 +1,27 @@
 <template>
-    <div class="bg-zinc-800 min-h-screen text-white">
-        <b-container v-if="userRole != 2">
-            <div class="bg-black min-h-screen ">
-                <p>NO!</p>
+    <div v-if="userRole != 2" class="bg-zinc-800 min-h-screen text-white">
+        <b-container class="pt-20 flex justify-center">
+            <div>
+                <p class="font-bold text-4xl">You don't have privilege here.</p>                
             </div>
         </b-container>
+    </div>
+
+    <div v-else class="bg-zinc-800 min-h-screen text-white">
         <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
                     <SlideBar class="ml-2 pt-20 xs:pl-20 sm:pl-20 md:pl-20 lg:pl-20 xl:pl-20" />
                 </b-col>
-
             </b-row>
         </b-container>
-
         <div class="mt-20">
 
             <b-container style="width: 1800px; height: auto;">
                 <b-card bg-variant="dark" class="overflow-y-scroll mt-8" style="height: 500px;">
-                    <div v-if="userRole != 2" class="flex justify-center">
+                    <!-- <div v-if="userRole != 2" class="flex justify-center">
                         <p class="font-bold text-4xl">You must be Admin.</p>
-                    </div>
+                    </div> -->
                     <b-row align-h="around">
                         <div v-for="(au, index ) in allUser" :key="index">
 
@@ -116,7 +117,6 @@ export default {
             this.$router.push({ name: 'index' })
             console.log('Redirect2!')
         } else {
-            
             await this.getAllUser()
         }
 

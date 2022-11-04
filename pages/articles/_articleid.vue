@@ -4,7 +4,7 @@
         <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
-                    <SlideBar class="ml-2 pt-20 xs:pl-20 sm:pl-20 md:pl-20 lg:pl-20 xl:pl-20" />
+                    <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
                 </b-col>
 
             </b-row>
@@ -17,22 +17,22 @@
                     
                     <div v-for="(a, index ) in article" :key="index">
 
-                            <b-card-text class="text-2xl mb-2 font-bold">
+                            <b-card-text class="text-2xl mb-2 font-bold break-words">
                                 {{ a.movie_name }}
                             </b-card-text>
                         
                     </div>
                     <div v-for="(a, index ) in article" :key="index">
                         <b-card border-variant="primary" bg-variant="secondary">
-                            <b-card-text class="text-lg">
+                            <b-card-text class="text-lg break-words">
                                 {{ a.articles }}
                             </b-card-text>
                             <b-card-text class="text-sm">
                                 Writer: {{ a.writer }}
                             </b-card-text>
-                            <b-card-text class="text-sm">
+                            <!-- <b-card-text class="text-sm">
                                 Movie name: {{ a.movie_name }}
-                            </b-card-text>
+                            </b-card-text> -->
                         </b-card>
                     </div>
 
@@ -48,7 +48,7 @@
                                         bg-variant="secondary" text-variant="light" border-variant="primary">
 
 
-                                        <b-card-text class="text-sm">: {{ ac.comment }}</b-card-text>
+                                        <b-card-text class="text-sm break-words">: {{ ac.comment }}</b-card-text>
                                         <!-- <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
                                         <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text> -->
 
