@@ -1,10 +1,6 @@
 <template>
-    <div v-if="userRole != 2" class="bg-zinc-800 min-h-screen text-white">
-        <b-container class="pt-20 flex justify-center">
-            <div>
-                <p class="font-bold text-4xl">You don't have privilege here.</p>                
-            </div>
-        </b-container>
+    <div v-if="userRole != 2" class="bg-zinc-800 min-h-screen text-white">       
+        <FailedPage />
     </div>
 
     <div v-else class="bg-zinc-800 min-h-screen text-white">
@@ -88,11 +84,13 @@
 <script>
 // import axios from "axios"
 import SlideBar from '@/components/slide_bar.vue'
+import FailedPage from '@/components/failed_page.vue'
 
 export default {
     name: 'ManagePage',
     components: {
-        SlideBar
+        SlideBar,
+        FailedPage
     },
     data() {
         return {
@@ -110,7 +108,7 @@ export default {
     // },
     async created() {
         console.log('Redirect1!')
-        await this.getSingleuser()
+        await this.getSingleUser()
         console.log('UserRole:')
         console.log(this.userRole)
         if (this.userRole != 2) {
@@ -119,8 +117,6 @@ export default {
         } else {
             await this.getAllUser()
         }
-
-
     },
 
     // async mounted() {
@@ -154,7 +150,7 @@ export default {
 
     methods: {
         // GET
-        async getSingleuser() {
+        async getSingleUser() {
             // if (document.cookie == null) { return }
 
             try {
@@ -166,8 +162,7 @@ export default {
                     credentials: 'include'
                 })
                 const getuserdata = await res.json()
-                this.userData = getuserdata
-                console.log('Not login2')
+                this.userData = getuserdata                
 
                 console.log(this.userData)
                 this.userRole = getuserdata.data.role

@@ -1,13 +1,16 @@
 <template>
-    <div class="bg-zinc-800 min-h-screen text-white">
+    <div v-if="userRole != 1" class="bg-zinc-800 min-h-screen text-white">
+        <FailedPage />
+    </div>
+    <div v-else class="bg-zinc-800 min-h-screen text-white">
         <b-container>
             <b-row align-h="between">
                 <b-col cols="5" xl="10" lg="8" md="8" sm="8">
                     <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
                 </b-col>
 
-                <b-col cols="7" xl="2" lg="4" md="4" sm="4">                    
-                    <UserBotton class="mr-2 mt-20"/>
+                <b-col cols="7" xl="2" lg="4" md="4" sm="4">
+                    <UserBotton class="mr-2 mt-20" />
                 </b-col>
             </b-row>
         </b-container>
@@ -15,12 +18,15 @@
         <div class="mt-20">
             <b-container>
                 <b-card bg-variant="dark" border-variant="primary" class="">
+                    <p>UserData: {{ userData }}</p>
                     <b-row align-h="center">
                         <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
+
                             <b-container style="max-width:700px;">
+
                                 <b-card bg-variant="dark" class="overflow-y-scroll"
                                     style="height: 470px; max-width: 700px;">
-                                    <div v-for="(a, index ) in articles" :key="index">
+                                    <div v-for="(a, index ) in userData" :key="index">
                                         <b-card :header="a.articles" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
                                             tag="article" class="mb-4 px-4 text-xl break-words"
@@ -28,7 +34,8 @@
                                             text-variant="light" border-variant="primary">
                                             <b-card-text class="text-sm break-words">Movie name: {{ a.movie_name }}
                                             </b-card-text>
-                                            <b-card-text class="text-sm break-words">Writer: {{ a.writer }}</b-card-text>
+                                            <b-card-text class="text-sm break-words">Writer: {{ a.writer }}
+                                            </b-card-text>
                                             <b-card-text class="text-sm">Date: {{ new
                                                     Date(a.date).toLocaleString('en-us', {
                                                         month: 'long',
@@ -129,15 +136,13 @@ export default {
                 title: ''
             },
             userData: '',
+            userRole: '',
             userInfo: '',
             editArticleID: '',
             url: 'http://localhost:3000'
             // url: 'https://backend-final.azurewebsites.net'
         }
-    },
-    // async fetch() {
-    //     await this.getAllArticles();
-    // },
+    },   
     validations: {
         form: {
             title: {
@@ -145,30 +150,42 @@ export default {
                 maxLength: maxLength(1000)
             }
         }
-    },
-    async mounted() {
-        if (document.cookie == null) { return }
-        try {
-            const res = await fetch(this.url + "/getarticleowner", {
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                credentials: 'include'
-            })
-            const getuserdata = await res.json()
-            this.articles = getuserdata
-            console.log('Userdata:')
-            console.log(this.articles)
-        }
-        catch (error) {
-            console.log(`get user failed: ${error}`)
-        }
+    },    
+    async created() {
+        console.log('RedirectUserData1!')
+
+        await this.getSingleUser()
+        console.log('UserRole:')
+        console.log(this.userRole)
+        if (this.userRole != 1) {
+            this.$router.push({ name: 'index' })
+            console.log('RedirectUserData2!')
+        }        
     },
     methods: {
-
         validateState(title) {
             const { $dirty, $error } = this.$v.form[title];
             return $dirty ? !$error : null;
+        },
+        // GET
+        async getSingleUser() {
+            try {
+                const res = await fetch(this.url + "/getsingleuser", {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    withCredentials: true,
+                    credentials: 'include'
+                })
+                const getuserdata = await res.json()
+                this.userData = getuserdata
+
+                console.log(this.userData)
+                this.userRole = getuserdata.data.role
+            }
+            catch (error) {
+                console.log(`get user failed: ${error}`)
+            }
         },
         // EDIT
         showArticleInfo(articleInfo) {
