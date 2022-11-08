@@ -15,7 +15,7 @@
                         <b-form-input id="input_penname" v-model="form.pname" type="text" placeholder=""
                         :state="validateState('pname')" aria-describedby="feedback_2">
                         </b-form-input>
-                        <b-form-invalid-feedback id="feedback_1">This is a required field and must be at
+                        <b-form-invalid-feedback id="feedback_2">This is a required field and must be at
                             least 3 characters and not more than 20 characters.</b-form-invalid-feedback>
                     </b-form-group>
 
@@ -23,14 +23,14 @@
                         <b-form-input id="input_email" v-model="form.emailaddress" type="email" placeholder=""
                         :state="validateState('emailaddress')" aria-describedby="feedback_3">
                         </b-form-input>
-                        <b-form-invalid-feedback id="feedback_2">This is a required field.</b-form-invalid-feedback>
+                        <b-form-invalid-feedback id="feedback_3">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
 
                     <b-form-group id="input_group_4" label="Password:" label-for="input_4">
                         <b-form-input id="input_pass" v-model="form.password" type="password" placeholder="" rows="8"
                         :state="validateState('password')" aria-describedby="feedback_4">
                         </b-form-input>
-                        <b-form-invalid-feedback id="feedback_3">This is a required field and must be at
+                        <b-form-invalid-feedback id="feedback_4">This is a required field and must be at
                             least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
                     </b-form-group>
 
@@ -38,22 +38,18 @@
                         <b-form-input id="input_DOB" v-model="form.date" type="date" placeholder="" rows="8"
                         :state="validateState('date')" aria-describedby="feedback_5">
                         </b-form-input>
-                        <b-form-invalid-feedback id="feedback_4">This is a required field.</b-form-invalid-feedback>
+                        <b-form-invalid-feedback id="feedback_5">This is a required field.</b-form-invalid-feedback>
                     </b-form-group>
                     <div class="justify-center flex">
                         <b-button type="submit" variant="primary">Register</b-button>
                         <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
                     </div>
                 </b-form>
-
-
             </b-card>
             <div>
-
-
-                <b-card class="mt-3" header="Form Data Result">
+                <!-- <b-card class="mt-3" header="Form Data Result">
                     <pre class="m-0">{{ form }}</pre>
-                </b-card>
+                </b-card> -->
             </div>
         </b-container>
     </div>

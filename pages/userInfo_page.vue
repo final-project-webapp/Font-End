@@ -15,66 +15,80 @@
             </b-row>
         </b-container>
 
-        <div class="mt-20">
-            <b-container>
-                <b-card bg-variant="dark" border-variant="primary" class="">
-                    <p>UserData: {{ userData }}</p>
-                    <b-row align-h="center">
-                        <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
+        <div class="mt-20 flex justify-center">
+            <b-container style="max-width: 1000px;">
+                <!-- <b-card bg-variant="dark" class=""> -->
 
-                            <b-container style="max-width:700px;">
+                <!-- <b-row align-h="center"> -->
+                <!-- <b-col cols="10" xl="" lg="12" md="12 mb-4" sm="12" class=""> -->
 
-                                <b-card bg-variant="dark" class="overflow-y-scroll"
-                                    style="height: 470px; max-width: 700px;">
-                                    <div v-for="(a, index ) in userData" :key="index">
-                                        <b-card :header="a.articles" header-text-variant="white"
-                                            header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                            tag="article" class="mb-4 px-4 text-xl break-words"
-                                            style="height: auto; max-width: 700px; " bg-variant="dark"
-                                            text-variant="light" border-variant="primary">
-                                            <b-card-text class="text-sm break-words">Movie name: {{ a.movie_name }}
-                                            </b-card-text>
-                                            <b-card-text class="text-sm break-words">Writer: {{ a.writer }}
-                                            </b-card-text>
-                                            <b-card-text class="text-sm">Date: {{ new
-                                                    Date(a.date).toLocaleString('en-us', {
-                                                        month: 'long',
-                                                        day: 'numeric',
-                                                        year: 'numeric',
-                                                    })
-                                            }}</b-card-text>
+                <!-- <b-container style="max-width:700px;"> -->
 
-                                            <div class="absolute bottom-3 right-3">
-                                                <b-dropdown size="sm" no-caret>
-                                                    <template #button-content>
-                                                        <b-icon icon="three-dots-vertical" variant="light"
-                                                            font-scale="1">
-                                                        </b-icon>
-                                                    </template>
-                                                    <b-dropdown-item-button variant="dark" class="px-0 text-xs"
-                                                        @click="deleteArticle(a.article_id)">
-                                                        <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Delete
-                                                    </b-dropdown-item-button>
-                                                    <b-dropdown-item-button variant="dark" class="text-xs flex"
-                                                        @click="showArticleInfo(a)">
-                                                        <b-icon icon="pencil-square" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Edit
-                                                    </b-dropdown-item-button>
-                                                </b-dropdown>
-                                            </div>
+                <!-- <b-card bg-variant="dark" class=""
+                                    style="height: 470px; max-width: 700px;"> -->
+                <!-- <div v-for="(a, index ) in userData" :key="index"> -->
+                <b-card :header="userData.name" header-text-variant="white" header-border-variant="primary"
+                    header-bg-variant="dark" header-tag="header" tag="article"
+                    class="mb-4 px-4 text-2xl font-bold break-words" style="height: auto; max-width: 1000px;"
+                    bg-variant="dark" text-variant="light" border-variant="primary">
+                    <b-form @submit.prevent="onSubmit">
+                        <b-card-text class="text-xl break-words">Penname:
+                        </b-card-text>
+                        <b-card-text class="text-base break-words mb-2"> {{ userData.alias }}
+                        </b-card-text>
+                        <b-form-group id="input_group_1" label-for="input_1">
+                            <b-form-input id="input_pname" v-model="form.pname" type="text" placeholder=""
+                                :state="validateState('pname')" aria-describedby="feedback_1">
+                            </b-form-input>
+                            <b-form-invalid-feedback id="feedback_1">This is a required field and must be at
+                                least 3 characters.</b-form-invalid-feedback>
+                        </b-form-group>
 
-                                        </b-card>
-                                    </div>
-                                </b-card>
-                            </b-container>
-                        </b-col>
+                        <b-card-text class="text-xl break-words">Password:
+                        </b-card-text>
+                        <b-card-text class="text-base break-words mb-2">{{ userData.password }}
+                        </b-card-text>
+                        <b-form-group id="input_group_2" label-for="input_2">
+                            <b-form-input id="input_pass" v-model="form.password" type="password" placeholder=""
+                                rows="8" :state="validateState('password')" aria-describedby="feedback_2">
+                            </b-form-input>
+                            <b-form-invalid-feedback id="feedback_2">This is a required field and must be at
+                                least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
+                        </b-form-group>
+                        <div class="flex gap-x-2 justify-center">
+                        <b-button @click="showUserInfo(userData)" variant="outline-warning">Edit</b-button>
+                        <b-button type="submit" variant="outline-primary">Submit</b-button>
+                    </div>
+                    </b-form>
 
-                        <b-col class="mb-4" cols="12" xl="" lg="12" md="12" sm="12">
+                    
+
+                    <!-- <div class="absolute bottom-3 right-3">
+                        <b-dropdown size="sm" no-caret>
+                            <template #button-content>
+                                <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                </b-icon>
+                            </template>
+                            <b-dropdown-item-button variant="dark" class="px-0 text-xs" @click="deleteArticle()">
+                                <b-icon icon="trash-fill" variant="dark" font-scale="1" class="flex justify-end">
+                                </b-icon>
+                                Delete
+                            </b-dropdown-item-button>
+                            <b-dropdown-item-button variant="dark" class="text-xs flex" @click="showArticleInfo()">
+                                <b-icon icon="pencil-square" variant="dark" font-scale="1" class="flex justify-end">
+                                </b-icon>
+                                Edit
+                            </b-dropdown-item-button>
+                        </b-dropdown>
+                    </div> -->
+
+                </b-card>
+                <!-- </div> -->
+                <!-- </b-card> -->
+                <!-- </b-container> -->
+                <!-- </b-col> -->
+
+                <!-- <b-col class="mb-4" cols="12" xl="" lg="12" md="12" sm="12">
                             <b-container style="max-width: 700px;">
                                 <b-card bg-variant="dark" class="pb-4">
                                     <b-form @submit.prevent="onSubmit" @reset="onReset">
@@ -97,16 +111,16 @@
                                         </div>
 
                                     </b-form>
-                                </b-card>
-                                <!-- <div>
+                                </b-card> -->
+                <!-- <div>
                                     <b-card class="mt-3" header="Form Data Result">
                                         <pre class="m-0">{{ form }}</pre>
                                     </b-card>
                                 </div> -->
-                            </b-container>
-                        </b-col>
-                    </b-row>
-                </b-card>
+                <!-- </b-container>
+                        </b-col> -->
+                <!-- </b-row> -->
+                <!-- </b-card> -->
             </b-container>
         </div>
 
@@ -117,7 +131,7 @@
 <script>
 // import axios from "axios"
 import { validationMixin } from "vuelidate";
-import { required, maxLength } from "vuelidate/lib/validators";
+import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
 import UserBotton from '@/components/user_botton.vue'
@@ -131,9 +145,9 @@ export default {
     mixins: [validationMixin],
     data() {
         return {
-            articles: [],
             form: {
-                title: ''
+                pname: '',
+                password: ''
             },
             userData: '',
             userRole: '',
@@ -142,15 +156,21 @@ export default {
             url: 'http://localhost:3000'
             // url: 'https://backend-final.azurewebsites.net'
         }
-    },   
+    },
     validations: {
         form: {
-            title: {
+            pname: {
                 required,
-                maxLength: maxLength(1000)
-            }
+                minLength: minLength(3),
+                maxLength: maxLength(20),
+            },
+            password: {
+                required,
+                minLength: minLength(8),
+                maxLength: maxLength(24)
+            },
         }
-    },    
+    },
     async created() {
         console.log('RedirectUserData1!')
 
@@ -160,11 +180,11 @@ export default {
         if (this.userRole != 1) {
             this.$router.push({ name: 'index' })
             console.log('RedirectUserData2!')
-        }        
+        }
     },
     methods: {
-        validateState(title) {
-            const { $dirty, $error } = this.$v.form[title];
+        validateState(pname) {
+            const { $dirty, $error } = this.$v.form[pname];
             return $dirty ? !$error : null;
         },
         // GET
@@ -178,8 +198,8 @@ export default {
                     credentials: 'include'
                 })
                 const getuserdata = await res.json()
-                this.userData = getuserdata
-
+                this.userData = getuserdata.data
+                console.log('UserInfo_page:')
                 console.log(this.userData)
                 this.userRole = getuserdata.data.role
             }
@@ -188,9 +208,10 @@ export default {
             }
         },
         // EDIT
-        showArticleInfo(articleInfo) {
-            this.editArticleID = articleInfo.article_id
-            this.form.title = articleInfo.articles
+        showUserInfo(userInfo) {
+            this.editUserID = userInfo.user_id
+            this.form.pname = userInfo.alias
+            this.form.password = userInfo.password
         },
         async onSubmit() {
             this.$v.form.$touch();
