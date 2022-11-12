@@ -115,15 +115,23 @@ export default {
                         timer: 2000
                     })
                     setTimeout(() => { this.$router.push('/login_page') }, 2000);
-                } else {
+                } else if (resdata.data == 0) {
                     swal.fire({
                         title: 'Register Failed!',
-                        text: 'Your email has been used.',
+                        text: 'Your Email has been used.',
                         icon: 'error',
                         confirmButtonColor: '#dc2626',
                         confirmButtonText: 'Cancel',
                     })
-                }                              
+                } else {
+                    swal.fire({
+                        title: 'Register Failed!',
+                        text: 'Your Username has been used.',
+                        icon: 'error',
+                        confirmButtonColor: '#dc2626',
+                        confirmButtonText: 'Cancel',
+                    })
+                }                             
             }
             catch (error) {
                 console.log(`addUserFalse!!! ${error}`)

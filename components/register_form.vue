@@ -3,7 +3,7 @@
         <b-container style="max-width: 800px;">
             <b-card border-variant="primary" bg-variant="dark">
                 <b-form @submit.prevent="onSubmit">
-                    <b-form-group id="input_group_1" label="Name:" label-for="input_1">
+                    <b-form-group id="input_group_1" label="Username:" label-for="input_1">
                         <b-form-input id="input_name" v-model="form.uname" type="text" placeholder=""
                         :state="validateState('uname')" aria-describedby="feedback_1">
                         </b-form-input>
