@@ -33,7 +33,7 @@
                     bg-variant="dark" text-variant="light" border-variant="primary">
                     <b-form @submit.prevent="onSubmit">
                         <div class="flex justify-between">
-                            <b-card-text class="text-xl break-words">Penname:
+                            <b-card-text class="text-xl break-words">Pen name:
                             </b-card-text>
                             <b-button size="sm" v-show="!editPenname" @click="showPenname(userData); togglePenname();"
                                 variant="outline-warning">Edit Penname</b-button>
@@ -67,7 +67,7 @@
                                 variant="outline-warning">
                                 Edit
                                 Password</b-button>
-                            <b-button size="sm" v-show="editPassword" @click="togglePassword();"
+                            <b-button size="sm" v-show="editPassword" @click="hidePassword(); togglePassword();"
                                 variant="outline-danger">Cancel</b-button>
                         </div>
 
@@ -103,8 +103,8 @@
                         <div class="flex justify-center mt-2">
                             <b-button v-show="editPassword" type="submit" variant="outline-primary">Submit</b-button>
                         </div>
-                    </b-form>                    
-                </b-card>                
+                    </b-form>
+                </b-card>
             </b-container>
         </div>
 
@@ -181,6 +181,8 @@ export default {
             const { $dirty, $error } = this.$v.form[pname];
             return $dirty ? !$error : null;
         },
+        
+        //----------------------------------------------------------------
         // GET
         async getSingleUser() {
             try {
@@ -201,6 +203,45 @@ export default {
                 console.log(`get user failed: ${error}`)
             }
         },
+
+        //----------------------------------------------------------------
+        // CONFIRM
+        confirmPenname() {
+            // await this.reloadUser();        
+            swal.fire({
+                title: 'Are you sure?',
+                text: "After this, your pen name will be changed.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#dc2626',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submitPenname()
+                }
+            })
+        },
+        confirmPassword() {
+            // await this.reloadUser();        
+            swal.fire({
+                title: 'Are you sure?',
+                text: "After this, your password will be changed.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#dc2626',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submitPassword()
+                }
+            })
+        },
+
+        //----------------------------------------------------------------
         // EDIT
         showPenname(userInfo) {
             this.editUserID = userInfo.user_id
@@ -210,14 +251,76 @@ export default {
             this.editUserID = ''
             this.form.pname = ''
         },
-        hideUserInfo() {
-            this.editUserID = ''
-            this.form.pname = ''
+        hidePassword() {
             this.form.oldpassword = ''
             this.form.newpassword = ''
             this.form.confirmpassword = ''
         },
-        async onSubmit() {
+        // hideUserInfo() {
+        //     this.editUserID = ''
+        //     this.form.pname = ''
+        //     this.form.oldpassword = ''
+        //     this.form.newpassword = ''
+        //     this.form.confirmpassword = ''
+        // },
+        async submitPenname() {
+            this.$v.form.$touch();
+            if (this.$v.form.$anyError) {
+                return;
+            }
+            try {
+                console.log('NewPenname:')
+                console.log(this.form.pname)
+                await fetch(this.url + "/editarticle1", {
+                    method: 'PUT',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        // article_id: this.editArticleID,
+                        alias: this.form.pname
+                    }),
+                })
+                const res = await fetch(this.url + "/getarticleowner", {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                })
+                const getuserdata = await res.json()
+                this.articles = getuserdata
+                console.log('Reloaddata:')
+                console.log(this.articles)
+                swal.fire({
+                    title: 'Submit Success!',
+                    // text: 'Do you want to continue',
+                    icon: 'success',
+                    confirmButtonText: 'Done',
+                    confirmButtonColor: '#007bff'
+                })
+                // setTimeout(() => { this.$router.go(-1) }, 2000);
+                // console.log('EditForm:')
+                // console.log(this.form.title, this.editArticleID)
+                // this.editArticleID = ''
+                this.form.pname = ''
+                this.$nextTick(() => {
+                    this.$v.$reset();
+                });
+            }
+            catch (error) {
+                console.log(`EditPenname False!!! ${error}`)
+                swal.fire({
+                    title: 'Submit Error!',
+                    // text: '${error}',
+                    icon: 'error',
+                    confirmButtonText: 'Cancel',
+                    confirmButtonColor: '#007bff'
+                })
+            }
+        },
+
+        async submitPassword() {
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
@@ -260,15 +363,17 @@ export default {
                     // setTimeout(() => { this.$router.go(-1) }, 2000);
                     // console.log('EditForm:')
                     // console.log(this.form.title, this.editArticleID)
-                    this.editArticleID = ''
-                    this.form.title = ''
+                    // this.editArticleID = ''
+                    this.form.oldpassword = ''
+                    this.form.newpassword = ''
+                    this.form.confirmpassword = ''
                     this.$nextTick(() => {
                         this.$v.$reset();
                     });
                 }
             }
             catch (error) {
-                console.log(`EditArticle False!!! ${error}`)
+                console.log(`EditPassword False!!! ${error}`)
                 swal.fire({
                     title: 'Submit Error!',
                     // text: '${error}',
@@ -278,42 +383,8 @@ export default {
                 })
             }
         }
-    },
+    }
 
-    // DELETE
-    async deleteArticle(articleId) {
-        console.log("Delete ID")
-        console.log(articleId)
-        try {
-            await fetch(`${this.url}/deletearticle/${articleId}`, {
-                method: 'DELETE',
-                credentials: 'include'
-            })
-
-            const res = await fetch(this.url + "/getarticleowner", {
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                credentials: 'include'
-            })
-            const getuserdata = await res.json()
-            this.articles = getuserdata
-        }
-        catch (error) {
-            console.log(`delete failed: ${error}`)
-        }
-    },
-
-    onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.editArticleID = ''
-        this.form.title = ''
-        // Trick to reset/clear native browser form validation state
-        this.$nextTick(() => {
-            this.$v.$reset();
-        });
-    },
 }
 
 

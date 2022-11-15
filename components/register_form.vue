@@ -3,7 +3,7 @@
         <b-container style="max-width: 800px;">
             <b-card border-variant="primary" bg-variant="dark">
                 <b-form @submit.prevent="onSubmit">
-                    <b-form-group id="input_group_1" label="Username:" label-for="input_1">
+                    <b-form-group id="input_group_1" label="User name:" label-for="input_1">
                         <b-form-input id="input_name" v-model="form.uname" type="text" placeholder=""
                         :state="validateState('uname')" aria-describedby="feedback_1">
                         </b-form-input>
@@ -11,7 +11,7 @@
                             least 3 characters and not more than 20 characters.</b-form-invalid-feedback>
                     </b-form-group>
 
-                    <b-form-group id="input_group_2" label="Penname:" label-for="input_2">
+                    <b-form-group id="input_group_2" label="Pen name:" label-for="input_2">
                         <b-form-input id="input_penname" v-model="form.pname" type="text" placeholder=""
                         :state="validateState('pname')" aria-describedby="feedback_2">
                         </b-form-input>
