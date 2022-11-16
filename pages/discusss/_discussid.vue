@@ -3,7 +3,7 @@
         <b-container>
             <b-row align-h="between">
                 <b-col cols="4">
-                    <SlideBar class="ml-2 pt-20 lg:pl-20 xl:pl-44" />
+                    <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
                 </b-col>
                 <b-col cols="2">
 
@@ -14,7 +14,7 @@
         <div class="py-20 flex">
             <b-container style="max-width: 1000px;">
                 <b-card border-variant="primary" bg-variant="dark">
-                    <div class="text-lg">
+                    <div class="text-lg font-bold mb-2">
                         <!-- <p>{{ this.$route.params.discussid }}</p> -->
                         <p>{{ this.form.mname }}</p>
                     </div>
@@ -27,7 +27,7 @@
                         </b-form-group>
 
                         <b-form-group id="input_group_2" label="Writer Name:" label-for="input_2">
-                            <b-form-input id="input_2" v-model="form.wname" type="text" placeholder=""
+                            <b-form-input disabled id="input_2" v-model="form.wname" type="text" placeholder=""
                                 :state="validateState('wname')" aria-describedby="feedback_2">
                             </b-form-input>
                             <b-form-invalid-feedback id="feedback_2">This is a required field and must be at
@@ -35,7 +35,7 @@
                         </b-form-group>
 
                         <b-form-group id="input_group_3" label="Writing Date:" label-for="input_3">
-                            <b-form-input id="input_3" v-model="form.wdate" type="date" placeholder=""
+                            <b-form-input disabled id="input_3" v-model="form.wdate" type="date" placeholder=""
                                 :state="validateState('wdate')" aria-describedby="feedback_3">
                             </b-form-input>
                             <b-form-invalid-feedback id="feedback_3">This is a required field.</b-form-invalid-feedback>
@@ -68,11 +68,11 @@
 
                     </b-form>
                 </b-card>
-                <!-- <div>
+                <div>
                     <b-card class="mt-3" header="Form Data Result">
                         <pre class="m-0">{{ form }}</pre>
                     </b-card>
-                </div> -->
+                </div>
             </b-container>
         </div>
 
@@ -84,11 +84,16 @@
 </template>
 
 <script>
+
 import axios from "axios"
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
+
+const today = new Date().toISOString().slice(0, 10)
+console.log('currentDate:')
+console.log(today)
 
 export default {
     emits: ['discuss-data'],
@@ -102,7 +107,7 @@ export default {
             form: {
                 title: '',
                 wname: '',
-                wdate: '',
+                wdate: today,
                 mname: '',
                 lang: [],
 
@@ -110,22 +115,20 @@ export default {
             userID: '',
             userData: null,
             userRole: '',
+            alias:'',
             dissIdById: '',
             defaultview: 1,
             testuser: 1,
             showDismissibleAlert: false,
             // articles: [],            
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'            
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'            
         }
     },
-    async mounted() {
-        console.log('Process 1:')
-        console.log(this.userData)
+    async mounted() {       
         if (document.cookie == null) { return }
 
-        try {
-            console.log('Process 2:')
+        try {         
             const res = await fetch(this.url + "/getsingleuser", {
                 headers: {
                     'Content-type': 'application/json'
@@ -135,14 +138,16 @@ export default {
             const getuserdata = await res.json()
             this.userData = getuserdata
             console.log('Userdata:')
-            console.log(this.userData)
-            console.log('Process 3:')
+            console.log(this.userData)            
             this.userRole = getuserdata.data.role
             console.log('Userrole:')
             console.log(this.userRole)
             this.userID = getuserdata.data.user_id
             console.log('UserID:')
             console.log(this.userID)
+            this.form.wname = getuserdata.data.alias
+            console.log('Alias:')
+            console.log(this.form.wname)            
             // return getuserdata
         }
         catch (error) {
@@ -176,6 +181,7 @@ export default {
         }
     },
     methods: {
+        
         // to() {
         //     this.$router.go(-1)
         // },
@@ -265,8 +271,8 @@ export default {
             event.preventDefault()
             // Reset our form values
             this.form.title = ''
-            this.form.wname = ''
-            this.form.wdate = ''
+            // this.form.wname = ''
+            // this.form.wdate = ''
             // this.form.mname = ''
             this.form.lang = []
             // Trick to reset/clear native browser form validation state

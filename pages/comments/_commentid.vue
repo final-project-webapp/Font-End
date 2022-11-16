@@ -6,21 +6,20 @@
                 <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
 
 
-                <NuxtLink v-if="userRole == 1" class="button"
+                <NuxtLink class="button"
                     :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
                     Write your article
                 </NuxtLink>
 
-                <div v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
+                <!-- <div v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
                     <b-button disabled class="button"> Write your article
-                    </b-button>
-                    <!-- <b-tooltip target="disabled-wrapper" triggers="hover">Login Please.</b-tooltip> -->
-                </div>
+                    </b-button>                    
+                </div> -->
 
             </div>
             <div class="movie-info">
                 <div class="movie-content">
-                    <h1> Title: {{ this.titleById }} </h1>
+                    <h1> Title: {{ this.titleById }} </h1>                    
                 </div>
             </div>
 
@@ -40,7 +39,7 @@
                             }} </span>
                         </div>
                         <div class="h-20 overflow-y-scroll pr-2">
-                            <span class="text-xs "> {{ comment.content }}</span>
+                            <span class="text-xs break-words"> {{ comment.content }}</span>
                         </div>
                         </p>
                     </div>
@@ -52,7 +51,7 @@
                         <div v-if="moviearticle == ''" class="flex justify-center">
                             <p class="font-bold text-4xl">No Articles Yet.</p>
                         </div>
-                        <b-row align-h="center">
+                        <b-row align-h="around">
                             <div v-for="(ma, index ) in moviearticle" :key="index">
 
                                 <b-col cols="12" xl="12" lg="12" md="12" sm="12">
@@ -60,7 +59,7 @@
                                         header-border-variant="primary" header-bg-variant="dark" header-tag="header"
                                         :title="ma.articles" tag="article"
                                         style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
-                                        class="pt-8 pl-4 pr-4 pb-4 mb-4" bg-variant="dark" border-variant="primary"
+                                        class="pt-8 pl-4 pr-4 pb-4 mb-4 break-words" bg-variant="dark" border-variant="primary"
                                         text-variant="light">
                                         <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
                                         <b-card-text class="text-sm"> {{
@@ -110,7 +109,17 @@
                                             </b-dropdown>
                                         </div>
 
-                                        <div class="absolute bottom-3 right-6" v-if="userRole == 1">
+                                        <div class="absolute bottom-3 right-6">
+                                            <b-button @click="countView(ma.article_id)">
+                                                <NuxtLink class=""
+                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id} }">
+                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
+                                                    </b-icon>
+                                                </NuxtLink>
+                                            </b-button>
+                                        </div>
+
+                                        <!-- <div class="absolute bottom-3 right-6" v-if="userRole == 2">
                                             <b-button @click="countView(ma.article_id)">
                                                 <NuxtLink class=""
                                                     :to="{ name: 'articles-articleid', params: { articleid: ma.article_id } }">
@@ -118,26 +127,15 @@
                                                     </b-icon>
                                                 </NuxtLink>
                                             </b-button>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="absolute bottom-3 right-6" v-if="userRole == 2">
-                                            <b-button @click="countView(ma.article_id)">
-                                                <NuxtLink class=""
-                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id } }">
-                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                    </b-icon>
-                                                </NuxtLink>
-                                            </b-button>
-                                        </div>
-
-                                        <div class="absolute bottom-3 right-6" v-if="userData == null"
+                                        <!-- <div class="absolute bottom-3 right-6" v-if="userData == null"
                                             v-b-tooltip.hover.bottom="'Please Login.'">
                                             <b-button disabled>
                                                 <b-icon icon="chat-left-text" variant="primary" font-scale="1">
                                                 </b-icon>
-                                            </b-button>
-                                            <!-- <b-tooltip target="disabled-wrapper" triggers="hover">Login Please.</b-tooltip> -->
-                                        </div>
+                                            </b-button>                                            
+                                        </div> -->
                                     </div>
                                 </b-col>
 
@@ -171,17 +169,13 @@ export default {
             userData: null,
             userRole: '',
             // namedata: '',
-            url: 'https://backend-final.azurewebsites.net'
-            // url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
         }
     },
-    async mounted() {
-        console.log('Process 1:')
-        console.log(this.userData)
+    async mounted() {     
         if (document.cookie == null) { return }
-
-        try {
-            console.log('Process 2:')
+        try {            
             const res = await fetch(this.url + "/getsingleuser", {
                 headers: {
                     'Content-type': 'application/json'
@@ -191,8 +185,7 @@ export default {
             const getuserdata = await res.json()
             this.userData = getuserdata
             console.log('Userdata:')
-            console.log(this.userData)
-            console.log('Process 3:')
+            console.log(this.userData)        
             this.userRole = getuserdata.data.role
             console.log('Userrole:')
             console.log(this.userRole)
@@ -229,11 +222,8 @@ export default {
             const result = await data;
             this.moviearticle = result.data;
 
-            
-            console.log('singlearticle:')
-            
+            console.log('singlearticle:')            
             console.log(this.moviearticle)
-
             }
             catch (error) { console.log(`getSingleArticle: ${error}`) }
         },

@@ -33,8 +33,8 @@ export default {
     data() {
         return {
             userList: [],
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     async created() {
@@ -51,7 +51,7 @@ export default {
             console.log(registerData)
             swal.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                // text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#007bff',
@@ -96,6 +96,7 @@ export default {
                     credentials: 'include',
                     body: JSON.stringify({
                         name: registerData.userName,
+                        alias: registerData.penname,
                         emailaddress: registerData.emailAddress,
                         password: registerData.password,
                         DOB: registerData.dob
@@ -114,15 +115,23 @@ export default {
                         timer: 2000
                     })
                     setTimeout(() => { this.$router.push('/login_page') }, 2000);
-                } else {
+                } else if (resdata.data == 0) {
                     swal.fire({
                         title: 'Register Failed!',
-                        text: 'Your email has been used.',
+                        text: 'Your Email has been used.',
                         icon: 'error',
                         confirmButtonColor: '#dc2626',
                         confirmButtonText: 'Cancel',
                     })
-                }                              
+                } else {
+                    swal.fire({
+                        title: 'Register Failed!',
+                        text: 'Your Username has been used.',
+                        icon: 'error',
+                        confirmButtonColor: '#dc2626',
+                        confirmButtonText: 'Cancel',
+                    })
+                }                             
             }
             catch (error) {
                 console.log(`addUserFalse!!! ${error}`)
