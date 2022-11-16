@@ -93,9 +93,8 @@ export default {
             defaultview: 1,
             testuser: 1,
             showDismissibleAlert: false,
-            // url: 'https://backend-final.azurewebsites.net'
-            url: 'http://localhost:3000'
-            // movienameshow:moviename,
+            url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'          
         };
     },
     async fetch() {        
