@@ -18,6 +18,10 @@
         <div class="mt-20">
             <b-container>
                 <b-card bg-variant="dark" border-variant="primary" class="">
+                    <div class="text-2xl font-bold mb-2 ml-4">
+                        {{ userData.name }}
+                    </div>
+                    
                     <b-row align-h="center">
                         <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
                             <b-container style="max-width:700px;">
@@ -179,8 +183,9 @@ export default {
                     credentials: 'include'
                 })
                 const getuserdata = await res.json()
-                this.userData = getuserdata
+                this.userData = getuserdata.data
 
+                console.log('userData_page name:')
                 console.log(this.userData)
                 this.userRole = getuserdata.data.role
             }
