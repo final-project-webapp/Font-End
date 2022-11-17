@@ -5,21 +5,21 @@
             <div class="flex justify-between">
                 <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
 
+                <div v-if="userData != null">
+                    <NuxtLink class="button" :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
+                        Write your article
+                    </NuxtLink>
+                </div>
 
-                <NuxtLink class="button"
-                    :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
-                    Write your article
-                </NuxtLink>
-
-                <!-- <div v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
+                <div v-if="userData == null" v-b-tooltip.hover.bottom="'Please Login.'">
                     <b-button disabled class="button"> Write your article
-                    </b-button>                    
-                </div> -->
+                    </b-button>
+                </div>
 
             </div>
             <div class="movie-info">
                 <div class="movie-content">
-                    <h1> Title: {{ this.titleById }} </h1>                    
+                    <h1> Title: {{ this.titleById }} </h1>
                 </div>
             </div>
 
@@ -59,8 +59,8 @@
                                         header-border-variant="primary" header-bg-variant="dark" header-tag="header"
                                         :title="ma.articles" tag="article"
                                         style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
-                                        class="pt-8 pl-4 pr-4 pb-4 mb-4 break-words" bg-variant="dark" border-variant="primary"
-                                        text-variant="light">
+                                        class="pt-8 pl-4 pr-4 pb-4 mb-4 break-words" bg-variant="dark"
+                                        border-variant="primary" text-variant="light">
                                         <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
                                         <b-card-text class="text-sm"> {{
                                                 new Date(ma.date).toLocaleString('en-us', {
@@ -112,7 +112,7 @@
                                         <div class="absolute bottom-3 right-6">
                                             <b-button @click="countView(ma.article_id)">
                                                 <NuxtLink class=""
-                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id} }">
+                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id } }">
                                                     <b-icon icon="chat-left-text" variant="primary" font-scale="1">
                                                     </b-icon>
                                                 </NuxtLink>
@@ -173,9 +173,9 @@ export default {
             // url: 'http://localhost:3000'
         }
     },
-    async mounted() {     
+    async mounted() {
         if (document.cookie == null) { return }
-        try {            
+        try {
             const res = await fetch(this.url + "/getsingleuser", {
                 headers: {
                     'Content-type': 'application/json'
@@ -185,7 +185,7 @@ export default {
             const getuserdata = await res.json()
             this.userData = getuserdata
             console.log('Userdata:')
-            console.log(this.userData)        
+            console.log(this.userData)
             this.userRole = getuserdata.data.role
             console.log('Userrole:')
             console.log(this.userRole)
@@ -199,7 +199,7 @@ export default {
             // const result = await data;
             // this.moviearticle = result.data;
 
-            
+
             // console.log('singlearticle:')
             // console.log(this.moviearticle)
         }
@@ -219,11 +219,11 @@ export default {
         async getSingleArticle() {
             try {
                 const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
-            const result = await data;
-            this.moviearticle = result.data;
+                const result = await data;
+                this.moviearticle = result.data;
 
-            console.log('singlearticle:')            
-            console.log(this.moviearticle)
+                console.log('singlearticle:')
+                console.log(this.moviearticle)
             }
             catch (error) { console.log(`getSingleArticle: ${error}`) }
         },
