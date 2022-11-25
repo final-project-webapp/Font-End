@@ -49,7 +49,7 @@
                 <div class="py-8 flex">
                     <b-container fluid style="max-width: 1800px;">
                         <div v-if="moviearticle == ''" class="flex justify-center">
-                            <p class="font-bold text-4xl">No Articles Yet.</p>
+                            <p class="font-bold text-2xl">You currently have no articles.</p>
                         </div>
                         <b-row align-h="around">
                             <div v-for="(ma, index ) in moviearticle" :key="index">
@@ -77,7 +77,7 @@
                                     </b-card>
 
                                     <div class="static">
-                                        <div class="absolute top-3 right-6" v-if="ma.user_user_id === userID">
+                                        <div class="absolute top-3 right-6" v-if="ma.user_user_id == userID">
                                             <b-dropdown size="sm" no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">

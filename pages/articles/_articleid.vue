@@ -13,7 +13,7 @@
         <div class="mt-8 flex justify-center">
 
             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-                <b-container style="max-width: 1000px;" class="mb-8">
+                <b-container style="max-width: 1000px;" class="">
                     
                     <div v-for="(a, index ) in article" :key="index">
 
@@ -39,7 +39,7 @@
                     <b-card border-variant="primary" bg-variant="dark" class="mt-8 overflow-y-scroll"
                         style="height: 380px;">
                         <div v-if="articleComment == ''" class="flex justify-center">
-                            <p class="text-2xl">No Comment Yet.</p>
+                            <p class="text-2xl">You currently have no comments.</p>
                         </div>
                         <b-row align-h="center" class="w-auto">
                             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
@@ -141,7 +141,7 @@
                     </b-card>
 
                 </b-container>
-                <b-container style="max-width: 1000px;" class="" >
+                <b-container style="max-width: 1000px;" class="mt-8" >
 
                     <b-card border-variant="primary" bg-variant="dark" class="">
 
@@ -219,8 +219,8 @@ export default {
             articleId: '',
             editCommetID: '',
             editMode: false,
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     async mounted() {

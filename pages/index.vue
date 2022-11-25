@@ -20,7 +20,12 @@
       <div v-if="searchInput !== ''" id="movie-grid" class="movies-grid">
         <div v-for="(movie, index) in searchedMovies" :key="index" class="movie">
           <div class="movie-img">
-            <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" />
+            <div v-if="movie.poster_path != null">
+              <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" />
+            </div>
+            <div v-else>
+              <img src="@/assests/image/noimage.png" />             
+            </div>
             <p class="review">{{ movie.vote_average }}</p>
             <p class="overview">{{ movie.overview }}</p>
           </div>
@@ -81,7 +86,8 @@
               </NuxtLink>
             </b-button>
             <b-button variant="outline-primary">
-              <NuxtLink class="" :to="{ name: 'comments-commentid', params: {commentid: movie.id, moviename: movie.title} } ">
+              <NuxtLink class=""
+                :to="{ name: 'comments-commentid', params: { commentid: movie.id, moviename: movie.title } }">
                 See Comment
               </NuxtLink>
             </b-button>
@@ -90,7 +96,7 @@
       </div>
     </div>
 
-    <!-- page botton -->    
+    <!-- page botton -->
     <div class="justify-center flex gap-2 pb-8">
       <!-- <b-button >
         <b-icon icon="arrow-left" font-scale="1"></b-icon>
@@ -99,7 +105,7 @@
         <b-icon icon="arrow-right" font-scale="1"></b-icon>
       </b-button> -->
     </div>
-    
+
   </div>
 </template>
 
@@ -123,15 +129,15 @@ export default {
       searchDummyInput: '',
       searchedMovies: [],
       url: 'https://backend-final.azurewebsites.net'
-      // url: 'http://localhost:3000'    
+      // url: 'http://localhost:3000'
     }
   },
   async fetch() {
     if (this.searchDummyInput === '') {
       await this.getMovies()
-         
+
     } else {
-      
+
       await this.searchMovies()
 
     }
@@ -150,10 +156,10 @@ export default {
         console.log('movie:')
         console.log(result.data.data.results)
         console.log('movies:')
-        
+
         result.data.data.results.forEach((movie) => {
           this.movies.push(movie)
-        })       
+        })
         console.log(this.movies)
       }
       catch (error) { console.log(`get movie failed: ${error}`) }
@@ -164,7 +170,7 @@ export default {
       this.searchInput = this.searchDummyInput
       // const data = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1&query=${this.searchInput}`)
       const data = axios.get(`${this.url}/moviessearch/${this.searchInput}`)
-      
+
       const result = await data
       console.log('Searchmovies2:')
       result.data.data.results.forEach((searchMovie) => {
