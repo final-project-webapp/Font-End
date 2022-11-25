@@ -99,8 +99,8 @@ export default {
             userData: null,
             userRole: null,
             // editArticleID: '',
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     // async fetch() {
@@ -112,7 +112,7 @@ export default {
         await this.getSingleUser()
         console.log('UserRole:')
         console.log(this.userRole)
-        if (this.userRole != 2 && this.userRole == null) {
+        if (this.userRole != 2 || this.userRole == null) {
             this.$router.push({ name: 'index' })
             console.log('Redirect2!')
             setTimeout(() => {

@@ -27,6 +27,9 @@
                             <b-container style="max-width:700px;">
                                 <b-card bg-variant="dark" class="overflow-y-scroll"
                                     style="height: 470px; max-width: 700px;">
+                                    <div v-if="articles == ''" class="flex justify-center">
+                                        <p class="font-bold text-2xl">You currently have no articles.</p>
+                                    </div>
                                     <div v-for="(a, index ) in articles" :key="index">
                                         <b-card :header="a.articles" header-text-variant="white"
                                             header-border-variant="primary" header-bg-variant="dark" header-tag="header"
@@ -141,8 +144,8 @@ export default {
             userData: '',
             userRole: '',
             editArticleID: '',
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     validations: {

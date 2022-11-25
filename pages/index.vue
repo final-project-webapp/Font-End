@@ -24,8 +24,7 @@
               <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster_path}`" />
             </div>
             <div v-else>
-              <img src="@/assests/image/noimage.png" />
-              <!-- <b-icon icon="x-square-fill" variant="error" font-scale="7"></b-icon> -->
+              <img src="@/assests/image/noimage.png" />             
             </div>
             <p class="review">{{ movie.vote_average }}</p>
             <p class="overview">{{ movie.overview }}</p>
@@ -129,8 +128,8 @@ export default {
       searchInput: '',
       searchDummyInput: '',
       searchedMovies: [],
-      // url: 'https://backend-final.azurewebsites.net'
-      url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
+      // url: 'http://localhost:3000'
     }
   },
   async fetch() {
