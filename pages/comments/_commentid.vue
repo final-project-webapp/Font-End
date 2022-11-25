@@ -77,7 +77,7 @@
                                     </b-card>
 
                                     <div class="static">
-                                        <div class="absolute top-3 right-6" v-if="ma.user_user_id === userID">
+                                        <div class="absolute top-3 right-6" v-if="ma.user_user_id == userID">
                                             <b-dropdown size="sm" no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
@@ -169,8 +169,8 @@ export default {
             userData: null,
             userRole: '',
             // namedata: '',
-            url: 'https://backend-final.azurewebsites.net'
-            // url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
         }
     },
     async mounted() {

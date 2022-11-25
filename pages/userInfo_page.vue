@@ -80,7 +80,8 @@
                                     placeholder="Current password" rows="8" :state="validateState('oldpassword')"
                                     aria-describedby="feedback_2">
                                 </b-form-input>
-                                <b-form-invalid-feedback id="feedback_2"  class="text-sm">This is a required field and must be at
+                                <b-form-invalid-feedback id="feedback_2" class="text-sm">This is a required field and
+                                    must be at
                                     least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
                             </b-form-group>
                             <b-form-group id="input_group_3" label-for="input_3">
@@ -88,7 +89,8 @@
                                     placeholder="New password" rows="8" :state="validateState('newpassword')"
                                     aria-describedby="feedback_3">
                                 </b-form-input>
-                                <b-form-invalid-feedback id="feedback_3" class="text-sm">This is a required field and must be at
+                                <b-form-invalid-feedback id="feedback_3" class="text-sm">This is a required field and
+                                    must be at
                                     least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
                             </b-form-group>
                             <b-form-group id="input_group_4" label-for="input_4">
@@ -96,7 +98,8 @@
                                     placeholder="Confirm password" rows="8" :state="validateState('confirmpassword')"
                                     aria-describedby="feedback_4">
                                 </b-form-input>
-                                <b-form-invalid-feedback id="feedback_4" class="text-sm">This is a required field and must be at
+                                <b-form-invalid-feedback id="feedback_4" class="text-sm">This is a required field and
+                                    must be at
                                     least 8 characters and not more than 24 characters.</b-form-invalid-feedback>
                             </b-form-group>
                         </div>
@@ -133,7 +136,7 @@ export default {
             editPassword: false,
             pname: '',
             form: {
-                
+
                 oldpassword: '',
                 newpassword: '',
                 confirmpassword: ''
@@ -142,8 +145,8 @@ export default {
             userRole: '',
             userInfo: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     validations: {
@@ -179,6 +182,15 @@ export default {
         if (this.userRole != 1) {
             this.$router.push({ name: 'index' })
             console.log('RedirectUserData2!')
+            setTimeout(() => {
+                swal.fire({
+                    title: 'You need to log in first!',
+                    // text: 'Do you want to continue',
+                    icon: 'warning',
+                    confirmButtonText: 'Done',
+                    confirmButtonColor: '#007bff'
+                })
+            }, 1000);
         }
     },
     methods: {
@@ -240,7 +252,7 @@ export default {
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
-            }     
+            }
             swal.fire({
                 title: 'Are you sure?',
                 text: "After this, your password will be changed.",
@@ -265,7 +277,7 @@ export default {
         },
         hidePenname() {
             this.editUserID = ''
-            this.form.pname = ''           
+            this.form.pname = ''
         },
         hidePassword() {
             this.form.oldpassword = ''
@@ -338,7 +350,7 @@ export default {
             this.$nextTick(() => {
                 this.$v.$reset();
             });
-            
+
         },
 
         async submitPassword() {

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="userRole != 1" class="bg-zinc-800 min-h-screen text-white">       
+    <div v-if="userRole != 1" class="bg-zinc-800 min-h-screen text-white">
         <FailedPage />
     </div>
     <div v-else class="bg-zinc-800 min-h-screen text-white">
@@ -21,7 +21,7 @@
                     <div class="text-2xl font-bold mb-2 ml-4">
                         {{ userData.name }}
                     </div>
-                    
+
                     <b-row align-h="center">
                         <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
                             <b-container style="max-width:700px;">
@@ -141,10 +141,10 @@ export default {
             userData: '',
             userRole: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
-    },    
+    },
     validations: {
         form: {
             title: {
@@ -152,7 +152,7 @@ export default {
                 maxLength: maxLength(1000)
             }
         }
-    },    
+    },
     async created() {
         console.log('RedirectUserData1!')
 
@@ -162,6 +162,15 @@ export default {
         if (this.userRole != 1) {
             this.$router.push({ name: 'index' })
             console.log('RedirectUserData2!')
+            setTimeout(() => {
+                swal.fire({
+                    title: 'You need to log in first!',
+                    // text: 'Do you want to continue',
+                    icon: 'warning',
+                    confirmButtonText: 'Done',
+                    confirmButtonColor: '#007bff'
+                })
+            }, 1000);
         }
         else {
             await this.getSingleArticle()
@@ -173,7 +182,7 @@ export default {
             return $dirty ? !$error : null;
         },
         // GET
-        async getSingleUser() {            
+        async getSingleUser() {
             try {
                 const res = await fetch(this.url + "/getsingleuser", {
                     headers: {

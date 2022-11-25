@@ -13,7 +13,7 @@
         <div class="mt-8 flex justify-center">
 
             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-                <b-container style="max-width: 1000px;" class="mb-8">
+                <b-container style="max-width: 1000px;" class="">
                     
                     <div v-for="(a, index ) in article" :key="index">
 
@@ -141,7 +141,7 @@
                     </b-card>
 
                 </b-container>
-                <b-container style="max-width: 1000px;" class="" >
+                <b-container style="max-width: 1000px;" class="mt-8" >
 
                     <b-card border-variant="primary" bg-variant="dark" class="">
 

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="userRole != 2" class="bg-zinc-800 min-h-screen text-white">       
+    <div v-if="userRole != 2" class="bg-zinc-800 min-h-screen text-white">
         <FailedPage />
     </div>
 
@@ -83,6 +83,7 @@
 </template>
 <script>
 // import axios from "axios"
+import swal from 'sweetalert2/dist/sweetalert2.js';
 import SlideBar from '@/components/slide_bar.vue'
 import FailedPage from '@/components/failed_page.vue'
 
@@ -98,8 +99,8 @@ export default {
             userData: null,
             userRole: null,
             // editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     // async fetch() {
@@ -111,9 +112,18 @@ export default {
         await this.getSingleUser()
         console.log('UserRole:')
         console.log(this.userRole)
-        if (this.userRole != 2) {
+        if (this.userRole != 2 && this.userRole == null) {
             this.$router.push({ name: 'index' })
             console.log('Redirect2!')
+            setTimeout(() => {
+                swal.fire({
+                    title: 'You do not have privileges here.',
+                    // text: 'Do you want to continue',
+                    icon: 'error',
+                    confirmButtonText: 'Done',
+                    confirmButtonColor: '#007bff'
+                })
+            }, 1000);
         } else {
             await this.getAllUser()
         }
@@ -162,7 +172,7 @@ export default {
                     credentials: 'include'
                 })
                 const getuserdata = await res.json()
-                this.userData = getuserdata                
+                this.userData = getuserdata
 
                 console.log(this.userData)
                 this.userRole = getuserdata.data.role
