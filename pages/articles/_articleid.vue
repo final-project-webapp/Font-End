@@ -14,13 +14,13 @@
 
             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                 <b-container style="max-width: 1000px;" class="">
-                    
+
                     <div v-for="(a, index ) in article" :key="index">
 
-                            <b-card-text class="text-2xl mb-2 font-bold break-words">
-                                {{ a.movie_name }}
-                            </b-card-text>
-                        
+                        <b-card-text class="text-2xl mb-2 font-bold break-words">
+                            {{ a.movie_name }}
+                        </b-card-text>
+
                     </div>
                     <div v-for="(a, index ) in article" :key="index">
                         <b-card border-variant="primary" bg-variant="secondary">
@@ -141,7 +141,7 @@
                     </b-card>
 
                 </b-container>
-                <b-container style="max-width: 1000px;" class="mt-8" >
+                <b-container style="max-width: 1000px;" class="mt-8">
 
                     <b-card border-variant="primary" bg-variant="dark" class="">
 
@@ -179,10 +179,6 @@
 
                 </b-container>
                 <b-container v-if="userRole == 2"></b-container>
-                <!-- <div>
-                    <CF class="mt-8" @comment-data="addComment"
-                    v-bind:oldCommentData="articleComment" />
-                </div> -->
             </b-col>
 
         </div>
@@ -209,7 +205,7 @@ export default {
             form: {
                 comment: '',
             },
-            titleById:'',
+            titleById: '',
             userID: '',
             userData: null,
             userRole: '',
@@ -227,7 +223,6 @@ export default {
         if (document.cookie == null) { return }
 
         try {
-            // console.log('Process 2:')
             const res = await fetch(this.url + "/getsingleuser", {
                 headers: {
                     'Content-type': 'application/json'
@@ -239,7 +234,6 @@ export default {
             this.userData = getuserdata
             console.log('Userdata:')
             console.log(this.userData)
-            // console.log('Process 3:')
             this.userRole = getuserdata.data.role
             console.log('Userrole:')
             console.log(this.userRole)
@@ -258,7 +252,6 @@ export default {
     async fetch() {
         await this.getSingleArticle();
         await this.getCommentArticle();
-        // await this.getMovieName();
     },
     validations: {
         form: {

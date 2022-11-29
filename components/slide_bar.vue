@@ -94,8 +94,7 @@ export default {
             // confirmButtonText: 'Done',
             showConfirmButton: false,
             timer: 2000
-          })
-          // setTimeout(() => { this.$router.go(0) }, 1000);
+          })        
           setTimeout(() => { this.$router.push({name: 'index'}) }, 1000);
           setTimeout(() => { this.$router.go(0) }, 2000);
         }
@@ -111,23 +110,7 @@ export default {
           confirmButtonText: 'Done',
         })
       }
-    },
-
-    // async getCookie() {
-    //   try {
-    //     await fetch(this.url + "/getcookie", {
-    //       method: 'GET',
-    //       headers: {
-    //         'Content-type': 'application/json'
-    //       },
-    //       withCredentials: true,
-    //       credentials: 'include'
-    //     })     
-    //     console.log('GetCookie!!!')
-        
-    //   }
-    //   catch (error) { console.log(`get cookie failed: ${error}`) }
-    // },
+    },    
   },
 
 }
