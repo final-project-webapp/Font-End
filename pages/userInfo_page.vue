@@ -150,12 +150,7 @@ export default {
         }
     },
     validations: {
-        form: {
-            // pname: {
-            //     required,
-            //     minLength: minLength(3),
-            //     maxLength: maxLength(20),
-            // },
+        form: {            
             oldpassword: {
                 required,
                 minLength: minLength(8),

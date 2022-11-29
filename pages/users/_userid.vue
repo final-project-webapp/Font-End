@@ -1,5 +1,9 @@
 <template>
-    <div class="bg-zinc-800 min-h-screen text-white">
+    <div v-if="userRole != 2" class="bg-zinc-800 min-h-screen text-white">
+        <FailedPage />
+    </div>
+
+    <div v-else class="bg-zinc-800 min-h-screen text-white">
         <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
@@ -56,8 +60,8 @@
                                                     <b-icon icon="chat-left-text" font-scale="1">
                                                     </b-icon>
                                                     See comment
-                                                </NuxtLink>                                                
-                                            </b-dropdown-item-button>                                            
+                                                </NuxtLink>
+                                            </b-dropdown-item-button>
                                         </b-dropdown>
                                     </div>
 
@@ -106,12 +110,15 @@
 // import { required, maxLength } from "vuelidate/lib/validators";
 // import swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from "axios"
+import swal from 'sweetalert2/dist/sweetalert2.js';
 import SlideBar from '@/components/slide_bar.vue'
+import FailedPage from '@/components/failed_page.vue';
 
 export default {
     name: 'UserPage',
     components: {
-        SlideBar
+        SlideBar,
+        FailedPage
     },
     // mixins: [validationMixin],
     data() {
@@ -122,7 +129,7 @@ export default {
             // },
             singleUser: '',
             userData: '',
-            userInfo: '',
+            userRole: '',
             editArticleID: '',
             // url: 'http://localhost:3000'
             url: 'https://backend-final.azurewebsites.net'
@@ -136,95 +143,83 @@ export default {
     //         }
     //     }
     // },
-    async mounted() {
-        try {
-            // const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
-            // const result = await data;    
-            // this.articles = result.data.data;
 
-            // console.log('_userArticle:')
-            // console.log(this.articles)
+    async created() {
+        console.log('RedirectUserData1!')
 
-            const res = await fetch(this.url + "/getarticlebyidparam/" + this.$route.params.userid, {
-                headers: {
-                    'Content-type': 'application/json'
-                },
-                credentials: 'include'
-            })
-            const getarticlebyid = await res.json()
-            this.articles = getarticlebyid.data
-            console.log('_userArticle:')
-            console.log(this.articles)
+        await this.getSingleUser()
+        console.log('UserRole:')
+        console.log(this.userRole)
+        if (this.userRole != 2) {
+            this.$router.push({ name: 'index' })
+            console.log('RedirectUserData2!')
+            setTimeout(() => {
+                swal.fire({
+                    title: 'You do not have privileges here.',
+                    // text: 'Do you want to continue',
+                    icon: 'error',
+                    confirmButtonText: 'Done',
+                    confirmButtonColor: '#007bff'
+                })
+            }, 1000);
+        } else {
+            await this.getArticleByID
         }
-        catch (error) { console.log(`getArticleUser F: ${error}`) }
     },
+
+    // async mounted() {
+
+    // },
 
     // async fetch() {
     //     await this.getAllUser();        
 
     // },
     methods: {
-        // validateState(title) {
-        //     const { $dirty, $error } = this.$v.form[title];
-        //     return $dirty ? !$error : null;
-        // },
-        // EDIT
-        // showArticleInfo(articleInfo) {
-        //     this.editArticleID = articleInfo.article_id
-        //     this.form.title = articleInfo.articles
-        // },
-        // async onSubmit() {
-        //     this.$v.form.$touch();
-        //     if (this.$v.form.$anyError) {
-        //         return;
-        //     }
-        //     try {
-        //         console.log('_userFormTitle:')
-        //         console.log(this.form.title)
-        //         await fetch(this.url + "/editarticle1", {
-        //             method: 'PUT',
-        //             headers: {
-        //                 'Content-type': 'application/json'
-        //             },
-        //             credentials: 'include',
-        //             body: JSON.stringify({
-        //                 article_id: this.editArticleID,
-        //                 articles: this.form.title
-        //             }),
-        //         })
-        //         const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
-        //         const result = await data;
-        //         this.articles = result.data.data;
+        // GET
+        async getSingleUser() {
+            try {
+                const res = await fetch(this.url + "/getsingleuser", {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    withCredentials: true,
+                    credentials: 'include'
+                })
+                const getuserdata = await res.json()
+                this.userData = getuserdata.data
+                console.log('UserInfo_page:')
+                console.log(this.userData)
+                this.userRole = getuserdata.data.role
+            }
+            catch (error) {
+                console.log(`get user failed: ${error}`)
+            }
+        },
 
-        //         console.log('_refreshUserArticle:')
-        //         console.log(this.aticles)
-        //         swal.fire({
-        //             title: 'Submit Success!',
-        //             // text: 'Do you want to continue',
-        //             icon: 'success',
-        //             confirmButtonText: 'Done',
-        //             confirmButtonColor: '#007bff'
-        //         })
-        //         // setTimeout(() => { this.$router.go(-1) }, 2000);
-        //         // console.log('EditForm:')
-        //         // console.log(this.form.title, this.editArticleID)
-        //         this.editArticleID = ''
-        //         this.form.title = ''
-        //         this.$nextTick(() => {
-        //             this.$v.$reset();
-        //         });
-        //     }
-        //     catch (error) {
-        //         console.log(`EditArticle False!!! ${error}`)
-        //         swal.fire({
-        //             title: 'Submit Error!',
-        //             // text: '${error}',
-        //             icon: 'error',
-        //             confirmButtonText: 'Cancel',
-        //             confirmButtonColor: '#007bff'
-        //         })
-        //     }
-        // },
+        async getArticleByID() {
+            try {
+                // const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
+                // const result = await data;    
+                // this.articles = result.data.data;
+
+                // console.log('_userArticle:')
+                // console.log(this.articles)
+
+                const res = await fetch(this.url + "/getarticlebyidparam/" + this.$route.params.userid, {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                })
+                const getarticlebyid = await res.json()
+                this.articles = getarticlebyid.data
+                console.log('_userArticle:')
+                console.log(this.articles)
+            }
+            catch (error) { console.log(`getArticleUser F: ${error}`) }
+        },
+
         // DELETE
         async deleteArticle(articleId) {
             console.log("Delete ID")
