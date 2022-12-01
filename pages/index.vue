@@ -128,8 +128,8 @@ export default {
       searchInput: '',
       searchDummyInput: '',
       searchedMovies: [],
-      url: 'https://backend-final.azurewebsites.net'
-      // url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
     }
   },
   async fetch() {
@@ -145,8 +145,7 @@ export default {
   fetchDelay: 2000,
 
   methods: {
-    async getMovies() {
-      console.log(this.url)
+    async getMovies() {      
       try {
         // const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
         const data = axios.get(this.url + "/movies/1")
