@@ -37,9 +37,7 @@
                                             style="height: auto; max-width: 700px; " bg-variant="dark"
                                             text-variant="light" border-variant="primary">
                                             <b-card-text class="text-sm break-words">Movie name: {{ a.movie_name }}
-                                            </b-card-text>
-                                            <b-card-text class="text-sm break-words">Writer: {{ a.writer }}
-                                            </b-card-text>
+                                            </b-card-text>                                            
                                             <b-card-text class="text-sm">Date: {{ new
                                                     Date(a.date).toLocaleString('en-us', {
                                                         month: 'long',
@@ -144,8 +142,8 @@ export default {
             userData: '',
             userRole: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     validations: {

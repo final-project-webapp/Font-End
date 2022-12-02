@@ -23,11 +23,11 @@
 
                     </div>
                     <div v-for="(a, index ) in article" :key="index">
-                        <b-card border-variant="primary" bg-variant="secondary">
+                        <b-card border-variant="primary" bg-variant="dark">
                             <b-card-text class="text-lg break-words">
                                 {{ a.articles }}
                             </b-card-text>
-                            <b-card-text class="text-sm">
+                            <b-card-text class="text-sm mt-2">
                                 Writer: {{ a.writer }}
                             </b-card-text>
                             <!-- <b-card-text class="text-sm">
@@ -39,7 +39,7 @@
                     <b-card border-variant="primary" bg-variant="dark" class="mt-8 overflow-y-scroll"
                         style="height: 380px;">
                         <div v-if="articleComment == ''" class="flex justify-center">
-                            <p class="text-2xl">You currently have no comments.</p>
+                            <p class="text-2xl font-bold mt-20">This article currently have no comments.</p>
                         </div>
                         <b-row align-h="center" class="w-auto">
                             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
@@ -339,13 +339,14 @@ export default {
                 this.form.comment = ''
                 this.$nextTick(() => {
                     this.$v.$reset();
-                });
-                const data = axios.get(`${this.url}/getcommentinarticle/${this.articleId}`)
-                const result = await data;
-                console.log('Result')
-                console.log(result)
+                })
+                await this.getCommentArticle();
+                // const data = axios.get(`${this.url}/getcommentinarticle/${this.articleId}`)
+                // const result = await data;
+                // console.log('Result')
+                // console.log(result)
 
-                this.articleComment = result.data;
+                // this.articleComment = result.data;
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)

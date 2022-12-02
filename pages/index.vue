@@ -120,7 +120,7 @@ export default {
     Header,
     Loading
   },
-  layout: "nav-bar",
+  // layout: "nav-bar",
 
   data() {
     return {

@@ -24,6 +24,11 @@
             </div>
 
             <b-card bg-variant="dark" class="h-80 overflow-y-scroll pr-2">
+
+                <div v-if="comments == ''" class="flex justify-center">
+                    <p class="font-bold text-2xl mt-20">No one has mentioned this movie yet.</p>
+                </div>
+
                 <div v-for="(comment, index) in comments" :key="index" class="movie-info">
                     <div class="movie-content ">
                         <p class="movie-fact">
@@ -49,18 +54,19 @@
                 <div class="py-8 flex">
                     <b-container fluid style="max-width: 1800px;">
                         <div v-if="moviearticle == ''" class="flex justify-center">
-                            <p class="font-bold text-2xl">You currently have no articles.</p>
+                            <p class="font-bold text-2xl mt-20">This movie currently have no articles.</p>
                         </div>
                         <b-row align-h="around">
                             <div v-for="(ma, index ) in moviearticle" :key="index">
 
                                 <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-                                    <b-card :header="ma.movie_name" header-text-variant="white"
-                                        header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                        :title="ma.articles" tag="article"
-                                        style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
-                                        class="pt-8 pl-4 pr-4 pb-4 mb-4 break-words" bg-variant="dark"
-                                        border-variant="primary" text-variant="light">
+                                    <b-card
+                                        style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px;"
+                                        class="pt-8 pl-4 pr-4 pb-8 mb-4" bg-variant="dark" border-variant="primary"
+                                        text-variant="light">
+                                        <b-card-text class="text-lg break-words truncate ..."> {{ ma.articles
+                                        }}</b-card-text>
+                                        <b-card-text class="text-lg text-[#007bff]"> _________________ </b-card-text>
                                         <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
                                         <b-card-text class="text-sm"> {{
                                                 new Date(ma.date).toLocaleString('en-us', {
@@ -69,11 +75,9 @@
                                                     year: 'numeric',
                                                 })
                                         
-                                        }}</b-card-text>
-                                        <!-- <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text> -->
+                                        }}</b-card-text>                                        
                                         <b-card-text class="text-sm">Language: {{ ma.language }}</b-card-text>
-                                        <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>
-                                        <!-- <b-card-text class="text-sm">WrittterID: {{ ma.user_user_id }} </b-card-text> -->
+                                        <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>                                        
                                     </b-card>
 
                                     <div class="static">
@@ -229,8 +233,6 @@ export default {
         },
 
         async getComment() {
-            console.log('titleById3')
-            console.log(this.titleById)
             try {
                 const data = axios.get(`${this.url}/moviesreviews/${this.$route.params.commentid}`)
                 const result = await data;
@@ -309,6 +311,7 @@ export default {
                 })
                 console.log('countview:')
                 console.log(articleId)
+                await this.getSingleArticle();
             } catch (error) {
                 console.log(`countview failed: ${error}`)
             }
