@@ -88,53 +88,7 @@
                                             </b-dropdown>
                                         </div>
 
-                                    </b-card>
-
-                                    <!-- <b-card :title="ac.name" tag="article" style="" class="mb-2 text-xs"
-                                        bg-variant="secondary" text-variant="primary" border-variant="primary" v-if="ac.role == 2">
-
-
-                                        <b-card-text class="text-sm">: {{ ac.comment }}</b-card-text>
-                                        <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
-                                        <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text>
-
-                                        <div class="absolute top-4 right-4" v-if="ac.user_id == userID">
-                                            <b-dropdown size="sm" no-caret>
-                                                <template #button-content>
-                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
-                                                    </b-icon>
-                                                </template>
-                                                <b-dropdown-item-button variant="dark" class="text-xs"
-                                                    @click="deleteComment(ac.comment_id)">
-                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                        class="flex justify-end"></b-icon>
-                                                    Delete
-                                                </b-dropdown-item-button>
-                                                <b-dropdown-item-button variant="dark" class="text-xs"
-                                                    @click="showCommentInfo(ac)">
-                                                    <b-icon icon="pencil-square" variant="dark" font-scale="1"
-                                                        class="flex justify-end"></b-icon>
-                                                    Edit
-                                                </b-dropdown-item-button>
-                                            </b-dropdown>
-                                        </div>
-
-                                        <div class="absolute top-4 right-4" v-if="userRole == 2">
-                                            <b-dropdown size="sm" no-caret>
-                                                <template #button-content>
-                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
-                                                    </b-icon>
-                                                </template>
-                                                <b-dropdown-item-button variant="dark" class="text-xs"
-                                                    @click="deleteComment(ac.comment_id)">
-                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                        class="flex justify-end"></b-icon>
-                                                    Delete
-                                                </b-dropdown-item-button>                                                
-                                            </b-dropdown>
-                                        </div>
-
-                                    </b-card> -->
+                                    </b-card>                                    
                                 </div>
                             </b-col>
                         </b-row>
@@ -215,8 +169,8 @@ export default {
             articleId: '',
             editCommetID: '',
             editMode: false,
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     async mounted() {
@@ -296,22 +250,7 @@ export default {
 
             console.log('Comment Article:')
             console.log(this.articleComment)
-        },
-
-        // async getMovieName() {
-        //     try {
-        //         const dataId = axios.get(`${this.url}/moviessearchId/${this.$route.params.movieid}`)
-        //         console.log('MovieID')
-        //         console.log(this.$route.params.movieid)
-
-        //         const resultId = await dataId            
-        //         this.titleById = resultId.data.data.title;
-
-        //         console.log('titleById:')
-        //         console.log(this.titleById)
-        //     }
-        //     catch (error) { console.log(`get MovieName failed: ${error}`) }
-        // },
+        },        
 
         // Post
         async postComment() {
@@ -340,13 +279,7 @@ export default {
                 this.$nextTick(() => {
                     this.$v.$reset();
                 })
-                await this.getCommentArticle();
-                // const data = axios.get(`${this.url}/getcommentinarticle/${this.articleId}`)
-                // const result = await data;
-                // console.log('Result')
-                // console.log(result)
-
-                // this.articleComment = result.data;
+                await this.getCommentArticle();                
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)

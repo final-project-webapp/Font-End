@@ -29,7 +29,7 @@
 
         <!-- search article -->
         <div v-if="searchInput !== ''">
-          <div v-for="(sa, index) in searchedArticles" :key="index">           
+          <div v-for="(sa, index) in searchedArticles" :key="index">
             <b-card bg-variant="dark" class="mb-8">
 
               <b-row align-h="around">
@@ -37,13 +37,11 @@
                   <div class="object-contain h-auto w-48">
                     <img :src="`https://image.tmdb.org/t/p/w500/${sa.picture_path}`" />
                   </div>
-                  <div>
-                    <!-- <b-button> -->
+                  <div>                    
                     <NuxtLink
                       :to="{ name: 'comments-commentid', params: { commentid: sa.movie_id, moviename: sa.title } }">
                       <p class="font-bold text-xl justify-center flex mt-4">{{ sa.title }}</p>
-                    </NuxtLink>
-                    <!-- </b-button> -->
+                    </NuxtLink>               
                   </div>
                 </b-col>
                 <b-col cols="10" xl="10" lg="10" md="10" sm="10">
@@ -54,7 +52,7 @@
 
                   <!-- <div class="overflow-x-scroll h-80"> -->
                   <!-- <b-container style="width: 1600px;"> -->
-                  <b-row align-h="start" class="mt-8">
+                  <b-row align-h="around" class="mt-8">
                     <div v-for="(data, index) in sa.articlename" :key="index">
                       <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                         <b-card style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px;"
@@ -147,12 +145,20 @@
                           }}</b-card-text>
                           <b-card-text class="text-sm">Language: {{ data.language }}</b-card-text>
                           <b-card-text class="text-sm">View: {{ data.view }} </b-card-text>
-                          <b-card-text class="text-sm">usereID: {{ data.user_user_id }} </b-card-text>
+                          <!-- <b-card-text class="text-sm">usereID: {{ data.user_user_id }} </b-card-text>
+                          <b-card-text class="text-sm">userRank: {{ rankData }} </b-card-text> -->
 
                           <div class="static">
-                            <div class="absolute top-3 right-6">
-                              <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                            <div v-for="(r, index) in userRank" :key="index">
+                              <!-- <p>R:{{r}}</p> -->
+
+                              <div v-if="(data.user_user_id == r)">
+                                <div class="absolute top-3 right-6">
+                                  <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                                </div>
+                              </div>
                             </div>
+                            <!-- </div> -->
                             <div class="absolute bottom-3 right-6">
                               <b-button @click="countView(data.article_id)">
                                 <NuxtLink class=""
@@ -206,42 +212,11 @@ export default {
       userData: null,
       userRole: '',
       userRank: '',
-      url: 'http://localhost:3000'
-      // url: 'https://backend-final.azurewebsites.net'
+      rankData: [],
+      // url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
     }
   },
-  // async mounted() {
-  //   if (document.cookie == null) { return }
-
-  //   try {
-  //     const res = await fetch(this.url + "/getsingleuser", {
-  //       headers: {
-  //         'Content-type': 'application/json'
-  //       },
-  //       credentials: 'include'
-  //     })
-  //     const getuserdata = await res.json()
-  //     this.userData = getuserdata
-  //     console.log('Userdata:')
-  //     console.log(this.userData)
-  //     this.userRole = getuserdata.data.role
-  //     console.log('Userrole:')
-  //     console.log(this.userRole)
-  //     this.userID = getuserdata.data.user_id
-  //     console.log('UserID:')
-  //     console.log(this.userID)
-
-  //   }
-  //   catch (error) {
-  //     console.log(`get user failed: ${error}`)
-  //   }
-  // },
-
-  // async created() {
-  //   this.articles = await getRandomArticles()
-
-  //   console.log('Articles:')
-  // },
 
   async fetch() {
     if (this.searchDummyArticle === '') {
@@ -283,9 +258,14 @@ export default {
         const rank = axios.get(`${this.url}/userrank`)
 
         const resultRank = await rank
-        this.userRank = resultRank.data
+        this.userRank = resultRank.data.user_id
         console.log('UserRank')
         console.log(this.userRank)
+        for (const i in this.userRank) {
+          this.rankData = this.userRank[i]
+        }
+        console.log('RankData')
+        console.log(this.rankData)
       }
       catch (error) { console.log(`get Rank failed: ${error}`) }
     },

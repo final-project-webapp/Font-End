@@ -74,12 +74,7 @@
                     </b-card>
                 </div>
             </b-container>
-        </div>
-
-        <!-- <DF :moviename="this.namedata" @discuss-data="addArticle" /> -->
-        <!-- <h1> Title: {{ this.titleById }} </h1> -->
-        <!-- <DF @discuss-data="addArticle" /> -->
-
+        </div>        
     </div>
 </template>
 
@@ -119,10 +114,9 @@ export default {
             dissIdById: '',
             defaultview: 1,
             testuser: 1,
-            showDismissibleAlert: false,
-            // articles: [],            
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'            
+            showDismissibleAlert: false,       
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'            
         }
     },
     async mounted() {       

@@ -97,13 +97,7 @@
     </div>
 
     <!-- page botton -->
-    <div class="justify-center flex gap-2 pb-8">
-      <!-- <b-button >
-        <b-icon icon="arrow-left" font-scale="1"></b-icon>
-      </b-button>
-      <b-button >
-        <b-icon icon="arrow-right" font-scale="1"></b-icon>
-      </b-button> -->
+    <div class="justify-center flex gap-2 pb-8">     
     </div>
 
   </div>
@@ -128,8 +122,8 @@ export default {
       searchInput: '',
       searchDummyInput: '',
       searchedMovies: [],
-      // url: 'https://backend-final.azurewebsites.net'
-      url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
+      // url: 'http://localhost:3000'
     }
   },
   async fetch() {

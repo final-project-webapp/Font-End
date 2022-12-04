@@ -76,14 +76,23 @@
                                                     year: 'numeric',
                                                 })
                                         
-                                        }}</b-card-text>                                        
+                                        }}</b-card-text>
                                         <b-card-text class="text-sm">Language: {{ ma.language }}</b-card-text>
-                                        <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>                                        
+                                        <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>
                                     </b-card>
 
                                     <div class="static">
-                                        <div class="absolute top-3 right-6" v-if="ma.user_user_id == userID">
-                                            <b-dropdown size="sm" no-caret>
+                                        <div v-for="(r, index) in userRank" :key="index">
+                                            <!-- <p>R:{{r}}</p> -->
+
+                                            <div v-if="(ma.user_user_id == r)">
+                                                <div class="absolute top-3 right-8">
+                                                    <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="absolute bottom-3 right-20" v-if="ma.user_user_id == userID">
+                                            <b-dropdown no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
                                                     </b-icon>
@@ -98,8 +107,8 @@
                                             </b-dropdown>
                                         </div>
 
-                                        <div class="absolute top-3 right-6" v-if="userRole == 2">
-                                            <b-dropdown size="sm" no-caret>
+                                        <div class="absolute bottom-3 right-20" v-if="userRole == 2">
+                                            <b-dropdown no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
                                                     </b-icon>
@@ -122,25 +131,7 @@
                                                     </b-icon>
                                                 </NuxtLink>
                                             </b-button>
-                                        </div>
-
-                                        <!-- <div class="absolute bottom-3 right-6" v-if="userRole == 2">
-                                            <b-button @click="countView(ma.article_id)">
-                                                <NuxtLink class=""
-                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id } }">
-                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                    </b-icon>
-                                                </NuxtLink>
-                                            </b-button>
-                                        </div> -->
-
-                                        <!-- <div class="absolute bottom-3 right-6" v-if="userData == null"
-                                            v-b-tooltip.hover.bottom="'Please Login.'">
-                                            <b-button disabled>
-                                                <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                </b-icon>
-                                            </b-button>                                            
-                                        </div> -->
+                                        </div>                                        
                                     </div>
                                 </b-col>
 
@@ -173,9 +164,11 @@ export default {
             userID: '',
             userData: null,
             userRole: '',
+            userRank: '',
+            rankData: [],
             // namedata: '',
-            // url: 'https://backend-final.azurewebsites.net'
-            url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
         }
     },
     async mounted() {
@@ -196,17 +189,7 @@ export default {
             console.log(this.userRole)
             this.userID = getuserdata.data.user_id
             console.log('UserID:')
-            console.log(this.userID)
-            // return getuserdata
-
-            // MOUNT Articles
-            // const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
-            // const result = await data;
-            // this.moviearticle = result.data;
-
-
-            // console.log('singlearticle:')
-            // console.log(this.moviearticle)
+            console.log(this.userID)            
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
@@ -277,7 +260,7 @@ export default {
                 console.log('single movie:')
                 console.log(result.data)
 
-                this.moviearticle = result.data;               
+                this.moviearticle = result.data;
             }
             catch (error) { console.log(`get MovieName failed: ${error}`) }
         },
@@ -304,18 +287,18 @@ export default {
         async getUserRank() {
             try {
                 const rank = axios.get(`${this.url}/userrank`)
-                                
+
                 const resultRank = await rank
+                this.userRank = resultRank.data.user_id
                 console.log('UserRank')
-                console.log(resultRank)
-
-                // this.idById = resultId.data.data.id;
-
-                // console.log('idByIdTest:')
-                // console.log(this.idById)
-
+                console.log(this.userRank)
+                for (const i in this.userRank) {
+                    this.rankData = this.userRank[i]
+                }
+                console.log('RankData')
+                console.log(this.rankData)
             }
-            catch (error) { console.log(`get MovieID failed: ${error}`) }
+            catch (error) { console.log(`get Rank failed: ${error}`) }
         },
 
         // POST
