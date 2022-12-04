@@ -3,7 +3,8 @@
         <Loading v-if="$fetchState.pending" />
         <div v-else class="container comment-movie">
             <div class="flex justify-between">
-                <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
+                <!-- <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink> -->
+                <b-button class="button" @click="back">Back</b-button>
 
                 <div v-if="userData != null">
                     <NuxtLink class="button" :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
@@ -24,6 +25,11 @@
             </div>
 
             <b-card bg-variant="dark" class="h-80 overflow-y-scroll pr-2">
+
+                <div v-if="comments == ''" class="flex justify-center">
+                    <p class="font-bold text-2xl mt-20">No one has mentioned this movie yet.</p>
+                </div>
+
                 <div v-for="(comment, index) in comments" :key="index" class="movie-info">
                     <div class="movie-content ">
                         <p class="movie-fact">
@@ -49,18 +55,19 @@
                 <div class="py-8 flex">
                     <b-container fluid style="max-width: 1800px;">
                         <div v-if="moviearticle == ''" class="flex justify-center">
-                            <p class="font-bold text-2xl">You currently have no articles.</p>
+                            <p class="font-bold text-2xl mt-20">This movie currently have no articles.</p>
                         </div>
-                        <b-row align-h="around">
+                        <b-row align-h="start">
                             <div v-for="(ma, index ) in moviearticle" :key="index">
 
                                 <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-                                    <b-card :header="ma.movie_name" header-text-variant="white"
-                                        header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                        :title="ma.articles" tag="article"
-                                        style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px; font-size:large"
-                                        class="pt-8 pl-4 pr-4 pb-4 mb-4 break-words" bg-variant="dark"
-                                        border-variant="primary" text-variant="light">
+                                    <b-card
+                                        style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px;"
+                                        class="pt-8 pl-4 pr-4 pb-8 mb-4" bg-variant="dark" border-variant="primary"
+                                        text-variant="light">
+                                        <b-card-text class="text-lg break-words truncate ..."> {{ ma.articles
+                                        }}</b-card-text>
+                                        <b-card-text class="text-lg text-[#007bff]"> _________________ </b-card-text>
                                         <b-card-text class="text-sm">Writer: {{ ma.writer }}</b-card-text>
                                         <b-card-text class="text-sm"> {{
                                                 new Date(ma.date).toLocaleString('en-us', {
@@ -70,15 +77,22 @@
                                                 })
                                         
                                         }}</b-card-text>
-                                        <!-- <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text> -->
                                         <b-card-text class="text-sm">Language: {{ ma.language }}</b-card-text>
                                         <b-card-text class="text-sm">View: {{ ma.view }} </b-card-text>
-                                        <!-- <b-card-text class="text-sm">WrittterID: {{ ma.user_user_id }} </b-card-text> -->
                                     </b-card>
 
                                     <div class="static">
-                                        <div class="absolute top-3 right-6" v-if="ma.user_user_id == userID">
-                                            <b-dropdown size="sm" no-caret>
+                                        <div v-for="(r, index) in userRank" :key="index">
+                                            <!-- <p>R:{{r}}</p> -->
+
+                                            <div v-if="(ma.user_user_id == r)">
+                                                <div class="absolute top-3 right-8">
+                                                    <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="absolute bottom-3 right-20" v-if="ma.user_user_id == userID">
+                                            <b-dropdown no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
                                                     </b-icon>
@@ -93,8 +107,8 @@
                                             </b-dropdown>
                                         </div>
 
-                                        <div class="absolute top-3 right-6" v-if="userRole == 2">
-                                            <b-dropdown size="sm" no-caret>
+                                        <div class="absolute bottom-3 right-20" v-if="userRole == 2">
+                                            <b-dropdown no-caret>
                                                 <template #button-content>
                                                     <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
                                                     </b-icon>
@@ -117,25 +131,7 @@
                                                     </b-icon>
                                                 </NuxtLink>
                                             </b-button>
-                                        </div>
-
-                                        <!-- <div class="absolute bottom-3 right-6" v-if="userRole == 2">
-                                            <b-button @click="countView(ma.article_id)">
-                                                <NuxtLink class=""
-                                                    :to="{ name: 'articles-articleid', params: { articleid: ma.article_id } }">
-                                                    <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                    </b-icon>
-                                                </NuxtLink>
-                                            </b-button>
-                                        </div> -->
-
-                                        <!-- <div class="absolute bottom-3 right-6" v-if="userData == null"
-                                            v-b-tooltip.hover.bottom="'Please Login.'">
-                                            <b-button disabled>
-                                                <b-icon icon="chat-left-text" variant="primary" font-scale="1">
-                                                </b-icon>
-                                            </b-button>                                            
-                                        </div> -->
+                                        </div>                                        
                                     </div>
                                 </b-col>
 
@@ -168,6 +164,8 @@ export default {
             userID: '',
             userData: null,
             userRole: '',
+            userRank: '',
+            rankData: [],
             // namedata: '',
             url: 'https://backend-final.azurewebsites.net'
             // url: 'http://localhost:3000'
@@ -191,17 +189,7 @@ export default {
             console.log(this.userRole)
             this.userID = getuserdata.data.user_id
             console.log('UserID:')
-            console.log(this.userID)
-            // return getuserdata
-
-            // MOUNT Articles
-            // const data = axios.get(`${this.url}/getsinglearticlename/${this.titleById}`)
-            // const result = await data;
-            // this.moviearticle = result.data;
-
-
-            // console.log('singlearticle:')
-            // console.log(this.moviearticle)
+            console.log(this.userID)            
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
@@ -212,9 +200,14 @@ export default {
         await this.getMovieName();
         await this.getSingleArticle();
         await this.getMovieID();
-
+        await this.getUserRank();
     },
     methods: {
+        back() {
+            this.$router.go(-1)
+            console.log('Back')
+        },
+
         // GET
         async getSingleArticle() {
             try {
@@ -229,8 +222,6 @@ export default {
         },
 
         async getComment() {
-            console.log('titleById3')
-            console.log(this.titleById)
             try {
                 const data = axios.get(`${this.url}/moviesreviews/${this.$route.params.commentid}`)
                 const result = await data;
@@ -270,7 +261,6 @@ export default {
                 console.log(result.data)
 
                 this.moviearticle = result.data;
-                // this.$router.go(0)
             }
             catch (error) { console.log(`get MovieName failed: ${error}`) }
         },
@@ -294,6 +284,23 @@ export default {
             catch (error) { console.log(`get MovieID failed: ${error}`) }
         },
 
+        async getUserRank() {
+            try {
+                const rank = axios.get(`${this.url}/userrank`)
+
+                const resultRank = await rank
+                this.userRank = resultRank.data.user_id
+                console.log('UserRank')
+                console.log(this.userRank)
+                for (const i in this.userRank) {
+                    this.rankData = this.userRank[i]
+                }
+                console.log('RankData')
+                console.log(this.rankData)
+            }
+            catch (error) { console.log(`get Rank failed: ${error}`) }
+        },
+
         // POST
         async countView(articleId) {
             try {
@@ -309,6 +316,7 @@ export default {
                 })
                 console.log('countview:')
                 console.log(articleId)
+                await this.getSingleArticle();
             } catch (error) {
                 console.log(`countview failed: ${error}`)
             }

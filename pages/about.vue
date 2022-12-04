@@ -12,18 +12,7 @@
           <div class="p-2 flex-auto w-80" bg-variant="dark">
             <img src="@/assests/image/TMDB.svg" alt="TMDB" />
           </div>
-        </div>
-
-        <!-- <div class="flex mt-4">
-          <div class="p-2 flex-auto w-40" bg-variant="dark">
-            <img src="@/assests/image/colored-white-text.svg" alt="NUXT" />
-          </div>
-
-          <div class="p-2 flex-auto w-80" bg-variant="dark">
-            <img src="@/assests/image/tailwindcss-logotype-white.svg" alt="Tailwind" />
-          </div>
-        </div> -->
-
+        </div>      
       </div>
     </div>
   </div>

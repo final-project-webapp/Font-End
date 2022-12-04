@@ -97,13 +97,7 @@
     </div>
 
     <!-- page botton -->
-    <div class="justify-center flex gap-2 pb-8">
-      <!-- <b-button >
-        <b-icon icon="arrow-left" font-scale="1"></b-icon>
-      </b-button>
-      <b-button >
-        <b-icon icon="arrow-right" font-scale="1"></b-icon>
-      </b-button> -->
+    <div class="justify-center flex gap-2 pb-8">     
     </div>
 
   </div>
@@ -120,7 +114,7 @@ export default {
     Header,
     Loading
   },
-  layout: "nav-bar",
+  // layout: "nav-bar",
 
   data() {
     return {
@@ -145,8 +139,7 @@ export default {
   fetchDelay: 2000,
 
   methods: {
-    async getMovies() {
-      console.log(this.url)
+    async getMovies() {      
       try {
         // const data = axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=855c67ea42890d4442543dfe2e92447f&language=en-US&page=1`)
         const data = axios.get(this.url + "/movies/1")

@@ -23,11 +23,11 @@
 
                     </div>
                     <div v-for="(a, index ) in article" :key="index">
-                        <b-card border-variant="primary" bg-variant="secondary">
-                            <b-card-text class="text-lg break-words">
+                        <b-card border-variant="primary" bg-variant="dark">
+                            <b-card-text class="text-lg break-words text-justify">
                                 {{ a.articles }}
                             </b-card-text>
-                            <b-card-text class="text-sm">
+                            <b-card-text class="text-sm mt-2">
                                 Writer: {{ a.writer }}
                             </b-card-text>
                             <!-- <b-card-text class="text-sm">
@@ -39,7 +39,7 @@
                     <b-card border-variant="primary" bg-variant="dark" class="mt-8 overflow-y-scroll"
                         style="height: 380px;">
                         <div v-if="articleComment == ''" class="flex justify-center">
-                            <p class="text-2xl">You currently have no comments.</p>
+                            <p class="text-2xl font-bold mt-20">This article currently have no comments.</p>
                         </div>
                         <b-row align-h="center" class="w-auto">
                             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
@@ -88,53 +88,7 @@
                                             </b-dropdown>
                                         </div>
 
-                                    </b-card>
-
-                                    <!-- <b-card :title="ac.name" tag="article" style="" class="mb-2 text-xs"
-                                        bg-variant="secondary" text-variant="primary" border-variant="primary" v-if="ac.role == 2">
-
-
-                                        <b-card-text class="text-sm">: {{ ac.comment }}</b-card-text>
-                                        <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
-                                        <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text>
-
-                                        <div class="absolute top-4 right-4" v-if="ac.user_id == userID">
-                                            <b-dropdown size="sm" no-caret>
-                                                <template #button-content>
-                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
-                                                    </b-icon>
-                                                </template>
-                                                <b-dropdown-item-button variant="dark" class="text-xs"
-                                                    @click="deleteComment(ac.comment_id)">
-                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                        class="flex justify-end"></b-icon>
-                                                    Delete
-                                                </b-dropdown-item-button>
-                                                <b-dropdown-item-button variant="dark" class="text-xs"
-                                                    @click="showCommentInfo(ac)">
-                                                    <b-icon icon="pencil-square" variant="dark" font-scale="1"
-                                                        class="flex justify-end"></b-icon>
-                                                    Edit
-                                                </b-dropdown-item-button>
-                                            </b-dropdown>
-                                        </div>
-
-                                        <div class="absolute top-4 right-4" v-if="userRole == 2">
-                                            <b-dropdown size="sm" no-caret>
-                                                <template #button-content>
-                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
-                                                    </b-icon>
-                                                </template>
-                                                <b-dropdown-item-button variant="dark" class="text-xs"
-                                                    @click="deleteComment(ac.comment_id)">
-                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                        class="flex justify-end"></b-icon>
-                                                    Delete
-                                                </b-dropdown-item-button>                                                
-                                            </b-dropdown>
-                                        </div>
-
-                                    </b-card> -->
+                                    </b-card>                                    
                                 </div>
                             </b-col>
                         </b-row>
@@ -296,22 +250,7 @@ export default {
 
             console.log('Comment Article:')
             console.log(this.articleComment)
-        },
-
-        // async getMovieName() {
-        //     try {
-        //         const dataId = axios.get(`${this.url}/moviessearchId/${this.$route.params.movieid}`)
-        //         console.log('MovieID')
-        //         console.log(this.$route.params.movieid)
-
-        //         const resultId = await dataId            
-        //         this.titleById = resultId.data.data.title;
-
-        //         console.log('titleById:')
-        //         console.log(this.titleById)
-        //     }
-        //     catch (error) { console.log(`get MovieName failed: ${error}`) }
-        // },
+        },        
 
         // Post
         async postComment() {
@@ -339,13 +278,8 @@ export default {
                 this.form.comment = ''
                 this.$nextTick(() => {
                     this.$v.$reset();
-                });
-                const data = axios.get(`${this.url}/getcommentinarticle/${this.articleId}`)
-                const result = await data;
-                console.log('Result')
-                console.log(result)
-
-                this.articleComment = result.data;
+                })
+                await this.getCommentArticle();                
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)

@@ -9,7 +9,7 @@
           <nav class="mb-3">
             <b-nav vertical>
               <b-nav-item to="/" @click="hide">Now Playing</b-nav-item>
-              <b-nav-item to="show_discuss" @click="hide">Articles</b-nav-item>
+              <b-nav-item to="/show_discuss" @click="hide">Articles</b-nav-item>
               <b-nav-item to="/about" @click="hide">About</b-nav-item>
               <b-nav-item to="/member" @click="hide">Team</b-nav-item>
               <b-nav-item to="/register_page" @click="hide" v-if="userData == null">Register</b-nav-item>
