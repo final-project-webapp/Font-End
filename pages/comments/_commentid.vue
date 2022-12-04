@@ -3,7 +3,8 @@
         <Loading v-if="$fetchState.pending" />
         <div v-else class="container comment-movie">
             <div class="flex justify-between">
-                <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink>
+                <!-- <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink> -->
+                <b-button class="button" @click="back">Back</b-button>
 
                 <div v-if="userData != null">
                     <NuxtLink class="button" :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
@@ -56,7 +57,7 @@
                         <div v-if="moviearticle == ''" class="flex justify-center">
                             <p class="font-bold text-2xl mt-20">This movie currently have no articles.</p>
                         </div>
-                        <b-row align-h="around">
+                        <b-row align-h="start">
                             <div v-for="(ma, index ) in moviearticle" :key="index">
 
                                 <b-col cols="12" xl="12" lg="12" md="12" sm="12">
@@ -216,9 +217,14 @@ export default {
         await this.getMovieName();
         await this.getSingleArticle();
         await this.getMovieID();
-
+        await this.getUserRank();
     },
     methods: {
+        back() {
+            this.$router.go(-1)
+            console.log('Back')
+        },
+
         // GET
         async getSingleArticle() {
             try {
@@ -271,8 +277,7 @@ export default {
                 console.log('single movie:')
                 console.log(result.data)
 
-                this.moviearticle = result.data;
-                // this.$router.go(0)
+                this.moviearticle = result.data;               
             }
             catch (error) { console.log(`get MovieName failed: ${error}`) }
         },
@@ -291,6 +296,23 @@ export default {
 
                 console.log('idByIdTest:')
                 console.log(this.idById)
+
+            }
+            catch (error) { console.log(`get MovieID failed: ${error}`) }
+        },
+
+        async getUserRank() {
+            try {
+                const rank = axios.get(`${this.url}/userrank`)
+                                
+                const resultRank = await rank
+                console.log('UserRank')
+                console.log(resultRank)
+
+                // this.idById = resultId.data.data.id;
+
+                // console.log('idByIdTest:')
+                // console.log(this.idById)
 
             }
             catch (error) { console.log(`get MovieID failed: ${error}`) }

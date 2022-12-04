@@ -24,7 +24,7 @@
                     </div>
                     <div v-for="(a, index ) in article" :key="index">
                         <b-card border-variant="primary" bg-variant="dark">
-                            <b-card-text class="text-lg break-words">
+                            <b-card-text class="text-lg break-words text-justify">
                                 {{ a.articles }}
                             </b-card-text>
                             <b-card-text class="text-sm mt-2">

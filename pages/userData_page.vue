@@ -17,6 +17,14 @@
 
         <div class="mt-20">
             <b-container>
+                <!-- search -->
+                <div class="mb-4 flex justify-start">
+                    <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Enter Full Movie Name"
+                        @keyup.enter="$fetch" @keyup.delete="clearSearch" style="max-width: 400px;"></b-form-input>
+                    <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm"
+                        @click="clearSearch">Clear Search</b-button>
+                </div>
+
                 <b-card bg-variant="dark" border-variant="primary" class="">
                     <div class="text-2xl font-bold mb-2 ml-4">
                         {{ userData.name }}
@@ -30,48 +38,100 @@
                                     <div v-if="articles == ''" class="flex justify-center">
                                         <p class="font-bold text-2xl">You currently have no articles.</p>
                                     </div>
-                                    <div v-for="(a, index ) in articles" :key="index">
-                                        <b-card :header="a.articles" header-text-variant="white"
-                                            header-border-variant="primary" header-bg-variant="dark" header-tag="header"
-                                            tag="article" class="mb-4 px-4 text-xl break-words"
-                                            style="height: auto; max-width: 700px; " bg-variant="dark"
-                                            text-variant="light" border-variant="primary">
-                                            <b-card-text class="text-sm break-words">Movie name: {{ a.movie_name }}
-                                            </b-card-text>                                            
-                                            <b-card-text class="text-sm">Date: {{ new
-                                                    Date(a.date).toLocaleString('en-us', {
-                                                        month: 'long',
-                                                        day: 'numeric',
-                                                        year: 'numeric',
-                                                    })
-                                            }}</b-card-text>
 
-                                            <div class="absolute bottom-3 right-3">
-                                                <b-dropdown size="sm" no-caret>
-                                                    <template #button-content>
-                                                        <b-icon icon="three-dots-vertical" variant="light"
-                                                            font-scale="1">
-                                                        </b-icon>
-                                                    </template>
-                                                    <b-dropdown-item-button variant="dark" class="px-0 text-xs"
-                                                        @click="deleteArticle(a.article_id)">
-                                                        <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Delete
-                                                    </b-dropdown-item-button>
-                                                    <b-dropdown-item-button variant="dark" class="text-xs flex"
-                                                        @click="showArticleInfo(a)">
-                                                        <b-icon icon="pencil-square" variant="dark" font-scale="1"
-                                                            class="flex justify-end">
-                                                        </b-icon>
-                                                        Edit
-                                                    </b-dropdown-item-button>
-                                                </b-dropdown>
-                                            </div>
+                                    <!-- search article -->
+                                    <div v-if="searchInput !== ''">
+                                        <div v-for="(sa, index ) in searchedArticles" :key="index">
+                                            <b-card :header="sa.articles" header-text-variant="white"
+                                                header-border-variant="primary" header-bg-variant="dark"
+                                                header-tag="header" tag="article" class="mb-4 px-4 text-xl break-words"
+                                                style="height: auto; max-width: 700px; " bg-variant="dark"
+                                                text-variant="light" border-variant="primary">
+                                                <b-card-text class="text-sm break-words">Movie name: {{ sa.movie_name }}
+                                                </b-card-text>
+                                                <b-card-text class="text-sm">Date: {{ new
+                                                        Date(sa.date).toLocaleString('en-us', {
+                                                            month: 'long',
+                                                            day: 'numeric',
+                                                            year: 'numeric',
+                                                        })
+                                                }}</b-card-text>
 
-                                        </b-card>
+                                                <div class="absolute bottom-3 right-3">
+                                                    <b-dropdown size="sm" no-caret>
+                                                        <template #button-content>
+                                                            <b-icon icon="three-dots-vertical" variant="light"
+                                                                font-scale="1">
+                                                            </b-icon>
+                                                        </template>
+                                                        <b-dropdown-item-button variant="dark" class="px-0 text-xs"
+                                                            @click="deleteArticle(sa.article_id)">
+                                                            <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                                class="flex justify-end">
+                                                            </b-icon>
+                                                            Delete
+                                                        </b-dropdown-item-button>
+                                                        <b-dropdown-item-button variant="dark" class="text-xs flex"
+                                                            @click="showArticleInfo(sa)">
+                                                            <b-icon icon="pencil-square" variant="dark" font-scale="1"
+                                                                class="flex justify-end">
+                                                            </b-icon>
+                                                            Edit
+                                                        </b-dropdown-item-button>
+                                                    </b-dropdown>
+                                                </div>
+
+                                            </b-card>
+                                        </div>
                                     </div>
+
+                                    <!-- normal article -->
+                                    <div v-else>
+                                        <div v-for="(a, index ) in articles" :key="index">
+                                            <b-card :header="a.articles" header-text-variant="white"
+                                                header-border-variant="primary" header-bg-variant="dark"
+                                                header-tag="header" tag="article" class="mb-4 px-4 text-xl break-words"
+                                                style="height: auto; max-width: 700px; " bg-variant="dark"
+                                                text-variant="light" border-variant="primary">
+                                                <b-card-text class="text-sm break-words">Movie name: {{ a.movie_name }}
+                                                </b-card-text>
+                                                <b-card-text class="text-sm">Date: {{ new
+                                                        Date(a.date).toLocaleString('en-us', {
+                                                            month: 'long',
+                                                            day: 'numeric',
+                                                            year: 'numeric',
+                                                        })
+                                                }}</b-card-text>
+
+                                                <div class="absolute bottom-3 right-3">
+                                                    <b-dropdown size="sm" no-caret>
+                                                        <template #button-content>
+                                                            <b-icon icon="three-dots-vertical" variant="light"
+                                                                font-scale="1">
+                                                            </b-icon>
+                                                        </template>
+                                                        <b-dropdown-item-button variant="dark" class="px-0 text-xs"
+                                                            @click="deleteArticle(a.article_id)">
+                                                            <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                                class="flex justify-end">
+                                                            </b-icon>
+                                                            Delete
+                                                        </b-dropdown-item-button>
+                                                        <b-dropdown-item-button variant="dark" class="text-xs flex"
+                                                            @click="showArticleInfo(a)">
+                                                            <b-icon icon="pencil-square" variant="dark" font-scale="1"
+                                                                class="flex justify-end">
+                                                            </b-icon>
+                                                            Edit
+                                                        </b-dropdown-item-button>
+                                                    </b-dropdown>
+                                                </div>
+
+                                            </b-card>
+                                        </div>
+                                    </div>
+
+
                                 </b-card>
                             </b-container>
                         </b-col>
@@ -117,7 +177,7 @@
 </template>
 
 <script>
-// import axios from "axios"
+import axios from "axios"
 import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js';
@@ -142,6 +202,9 @@ export default {
             userData: '',
             userRole: '',
             editArticleID: '',
+            searchDummyArticle: '',
+            searchInput: '',
+            searchedArticles: [],
             url: 'http://localhost:3000'
             // url: 'https://backend-final.azurewebsites.net'
         }
@@ -175,6 +238,16 @@ export default {
         }
         else {
             await this.getSingleArticle()
+        }
+    },
+
+    async fetch() {
+        if (this.searchDummyArticle === '') {
+            await this.getSingleArticle()
+            //   await this.getUserRank();
+        } else {
+            await this.searchArticle()
+            //   await this.getUserRank();
         }
     },
     methods: {
@@ -222,6 +295,26 @@ export default {
             }
         },
 
+        async searchArticle() {
+            this.searchInput = this.searchDummyArticle
+            const data = axios.get(`${this.url}/getarticlebymoviename/${this.searchInput}`, { withCredentials: true })
+            const result = await data
+            console.log('SearchArticle2:')
+            console.log(result.data.data)
+            result.data.data.forEach((searchArticle) => {
+                this.searchedArticles.push(searchArticle)
+                console.log('SearchArticles3:')
+                console.log(this.searchedArticles)
+            })
+        },
+
+        clearSearch() {
+            this.searchDummyArticle = ''
+            this.searchInput = ''
+            this.searchedArticles = []
+        },
+
+
         // EDIT
         showArticleInfo(articleInfo) {
             this.editArticleID = articleInfo.article_id
@@ -244,16 +337,10 @@ export default {
                         articles: this.form.title
                     }),
                 })
-                const res = await fetch(this.url + "/getarticleowner", {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    credentials: 'include'
-                })
-                const getuserdata = await res.json()
-                this.articles = getuserdata
+                this.clearSearch()
+                await this.getSingleArticle()
                 console.log('Reloaddata:')
-                console.log(this.articles)
+
                 swal.fire({
                     title: 'Submit Success!',
                     // text: 'Do you want to continue',
@@ -261,9 +348,7 @@ export default {
                     confirmButtonText: 'Done',
                     confirmButtonColor: '#007bff'
                 })
-                // setTimeout(() => { this.$router.go(-1) }, 2000);
-                // console.log('EditForm:')
-                // console.log(this.form.title, this.editArticleID)
+
                 this.editArticleID = ''
                 this.form.title = ''
                 this.$nextTick(() => {
