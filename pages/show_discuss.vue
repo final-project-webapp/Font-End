@@ -3,16 +3,24 @@
     <!-- <Loading v-if="$fetchState.pending" /> -->
     <b-container fluid>
       <b-row align-h="between">
-        <b-col cols="9" xl="10" lg="10" md="10" sm="10">
-          <SlideBar class="pt-20 sm:pl-4 md:pl-12 lg:pl-24 xl:pl-48" />
+        <b-col cols="4" xl="10" lg="8" md="8" sm="6">
+          <SlideBar class="ml-2 mt-20 xs:pl-20 sm:pl-20 md:pl-20 lg:pl-20 xl:pl-40" />
         </b-col>
-        <!-- <b-col cols="3" xl="2" lg="2" md="2" sm="2">
-          <OD class="pr-2 pt-20" />
-        </b-col> -->
+
+        <b-col cols="8" xl="2" lg="4" md="4" sm="6">
+          <div class="mr-2 mt-20">
+            <b-button-group>
+              <b-button variant="info" @click="getNewestArticles()">
+                Newest
+              </b-button>
+              <b-button variant="primary" @click="getRandomArticles()">
+                Random
+              </b-button>
+            </b-button-group>
+          </div>
+        </b-col>
       </b-row>
     </b-container>
-
-
 
     <div class="mt-20 flex">
       <b-container fluid style="max-width: 1800px;">
@@ -33,25 +41,27 @@
             <b-card bg-variant="dark" class="mb-8">
 
               <b-row align-h="around">
-                <b-col cols="2" xl="2" lg="2" md="2" sm="2">
+                <b-col cols="12" xl="2" lg="4" md="4" sm="4">
+
                   <div class="object-contain h-auto w-48">
                     <img :src="`https://image.tmdb.org/t/p/w500/${sa.picture_path}`" />
                   </div>
-                  <div>                    
+                  <div>
                     <NuxtLink
                       :to="{ name: 'comments-commentid', params: { commentid: sa.movie_id, moviename: sa.title } }">
                       <p class="font-bold text-xl justify-center flex mt-4">{{ sa.title }}</p>
-                    </NuxtLink>               
+                    </NuxtLink>
                   </div>
+
                 </b-col>
-                <b-col cols="10" xl="10" lg="10" md="10" sm="10">
+                <b-col cols="12" xl="10" lg="8" md="8" sm="12">
+
 
                   <div v-if="(sa.articlename == '')">
                     <p class="font-bold text-2xl justify-center flex mt-20">This movie currently has no articles.</p>
                   </div>
 
-                  <!-- <div class="overflow-x-scroll h-80"> -->
-                  <!-- <b-container style="width: 1600px;"> -->
+
                   <b-row align-h="around" class="mt-8">
                     <div v-for="(data, index) in sa.articlename" :key="index">
                       <b-col cols="12" xl="12" lg="12" md="12" sm="12">
@@ -91,8 +101,8 @@
 
                     </div>
                   </b-row>
-                  <!-- </b-container> -->
-                  <!-- </div> -->
+
+
 
                 </b-col>
               </b-row>
@@ -106,31 +116,28 @@
             <b-card bg-variant="dark" class="mb-8">
 
               <b-row align-h="around">
-                <b-col cols="2" xl="2" lg="2" md="2" sm="2">
+                <b-col cols="12" xl="2" lg="4" md="4" sm="4">
                   <div class="object-contain h-auto w-48">
                     <img :src="`https://image.tmdb.org/t/p/w500/${article.picture_path}`" />
                   </div>
-                  <div>
-                    <!-- <b-button> -->
+                  <div>                   
                     <NuxtLink
                       :to="{ name: 'comments-commentid', params: { commentid: article.movie_id, moviename: article.title } }">
                       <p class="font-bold text-xl justify-center flex mt-4">{{ article.title }}</p>
-                    </NuxtLink>
-                    <!-- </b-button> -->
+                    </NuxtLink>                    
                   </div>
                 </b-col>
-                <b-col cols="10" xl="10" lg="10" md="10" sm="10">
 
+                <b-col cols="12" xl="10" lg="8" md="8" sm="12">
+                  <!-- <b-container fluid style="max-width: 1000px;"> -->
                   <div v-if="(article.articlename == '')">
                     <p class="font-bold text-2xl justify-center flex mt-20">This movie currently has no articles.</p>
                   </div>
 
-                  <!-- <div class="overflow-x-scroll h-80"> -->
-                  <!-- <b-container style="width: 1600px;"> -->
                   <b-row align-h="around" class="mt-8">
                     <div v-for="(data, index) in article.articlename" :key="index">
                       <b-col cols="12" xl="12" lg="12" md="12" sm="12">
-                        <b-card style="max-width: 400px; min-width: 200px; min-height:200px; max-height: 400px;"
+                        <b-card style="max-width: 400px; min-width: auto; min-height:200px; max-height: 400px;"
                           class="mb-4 p-4 break-words" bg-variant="dark" text-variant="light" border-variant="primary">
                           <b-card-text class="text-lg break-words truncate ...">
                             {{ data.articles }}</b-card-text>
@@ -175,7 +182,7 @@
                     </div>
                   </b-row>
                   <!-- </b-container> -->
-                  <!-- </div> -->
+
 
                 </b-col>
               </b-row>
@@ -213,14 +220,14 @@ export default {
       userRole: '',
       userRank: '',
       rankData: [],
-      // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
     }
   },
 
   async fetch() {
     if (this.searchDummyArticle === '') {
-      await this.getRandomArticles()
+      await this.getNewestArticles();
       await this.getUserRank();
     } else {
       await this.searchArticle()
@@ -231,7 +238,7 @@ export default {
 
   methods: {
     // GET    
-    async getRandomArticles() {
+    async getNewestArticles() {
       try {
         const data = axios.get(this.url + "/getarticlebypage/1")
         const result = await data
@@ -250,7 +257,29 @@ export default {
 
         }
       }
-      catch (error) { console.log(`get article failed: ${error}`) }
+      catch (error) { console.log(`get newest failed: ${error}`) }
+    },
+
+    async getRandomArticles() {
+      try {
+        const data = axios.get(this.url + "/randommoviearticle")
+        const result = await data
+
+        this.articles = result.data.data
+        console.log('Article:')
+        console.log(this.articles)
+
+        // for (const i in this.articles) {
+        //   for (const j in this.article[i].articlename) {
+
+        //   }
+        //   this.articlesData = this.articles[i].articlename
+        //   console.log('ArticleData:')
+        //   console.log(this.articlesData)
+
+        // }
+      }
+      catch (error) { console.log(`get random failed: ${error}`) }
     },
 
     async getUserRank() {
@@ -285,7 +314,7 @@ export default {
         })
         console.log('countview:')
         console.log(articleId)
-        await this.getRandomArticles()
+        await this.getNewestArticles()
       } catch (error) {
         console.log(`countview failed: ${error}`)
       }

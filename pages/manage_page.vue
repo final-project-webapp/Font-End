@@ -11,21 +11,21 @@
                 </b-col>
             </b-row>
         </b-container>
-        <div class="mt-20">
+        <div class="mt-20 flex justify-center">
 
-            <b-container style="width: 1800px; height: auto;">
-                <b-card bg-variant="dark" class="overflow-y-scroll mt-8" style="height: 500px;">
+            <b-container style="max-width: 1800px; height: auto" >
+                <b-card bg-variant="dark" class="overflow-y-scroll mt-8" style="height: 500px; max-width: 1800;">
                     <!-- <div v-if="userRole != 2" class="flex justify-center">
                         <p class="font-bold text-4xl">You must be Admin.</p>
                     </div> -->
-                    <b-row align-h="around">
+                    <b-row align-h="start">
                         <div v-for="(au, index ) in allUser" :key="index">
 
                             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                                 <b-card :header="au.name" header-text-variant="white" header-border-variant="primary"
                                     header-bg-variant="dark" header-tag="header" tag="article"
                                     style="width:380px; height:200px; font-size:large"
-                                    class="pt-8 pl-4 pr-4 pb-4 mb-4 break-all" bg-variant="dark"
+                                    class="pt-4 pl-4 pr-4 pb-4 mb-4 break-all" bg-variant="dark"
                                     border-variant="primary" text-variant="light">
                                     <b-card-text class="text-sm">Email: {{ au.emailaddress }}</b-card-text>
                                     <b-card-text class="text-sm"> Birthdate {{
