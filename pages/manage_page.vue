@@ -241,13 +241,7 @@ export default {
                 const result = await data
                 console.log('SearchUser2:')
                 this.searchedUsers = result.data.data
-                console.log(this.searchedUsers)
-                // this.searchedArticles = result.data.data
-                // result.data.data.forEach((searchUser) => {
-                //     this.searchedUsers.push(searchUser)
-                //     console.log('SearchArticles3:')
-                //     console.log(this.searchedUsers)
-                // })
+                console.log(this.searchedUsers)                
             }
             catch (error) { console.log(`FindUser: ${error}`) }
         },
@@ -266,14 +260,7 @@ export default {
                 await fetch(`${this.url}/deleteuser/${userId}`, {
                     method: 'DELETE',
                     credentials: 'include'
-                })
-                // const data = axios.get(`${this.url}/getalluser`)
-                // const result = await data;
-                // result.data.data.forEach((user) => {
-                //     this.allUser.push(user)
-                //     console.log('RefreshUser:')
-                //     console.log(this.allUser)
-                // })
+                })                
                 const res = await fetch(this.url + "/getalluser")
                 const getuserdata = await res.json()
                 this.allUser = getuserdata.data

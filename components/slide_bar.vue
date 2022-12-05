@@ -18,8 +18,8 @@
               <b-nav-item to="/" @click="logOut" v-if="userData != null">Logout</b-nav-item>
               <b-nav-item to="/userInfo_page" v-if="userRole == 1" class="absolute bottom-0"> {{ userName }}
               </b-nav-item>
-              <b-nav-item @click="getCookie()"> GetCookie
-              </b-nav-item>
+              <!-- <b-nav-item @click="getCookie()"> GetCookie -->
+              <!-- </b-nav-item> -->
               <b-nav-text v-if="userRole == 2" class="absolute bottom-0 left-8 texl-xl font-bold"> Admin
               </b-nav-text>
             </b-nav>
@@ -75,20 +75,20 @@ export default {
   },
   methods: {
     // GET
-    async getCookie() {            
-            try {
-                await fetch(this.url + "/getcookie", {
-                    headers: {
-                        'Content-type': 'application/json'
-                    },                    
-                    credentials: 'include'
-                })                
+    // async getCookie() {
+    //   try {
+    //     await fetch(this.url + "/getcookie", {
+    //       headers: {
+    //         'Content-type': 'application/json'
+    //       },
+    //       credentials: 'include'
+    //     })
 
-            }
-            catch (error) {
-                console.log(`get cookie failed: ${error}`)
-            }
-        },
+    //   }
+    //   catch (error) {
+    //     console.log(`get cookie failed: ${error}`)
+    //   }
+    // },
 
     async logOut() {
       try {
@@ -104,14 +104,14 @@ export default {
         console.log(this.userData)
         if (resdata.data == 1) {
           swal.fire({
-            title: 'Logout Completed!',
+            title: 'Logout completed!',
             icon: 'success',
             // confirmButtonColor: '#007bff',
             // confirmButtonText: 'Done',
             showConfirmButton: false,
             timer: 2000
-          })        
-          setTimeout(() => { this.$router.push({name: 'index'}) }, 1000);
+          })
+          setTimeout(() => { this.$router.push({ name: 'index' }) }, 1000);
           setTimeout(() => { this.$router.go(0) }, 2000);
         }
 
@@ -126,7 +126,7 @@ export default {
           confirmButtonText: 'Done',
         })
       }
-    },    
+    },
   },
 
 }

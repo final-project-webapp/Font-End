@@ -1,6 +1,9 @@
 <template>
+    <div v-if="(this.articlesData == '')" class="bg-zinc-800 min-h-screen text-white">
+        <FailedArticlePage />
+    </div>
 
-    <div class="bg-zinc-800 min-h-screen text-white">
+    <div v-else class="bg-zinc-800 min-h-screen text-white">
         <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
@@ -15,13 +18,18 @@
             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                 <b-container style="max-width: 1000px;" class="">
 
-                    <div v-for="(a, index ) in article" :key="index">
-
+                    <div v-for="(a, index ) in article" :key="index" class="flex justify-between mb-2">
                         <b-card-text class="text-2xl mb-2 font-bold break-words">
                             {{ a.movie_name }}
                         </b-card-text>
-
+                        <div v-if="(a.user_user_id == userID || userRole == 2)"
+                            v-b-tooltip.hover.top="'Delete article.'">
+                            <b-button variant="outline-danger" class="" @click="confirm(a.article_id)">
+                                <b-icon icon="trash-fill" variant="" font-scale="1" class=""></b-icon>
+                            </b-button>
+                        </div>
                     </div>
+
                     <div v-for="(a, index ) in article" :key="index">
                         <b-card border-variant="primary" bg-variant="dark">
                             <b-card-text class="text-lg break-words text-justify">
@@ -46,11 +54,7 @@
                                 <div v-for="(ac, index ) in articleComment" :key="index">
                                     <b-card :title="ac.comment_writer" tag="article" style="" class="mb-2 text-xs"
                                         bg-variant="secondary" text-variant="light" border-variant="primary">
-
-
                                         <b-card-text class="text-sm break-words">: {{ ac.comment }}</b-card-text>
-                                        <!-- <b-card-text class="text-sm">ID: {{ ac.comment_id }}</b-card-text>
-                                        <b-card-text class="text-sm">WritterID: {{ ac.user_id }}</b-card-text> -->
 
                                         <div class="absolute top-4 right-4" v-if="ac.user_user_id == userID">
                                             <b-dropdown size="sm" no-caret>
@@ -88,7 +92,7 @@
                                             </b-dropdown>
                                         </div>
 
-                                    </b-card>                                    
+                                    </b-card>
                                 </div>
                             </b-col>
                         </b-row>
@@ -142,15 +146,18 @@
 </template>
     
 <script>
+import swal from 'sweetalert2/dist/sweetalert2.js'
 import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
 import axios from "axios"
 import SlideBar from '@/components/slide_bar.vue'
+import FailedArticlePage from '@/components/failed_article_page.vue';
 
 export default {
     name: 'ShowArticle',
     components: {
         SlideBar,
+        FailedArticlePage
     },
 
     mixins: [validationMixin],
@@ -167,11 +174,16 @@ export default {
             article: '',
             articleComment: [],
             articleId: '',
+            articlesData: '',            
             editCommetID: '',
             editMode: false,
             // url: 'http://localhost:3000'
             url: 'https://backend-final.azurewebsites.net'
         }
+    },
+    async created() {
+        await this.getSingleArticle();
+        await this.getCommentArticle();    
     },
     async mounted() {
         if (document.cookie == null) { return }
@@ -203,10 +215,10 @@ export default {
             console.log(`get user failed: ${error}`)
         }
     },
-    async fetch() {
-        await this.getSingleArticle();
-        await this.getCommentArticle();
-    },
+    // async fetch() {
+    //     await this.getSingleArticle();
+    //     await this.getCommentArticle();
+    // },
     validations: {
         form: {
             comment: {
@@ -233,13 +245,30 @@ export default {
         async getSingleArticle() {
             const data = axios.get(`${this.url}/getsinglearticle/${this.$route.params.articleid}`)
             const result = await data;
-            console.log('single result:')
-            console.log(data)
-
             this.article = result.data;
 
-            console.log('singlearticle:')
+            console.log('Getsinglearticle:')
             console.log(this.article)
+            for (const i in this.article) {                
+                this.articlesData = this.article[i].article_id
+                console.log('ArticleData:')
+                console.log(this.articlesData)
+            }
+            if (this.articlesData == '') {
+                this.$router.push({ name: 'index' })
+                setTimeout(() => {
+                    console.log('Redirect2!')
+
+                    swal.fire({
+                        title: 'This article does not exist.',
+                        // text: 'Do you want to continue',
+                        icon: 'error',
+                        confirmButtonText: 'Done',
+                        confirmButtonColor: '#007bff'
+                    })
+                }, 1000);
+
+            }
         },
 
         async getCommentArticle() {
@@ -250,7 +279,7 @@ export default {
 
             console.log('Comment Article:')
             console.log(this.articleComment)
-        },        
+        },
 
         // Post
         async postComment() {
@@ -279,11 +308,29 @@ export default {
                 this.$nextTick(() => {
                     this.$v.$reset();
                 })
-                await this.getCommentArticle();                
+                await this.getCommentArticle();
             }
             catch (error) {
                 console.log(`addArticle False!!! ${error}`)
             }
+        },
+
+        // CONFIRM
+        confirm(articleId) {
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You will be deleting this article!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#dc2626',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteArticle(articleId)
+                }
+            })
         },
 
         // DELETE
@@ -305,6 +352,31 @@ export default {
             catch (error) {
                 console.log(`delete failed: ${error}`)
             }
+        },
+
+        async deleteArticle(articleId) {
+            console.log("Delete ID")
+            console.log(articleId)
+
+            try {
+                await fetch(`${this.url}/deletearticle/${articleId}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                })
+            }
+            catch (error) {
+                console.log(`delete failed: ${error}`)
+            }
+            swal.fire({
+                title: 'This article has been deleted.',
+                // text: 'Do you want to continue',
+                icon: 'success',
+                confirmButtonText: 'Done',
+                confirmButtonColor: '#007bff'
+            })
+            setTimeout(() => { this.$router.go(-1) }, 1000);
+            setTimeout(() => { this.$router.go(0) }, 2000);
+
         },
 
         // EDIT

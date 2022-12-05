@@ -16,21 +16,12 @@
         </b-container>
 
         <div class="mt-20 flex justify-center">
-            <b-container style="max-width: 1000px;">
-                <!-- <b-card bg-variant="dark" class=""> -->
-
-                <!-- <b-row align-h="center"> -->
-                <!-- <b-col cols="10" xl="" lg="12" md="12 mb-4" sm="12" class=""> -->
-
-                <!-- <b-container style="max-width:700px;"> -->
-
-                <!-- <b-card bg-variant="dark" class=""
-                                    style="height: 470px; max-width: 700px;"> -->
-                <!-- <div v-for="(a, index ) in userData" :key="index"> -->
+            <b-container style="max-width: 1000px;">                
                 <b-card :header="userData.name" header-text-variant="white" header-border-variant="primary"
                     header-bg-variant="dark" header-tag="header" tag="article"
                     class="mb-4 px-4 text-2xl font-bold break-words" style="height: auto; max-width: 1000px;"
                     bg-variant="dark" text-variant="light" border-variant="primary">
+
                     <b-form @submit.prevent="confirmPenname">
                         <div class="flex justify-between">
                             <b-card-text class="text-xl break-words">Pen name:
@@ -40,7 +31,6 @@
                             <b-button size="sm" v-show="editPenname" @click="hidePenname(); togglePenname();"
                                 variant="outline-danger">Cancel</b-button>
                         </div>
-
 
                         <b-card-text class="text-base break-words mb-2"> {{ userData.alias }}
                         </b-card-text>
@@ -70,7 +60,6 @@
                             <b-button size="sm" v-show="editPassword" @click="hidePassword(); togglePassword();"
                                 variant="outline-danger">Cancel</b-button>
                         </div>
-
 
                         <b-card-text class="text-base break-words mb-2">********
                         </b-card-text>
@@ -107,10 +96,15 @@
                             <b-button type="submit" variant="outline-primary">Submit</b-button>
                         </div>
                     </b-form>
+                    <div>
+                        <p class="text-lg text-[#007bff]"> __________________________________________________ </p>
+                        <b-button variant="danger" class="mt-4" @click="confirmDelete(userData.user_id)">
+                            Delete Account
+                        </b-button>
+                    </div>
                 </b-card>
             </b-container>
         </div>
-
 
     </div>
 </template>
@@ -122,12 +116,14 @@ import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
 import SlideBar from '@/components/slide_bar.vue'
 import UserBotton from '@/components/user_botton.vue'
+import FailedPage from '@/components/failed_page.vue';
 
 export default {
     name: 'userInfoPage',
     components: {
         SlideBar,
-        UserBotton
+        UserBotton,
+        FailedPage
     },
     mixins: [validationMixin],
     data() {
@@ -136,7 +132,6 @@ export default {
             editPassword: false,
             pname: '',
             form: {
-
                 oldpassword: '',
                 newpassword: '',
                 confirmpassword: ''
@@ -150,7 +145,7 @@ export default {
         }
     },
     validations: {
-        form: {            
+        form: {
             oldpassword: {
                 required,
                 minLength: minLength(8),
@@ -225,7 +220,6 @@ export default {
         // ----------------------------------------------------------------
         // CONFIRM    
         confirmPenname() {
-            // await this.reloadUser();        
             swal.fire({
                 title: 'Are you sure?',
                 text: "After this, your pen name will be changed.",
@@ -243,7 +237,6 @@ export default {
             console.log('SubmitPenname:')
         },
         confirmPassword() {
-            // await this.reloadUser();   
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
@@ -262,6 +255,79 @@ export default {
                     this.submitPassword()
                 }
             })
+        },
+        confirmDelete(userId) {
+            swal.fire({
+                title: 'Are you sure?',
+                text: "You will be deleting your account!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#007bff',
+                cancelButtonColor: '#dc2626',
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.deleteAccount(userId)
+                }
+            })
+        },
+
+        // ----------------------------------------------------------------
+        // DELETE
+        async deleteAccount(userId) {
+            console.log("Delete User")
+            console.log(userId)
+            this.$router.go(-1)
+            try {
+                await fetch(`${this.url}/deleteuser/${userId}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                })
+                await this.logOut();
+
+            }
+            catch (error) {
+                console.log(`delete failed: ${error}`)
+            }
+        },
+
+        async logOut() {
+            try {
+                const res = await fetch(this.url + "/logout", {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                })
+                const resdata = await res.json()
+                console.log('Logout Complete!!:')
+                console.log(this.userData)
+                if (resdata.data == 1) {
+                    swal.fire({
+                        title: 'Delete account completed!',
+                        icon: 'success',
+                        // confirmButtonColor: '#007bff',
+                        // confirmButtonText: 'Done',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                    setTimeout(() => { this.$router.push({ name: 'index' }) }, 1000);
+                    setTimeout(() => { this.$router.go(0) }, 2000);
+                }
+
+            }
+            catch (error) {
+                console.log(`Log Out failed: ${error}`)
+                swal.fire({
+                    title: 'Logout Failed!',
+                    // text: 'Your has been registered.',
+                    icon: 'error',
+                    confirmButtonColor: '#007bff',
+                    confirmButtonText: 'Done',
+                })
+            }
         },
 
         // ----------------------------------------------------------------
