@@ -4,7 +4,8 @@
         <div v-else class="container comment-movie">
             <div class="flex justify-between">
                 <!-- <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink> -->
-                <b-button class="button" @click="back">Back</b-button>
+                <!-- <b-button class="button" @click="back">Back</b-button> -->
+                <SlideBar />
 
                 <div v-if="userData != null">
                     <NuxtLink class="button" :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
@@ -131,7 +132,7 @@
                                                     </b-icon>
                                                 </NuxtLink>
                                             </b-button>
-                                        </div>                                        
+                                        </div>
                                     </div>
                                 </b-col>
 
@@ -147,9 +148,11 @@
 <script>
 import axios from "axios"
 import Loading from "../../components/Loading.vue"
+import SlideBar from '@/components/slide_bar.vue'
+
 export default {
     name: "CommentMovie",
-    components: { Loading },
+    components: { Loading, SlideBar },
     head() {
         return {
             title: this.$route.params.movietitle
@@ -189,7 +192,7 @@ export default {
             console.log(this.userRole)
             this.userID = getuserdata.data.user_id
             console.log('UserID:')
-            console.log(this.userID)            
+            console.log(this.userID)
         }
         catch (error) {
             console.log(`get user failed: ${error}`)
