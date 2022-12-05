@@ -210,6 +210,8 @@ export default {
   },
   data() {
     return {
+      randomArticles: [],
+      randomArticlesData: [],
       articles: [],
       articlesData: [],
       searchDummyArticle: '',
@@ -220,8 +222,8 @@ export default {
       userRole: '',
       userRank: '',
       rankData: [],
-      url: 'http://localhost:3000'
-      // url: 'https://backend-final.azurewebsites.net'
+      // url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
     }
   },
 
@@ -266,18 +268,18 @@ export default {
         const result = await data
 
         this.articles = result.data.data
-        console.log('Article:')
-        console.log(this.articles)
+        console.log('randomArticle:')
+        // console.log(this.articles)
 
-        // for (const i in this.articles) {
+        for (const i in this.randomArticles) {
         //   for (const j in this.article[i].articlename) {
 
         //   }
-        //   this.articlesData = this.articles[i].articlename
-        //   console.log('ArticleData:')
-        //   console.log(this.articlesData)
+          this.articlesData= this.articles[i].articlename
+          console.log('randomArticleData:')
+          console.log(this.articlesData)
 
-        // }
+        }
       }
       catch (error) { console.log(`get random failed: ${error}`) }
     },
