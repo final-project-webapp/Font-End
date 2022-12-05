@@ -63,8 +63,7 @@ export default {
                         timer: 2000
                         // confirmButtonColor: '#007bff',
                         // confirmButtonText: 'Done',                    
-                    })
-                    // setTimeout(() => { this.$router.go(0) }, 1000);                    
+                    })                                      
                     setTimeout(() => { this.$router.push({name: 'index'}) }, 1000);
                     setTimeout(() => { this.$router.go(0) }, 2000);
                 } else if (resdata.data == 0) {

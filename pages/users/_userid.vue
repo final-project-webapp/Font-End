@@ -21,11 +21,7 @@
                     </div>
                     <b-row align-h="around">
                         <div v-for="(a, index ) in articles" :key="index">
-                            <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
-                                <!-- <b-container style="max-width:700px;"> -->
-                                <!-- <b-card bg-variant="dark" > -->
-                                <!-- <p> {{ this.articles.data }} </p> -->
-
+                            <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">                                
 
                                 <b-card :header="a.articles" header-text-variant="white" header-border-variant="primary"
                                     header-bg-variant="dark" header-tag="header" tag="article"
@@ -70,34 +66,7 @@
                                 <!-- </b-card> -->
                                 <!-- </b-container> -->
                             </b-col>
-                        </div>
-
-                        <!-- <b-col class="mb-4" cols="12" xl="" lg="12" md="12" sm="12">
-                            <b-container style="max-width: 700px;">
-                                <b-card bg-variant="dark" class="pb-4">
-                                    <b-form @submit.prevent="onSubmit" @reset="onReset">
-                                        <b-form-group id="input_group_1" label="Article:" label-for="input_1">
-                                            <b-form-textarea id="input_1" v-model="form.title" type="text"
-                                                placeholder="" :state="validateState('title')"
-                                                aria-describedby="feedback_1" rows="8">
-                                            </b-form-textarea>
-                                            <b-form-invalid-feedback id="feedback_1">This is a required field.
-                                            </b-form-invalid-feedback>
-                                        </b-form-group>
-
-                                        <div>
-                                            <div class="absolute bottom-3 left-5">
-                                                <b-button type="submit" variant="primary"
-                                                    @click="showDismissibleAlert = true">Submit
-                                                </b-button>
-                                                <b-button type="reset" variant="danger">Reset</b-button>
-                                            </div>
-                                        </div>
-
-                                    </b-form>
-                                </b-card>
-                            </b-container>
-                        </b-col> -->
+                        </div>                        
                     </b-row>
                 </b-card>
             </b-container>
@@ -167,14 +136,6 @@ export default {
         }
     },
 
-    // async mounted() {
-
-    // },
-
-    // async fetch() {
-    //     await this.getAllUser();        
-
-    // },
     methods: {
         // GET
         async getSingleUser() {
