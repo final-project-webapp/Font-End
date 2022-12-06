@@ -82,10 +82,17 @@
                           <b-card-text class="text-sm">View: {{ data.view }} </b-card-text>
                           <b-card-text class="text-sm">usereID: {{ data.user_user_id }} </b-card-text>
 
-                          <div class="static">
-                            <div class="absolute top-3 right-6">
-                              <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                            <div class="static">
+                            <div v-for="(r, index) in userRank" :key="index">
+                              <!-- <p>R:{{r}}</p> -->
+
+                              <div v-if="(data.user_user_id == r)">
+                                <div class="absolute top-3 right-6">
+                                  <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                                </div>
+                              </div>
                             </div>
+                            <!-- </div> -->
                             <div class="absolute bottom-3 right-6">
                               <b-button @click="countView(data.article_id)">
                                 <NuxtLink class=""
