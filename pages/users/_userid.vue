@@ -21,12 +21,13 @@
                     </div>
                     <b-row align-h="around">
                         <div v-for="(a, index ) in articles" :key="index">
-                            <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">                                
+                            <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
 
-                                <b-card :header="a.articles" header-text-variant="white" header-border-variant="primary"
-                                    header-bg-variant="dark" header-tag="header" tag="article"
-                                    class="mb-4 px-4 text-xl break-words" style="height: auto; width: 400px;"
+                                <b-card class="mb-4 px-4 text-xl break-words" style="height: auto; width: 400px;"
                                     bg-variant="dark" text-variant="light" border-variant="primary">
+                                    <b-card-text class="text-lg break-words truncate ...">
+                                        {{ a.articles }}</b-card-text>
+                                    <b-card-text class="text-lg text-[#007bff]"> _________________ </b-card-text>
                                     <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
                                     <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
                                     <b-card-text class="text-sm">Date: {{ new
@@ -66,7 +67,7 @@
                                 <!-- </b-card> -->
                                 <!-- </b-container> -->
                             </b-col>
-                        </div>                        
+                        </div>
                     </b-row>
                 </b-card>
             </b-container>
@@ -100,8 +101,8 @@ export default {
             userData: '',
             userRole: '',
             editArticleID: '',
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     // validations: {
@@ -132,7 +133,7 @@ export default {
                 })
             }, 1000);
         } else {
-            await this.getArticleByID
+            await this.getArticleByID()
         }
     },
 

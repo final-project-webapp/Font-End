@@ -1,38 +1,30 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
+        <NavBar />
         <b-container fluid>
-            <b-row align-h="between">
-                <b-col cols="9" xl="10" lg="10" md="10" sm="10">
-                    <SlideBar class="pt-20 sm:pl-4 md:pl-12 lg:pl-24 xl:pl-48" />
-                </b-col>
-                <b-col cols="2">
-
-                </b-col>
-            </b-row>
+            <div class="pt-20">
+                <loginForm @login-user="login"></loginForm>
+            </div>
         </b-container>
-
-        <loginForm @login-user="login"></loginForm>
-
     </div>
 </template>
 
 <script>
 import swal from 'sweetalert2/dist/sweetalert2.js'
-import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 import loginForm from '@/components/login_form.vue'
 
 export default {
     name: 'LoginPage',
     components: {
-        SlideBar,
+        NavBar,
         loginForm
-
     },
     emits: ['login-user'],
     data() {
         return {
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     methods: {
@@ -52,39 +44,39 @@ export default {
                     })
                 })
                 console.log('Done!!')
-              
+
                 const resdata = await res.json()
                 if (resdata.data == 1) {
                     swal.fire({
                         title: 'Login Success!',
                         // text: 'Your has been registered.',
-                        icon: 'success',                        
+                        icon: 'success',
                         showConfirmButton: false,
                         timer: 2000
                         // confirmButtonColor: '#007bff',
                         // confirmButtonText: 'Done',                    
-                    })                                      
-                    setTimeout(() => { this.$router.push({name: 'index'}) }, 1000);
+                    })
+                    setTimeout(() => { this.$router.push({ name: 'index' }) }, 1000);
                     setTimeout(() => { this.$router.go(0) }, 2000);
                 } else if (resdata.data == 0) {
                     swal.fire({
                         title: 'Something went wrong!',
                         text: 'Your Email or Password has been wrong.',
-                        icon: 'error',                                                                        
+                        icon: 'error',
                         confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Done',                    
+                        confirmButtonText: 'Done',
                     })
-                }                                          
+                }
             }
             catch (error) {
                 console.log(`LoginFalse!!! ${error}`)
                 swal.fire({
-                        title: 'Login Failed!',
-                        // text: 'Your has been registered.',
-                        icon: 'error',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Done',                    
-                    })
+                    title: 'Login Failed!',
+                    // text: 'Your has been registered.',
+                    icon: 'error',
+                    confirmButtonColor: '#007bff',
+                    confirmButtonText: 'Done',
+                })
             }
         },
     }

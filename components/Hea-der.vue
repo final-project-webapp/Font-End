@@ -1,39 +1,35 @@
-<!-- <template>
-<div class="">    
-   <img src="@/assests/image/headerImage.jpg" alt=""
-   style="width: 100%; height: 480px; object-fit: cover;"
-   >
-</div>
-</template> -->
 <template>
-   <div class="header">
+   <div>
+      <NavBar />
+      <div class="header">
 
-      <img src="@/assests/image/popcorn.jpg" alt="" />
+         <img src="@/assests/image/popcorn.jpg" alt="" />
 
-      <div class="text-container">
-         <div class="text">
-            <div class="">
-               <SlideBar />
+         <div class="text-container">
+            <div class="text">
+               <div class="">                  
+               </div>
+               <!-- <span class="mini-heading">Now Stremaing</span> -->
+               <h1 class="pt-20"><span>Now</span> Playing</h1>
+               <!-- <b-button variant="" size="sm">
+                  <a href="#movie-grid" class="view">View Movies</a>
+               </b-button>
+               <b-button variant="" size="sm">
+                  <nuxt-link class="view" to="/show_discuss">More Discuss</nuxt-link>
+                  <a href="#movie-grid" class="view"></a>
+               </b-button> -->
             </div>
-            <!-- <span class="mini-heading">Now Stremaing</span> -->
-            <h1 class="pt-20"><span>Now</span> Playing</h1>
-            <b-button variant="" size="sm" >
-            <a href="#movie-grid" class="view">View Movies</a>
-            </b-button>
-            <b-button variant="" size="sm" >
-               <nuxt-link class="view" to="/show_discuss">More Discuss</nuxt-link>
-            <a href="#movie-grid" class="view"></a>
-            </b-button>            
          </div>
       </div>
    </div>
 </template>
 
 <script>
-import SlideBar from '@/components/slide_bar.vue'
+// import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 export default {
-   components: {
-      SlideBar
+   components: {      
+      NavBar
    },
 }
 </script>

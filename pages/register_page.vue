@@ -1,40 +1,31 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
+        <NavBar />
         <b-container fluid>
-            <b-row align-h="between">
-                <b-col cols="9" xl="10" lg="10" md="10" sm="10">
-                    <SlideBar class="pt-20 sm:pl-4 md:pl-12 lg:pl-24 xl:pl-48" />
-                </b-col>
-                <b-col cols="2">
-
-                </b-col>
-            </b-row>
+            <div class="pt-20">
+                <registerForm @register-user="confirmRegis"></registerForm>
+            </div>
         </b-container>
-
-        <registerForm @register-user="confirmRegis"></registerForm>
-
     </div>
 </template>
 
 <script>
 import swal from 'sweetalert2/dist/sweetalert2.js'
-import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 import registerForm from '@/components/register_form.vue'
 
-
 export default {
-
     name: 'RegisterPage',
     components: {
-        SlideBar,
+        NavBar,
         registerForm
     },
     emits: ['register-user'],
     data() {
         return {
             userList: [],
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'
         }
     },
     async created() {
@@ -60,7 +51,7 @@ export default {
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.registerUser(registerData)                                        
+                    this.registerUser(registerData)
                 }
             })
         },
@@ -102,7 +93,7 @@ export default {
                         DOB: registerData.dob
                     })
                 })
-        
+
                 const resdata = await res.json()
                 if (resdata.data == 1) {
                     swal.fire({
@@ -131,11 +122,11 @@ export default {
                         confirmButtonColor: '#dc2626',
                         confirmButtonText: 'Cancel',
                     })
-                }                             
+                }
             }
             catch (error) {
                 console.log(`addUserFalse!!! ${error}`)
-            }            
+            }
         }
     },
 

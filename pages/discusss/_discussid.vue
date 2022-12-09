@@ -1,6 +1,7 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
-        <b-container>
+        <NavBar />
+        <!-- <b-container>
             <b-row align-h="between">
                 <b-col cols="4">
                     <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
@@ -9,9 +10,9 @@
 
                 </b-col>
             </b-row>
-        </b-container>
+        </b-container> -->
 
-        <div class="py-20 flex">
+        <div class="pt-40 flex">
             <b-container style="max-width: 1000px;">
                 <b-card border-variant="primary" bg-variant="dark">
                     <div class="text-lg font-bold mb-2">
@@ -84,7 +85,7 @@ import axios from "axios"
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
-import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 
 const today = new Date().toISOString().slice(0, 10)
 console.log('currentDate:')
@@ -94,7 +95,7 @@ export default {
     emits: ['discuss-data'],
     name: 'DiscussPage',
     components: {
-        SlideBar,
+        NavBar,
     },
     mixins: [validationMixin],
     data() {
@@ -115,8 +116,8 @@ export default {
             defaultview: 1,
             testuser: 1,
             showDismissibleAlert: false,       
-            // url: 'http://localhost:3000'
-            url: 'https://backend-final.azurewebsites.net'            
+            url: 'http://localhost:3000'
+            // url: 'https://backend-final.azurewebsites.net'            
         }
     },
     async mounted() {       

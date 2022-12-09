@@ -1,19 +1,23 @@
 <template>
   <div class="bg-zinc-800 min-h-screen text-white">
+    <div v-if="toggleRandom == 0">
+      <NBanner />
+    </div>
+    <div v-if="toggleRandom == 1">
+      <RBanner />
+    </div>
+
     <!-- <Loading v-if="$fetchState.pending" /> -->
     <b-container fluid>
-      <b-row align-h="between">
-        <b-col cols="4" xl="10" lg="8" md="8" sm="6">
-          <SlideBar class="ml-2 mt-20 xs:pl-20 sm:pl-20 md:pl-20 lg:pl-20 xl:pl-40" />
-        </b-col>
 
-        <b-col cols="8" xl="2" lg="4" md="4" sm="6">
-          <div class="mr-2 mt-20">
+      <b-row align-h="end">
+        <b-col cols="7" xl="2" lg="4" md="4" sm="4">
+          <div class="mr-2 mt-8">
             <b-button-group>
-              <b-button variant="info" @click="getNewestArticles()">
+              <b-button variant="info" @click="getNewestArticles(); ">
                 Newest
               </b-button>
-              <b-button variant="primary" @click="getRandomArticles()">
+              <b-button variant="primary" @click="getRandomArticles(); ">
                 Random
               </b-button>
             </b-button-group>
@@ -22,7 +26,7 @@
       </b-row>
     </b-container>
 
-    <div class="mt-20 flex">
+    <div class="mt-8 flex">
       <b-container fluid style="max-width: 1800px;">
         <!-- search -->
         <div class="mb-4 flex justify-start">
@@ -47,20 +51,17 @@
                     <img :src="`https://image.tmdb.org/t/p/w500/${sa.picture_path}`" />
                   </div>
                   <div>
-                    <NuxtLink
-                      :to="{ name: 'comments-commentid', params: { commentid: sa.movie_id, moviename: sa.title } }">
-                      <p class="font-bold text-xl justify-center flex mt-4">{{ sa.title }}</p>
-                    </NuxtLink>
+
+                    <p class="font-bold text-xl justify-center flex mt-4">{{ sa.title }}</p>
+
                   </div>
 
                 </b-col>
                 <b-col cols="12" xl="10" lg="8" md="8" sm="12">
 
-
                   <div v-if="(sa.articlename == '')">
                     <p class="font-bold text-2xl justify-center flex mt-20">This movie currently has no articles.</p>
                   </div>
-
 
                   <b-row align-h="around" class="mt-8">
                     <div v-for="(data, index) in sa.articlename" :key="index">
@@ -80,12 +81,18 @@
                           }}</b-card-text>
                           <b-card-text class="text-sm">Language: {{ data.language }}</b-card-text>
                           <b-card-text class="text-sm">View: {{ data.view }} </b-card-text>
-                          <b-card-text class="text-sm">usereID: {{ data.user_user_id }} </b-card-text>
 
                           <div class="static">
-                            <div class="absolute top-3 right-6">
-                              <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                            <div v-for="(r, index) in userRank" :key="index">
+                              <!-- <p>R:{{r}}</p> -->
+
+                              <div v-if="(data.user_user_id == r)">
+                                <div class="absolute top-3 right-6">
+                                  <b-icon icon="star-fill" variant="success" font-scale="1"></b-icon>
+                                </div>
+                              </div>
                             </div>
+
                             <div class="absolute bottom-3 right-6">
                               <b-button @click="countView(data.article_id)">
                                 <NuxtLink class=""
@@ -102,8 +109,14 @@
                     </div>
                   </b-row>
 
-
-
+                  <div v-if="(sa.articlename != '')" class="flex justify-center">
+                    <b-button variant="primary">
+                      <NuxtLink
+                        :to="{ name: 'comments-commentid', params: { commentid: sa.movie_id, moviename: sa.title } }">
+                        View More
+                      </NuxtLink>
+                    </b-button>
+                  </div>
                 </b-col>
               </b-row>
             </b-card>
@@ -120,16 +133,15 @@
                   <div class="object-contain h-auto w-48">
                     <img :src="`https://image.tmdb.org/t/p/w500/${article.picture_path}`" />
                   </div>
-                  <div>                   
-                    <NuxtLink
-                      :to="{ name: 'comments-commentid', params: { commentid: article.movie_id, moviename: article.title } }">
-                      <p class="font-bold text-xl justify-center flex mt-4">{{ article.title }}</p>
-                    </NuxtLink>                    
+                  <div>
+
+                    <p class="font-bold text-xl justify-center flex mt-4">{{ article.title }}</p>
+
                   </div>
                 </b-col>
 
                 <b-col cols="12" xl="10" lg="8" md="8" sm="12">
-                  <!-- <b-container fluid style="max-width: 1000px;"> -->
+
                   <div v-if="(article.articlename == '')">
                     <p class="font-bold text-2xl justify-center flex mt-20">This movie currently has no articles.</p>
                   </div>
@@ -181,8 +193,16 @@
 
                     </div>
                   </b-row>
-                  <!-- </b-container> -->
 
+
+                  <div v-if="(article.articlename != '')" class="flex justify-center">
+                    <b-button variant="primary">
+                      <NuxtLink
+                        :to="{ name: 'comments-commentid', params: { commentid: article.movie_id, moviename: article.title } }">
+                        View More
+                      </NuxtLink>
+                    </b-button>
+                  </div>
 
                 </b-col>
               </b-row>
@@ -199,21 +219,25 @@
 
 <script>
 import axios from "axios"
-import SlideBar from '@/components/slide_bar.vue'
+import NBanner from '@/components/Newest_Banner.vue'
+import RBanner from '@/components/Random_Banner.vue'
 import Loading from '@/components/Loading.vue'
 
 export default {
   name: 'ShowDiscuss',
-  components: {
-    SlideBar,
-    Loading
+  components: {   
+    Loading,    
+    NBanner,
+    RBanner
+
   },
   data() {
-    return {
-      randomArticles: [],
-      randomArticlesData: [],
+    return {      
+      toggleRandom: 0,
+      randomArticles: [],      
       articles: [],
-      articlesData: [],
+      articlesData: '',
+      randomData: '',
       searchDummyArticle: '',
       searchInput: '',
       searchedArticles: [],
@@ -222,8 +246,8 @@ export default {
       userRole: '',
       userRank: '',
       rankData: [],
-      // url: 'http://localhost:3000'
-      url: 'https://backend-final.azurewebsites.net'
+      url: 'http://localhost:3000'
+      // url: 'https://backend-final.azurewebsites.net'
     }
   },
 
@@ -238,9 +262,10 @@ export default {
   },
   fetchDelay: 2000,
 
-  methods: {
+  methods: { 
     // GET    
     async getNewestArticles() {
+      this.toggleRandom = 0;
       try {
         const data = axios.get(this.url + "/getarticlebypage/1")
         const result = await data
@@ -263,21 +288,23 @@ export default {
     },
 
     async getRandomArticles() {
+      this.toggleRandom = 1;
       try {
         const data = axios.get(this.url + "/randommoviearticle")
         const result = await data
 
         this.articles = result.data.data
+        // this.randomArticles = result.data.data
         console.log('randomArticle:')
         // console.log(this.articles)
 
-        for (const i in this.randomArticles) {
-        //   for (const j in this.article[i].articlename) {
+        for (const i in this.articles) {
+          //   for (const j in this.article[i].articlename) {
 
-        //   }
-          this.articlesData= this.articles[i].articlename
+          //   }
+          this.randomData = this.articles[i].articlename
           console.log('randomArticleData:')
-          console.log(this.articlesData)
+          console.log(this.randomData)
 
         }
       }
