@@ -1,4 +1,4 @@
-# megami
+# megami 😀
 
 ## Build Setup
 
