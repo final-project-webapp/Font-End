@@ -44,8 +44,8 @@ export default {
             userName: '',
             userData: null,
             userRole: null,
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
 

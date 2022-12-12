@@ -172,8 +172,8 @@ export default {
             userRank: '',
             rankData: [],
             // namedata: '',
-            // url: 'https://backend-final.azurewebsites.net'
-            url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
         }
     },
     async mounted() {

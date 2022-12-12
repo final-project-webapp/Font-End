@@ -116,8 +116,8 @@ export default {
             defaultview: 1,
             testuser: 1,
             showDismissibleAlert: false,       
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'            
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'            
         }
     },
     async mounted() {       

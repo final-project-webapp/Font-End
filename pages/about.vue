@@ -3,7 +3,7 @@
     <!-- <SlideBar class="pt-20 sm:pl-4 md:pl-12 lg:pl-24 xl:pl-48" /> -->
     <NavBar class="pt-20" />
     <div class="justify-center flex">
-      <div class=" mt-12 mx-2 p-4 border-solid border-2 border-primary rounded-md h-auto w-60 lg:w-max md:w-max">
+      <div class=" mt-20 mx-2 p-4 border-solid border-2 border-primary rounded-md h-auto w-60 lg:w-max md:w-max">
         <!-- <div class="grid grid-cols-2 gap-20 justify-center md:grid-cols-2 cols sm:grid-cols-1"> -->
 
         <p class="text-2xl font-bold">

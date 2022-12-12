@@ -24,8 +24,8 @@ export default {
     data() {
         return {
             userList: [],
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     async created() {
@@ -106,6 +106,14 @@ export default {
                         timer: 2000
                     })
                     setTimeout(() => { this.$router.push('/login_page') }, 2000);
+                } else if (resdata.data == 2) {
+                    swal.fire({
+                        title: 'Register Failed!',
+                        text: 'You must be 15 years old to register.',
+                        icon: 'error',
+                        confirmButtonColor: '#dc2626',
+                        confirmButtonText: 'Cancel',
+                    })
                 } else if (resdata.data == 0) {
                     swal.fire({
                         title: 'Register Failed!',

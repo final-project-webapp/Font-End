@@ -28,9 +28,10 @@
 
     <div class="mt-8 flex">
       <b-container fluid style="max-width: 1800px;">
+        
         <!-- search -->
         <div class="mb-4 flex justify-start">
-          <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Enter Movie Name"
+          <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Search Movie Name"
             @keyup.enter="$fetch" @keyup.delete="clearSearch" style="max-width: 400px;"></b-form-input>
           <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm" @click="clearSearch">Clear
             Search</b-button>
@@ -246,8 +247,8 @@ export default {
       userRole: '',
       userRank: '',
       rankData: [],
-      url: 'http://localhost:3000'
-      // url: 'https://backend-final.azurewebsites.net'
+      // url: 'http://localhost:3000'
+      url: 'https://backend-final.azurewebsites.net'
     }
   },
 

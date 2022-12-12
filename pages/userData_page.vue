@@ -16,7 +16,7 @@
             <b-container>
                 <!-- search -->
                 <div class="mb-4 flex justify-start">
-                    <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Enter Full Movie Name"
+                    <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Search Full Movie Name"
                         @keyup.enter="$fetch" @keyup.delete="clearSearch" style="max-width: 400px;"></b-form-input>
                     <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm"
                         @click="clearSearch">Clear Search</b-button>
@@ -202,8 +202,8 @@ export default {
             searchDummyArticle: '',
             searchInput: '',
             searchedArticles: [],
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
     validations: {

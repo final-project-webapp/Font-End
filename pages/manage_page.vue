@@ -4,21 +4,21 @@
     </div>
 
     <div v-else class="bg-zinc-800 min-h-screen text-white">
-        <b-container>
+        <NavBar />
+        <!-- <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
                     <SlideBar class="ml-2 pt-20 xs:pl-8 sm:pl-8 md:pl-8 lg:pl-8 xl:pl-8" />
                 </b-col>
             </b-row>
-        </b-container>
+        </b-container> -->
 
-        <div class="mt-20 flex justify-center">
-
+        <div class="pt-40 flex justify-center">
             <b-container style="max-width: 1800px; height: auto">
 
                 <!-- search -->
                 <div class="mb-4 flex justify-start">
-                    <b-form-input v-model.lazy="searchDummyUser" type="text" placeholder="Enter Username"
+                    <b-form-input v-model.lazy="searchDummyUser" type="text" placeholder="Search Username"
                         @keyup.enter="$fetch" @keyup.delete="clearSearch" style="max-width: 400px;"></b-form-input>
                     <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm"
                         @click="clearSearch">Clear
@@ -134,20 +134,19 @@
                 </div>
 
             </b-container>
-
         </div>
     </div>
 </template>
 <script>
 import axios from "axios"
 import swal from 'sweetalert2/dist/sweetalert2.js';
-import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 import FailedPage from '@/components/failed_page.vue'
 
 export default {
     name: 'ManagePage',
     components: {
-        SlideBar,
+        NavBar,
         FailedPage
     },
     data() {
@@ -159,8 +158,8 @@ export default {
             searchInput: '',
             searchedUsers: [],
             // editArticleID: '',
-            url: 'http://localhost:3000'
-            // url: 'https://backend-final.azurewebsites.net'
+            // url: 'http://localhost:3000'
+            url: 'https://backend-final.azurewebsites.net'
         }
     },
 
