@@ -4,16 +4,17 @@
     </div>
 
     <div v-else class="bg-zinc-800 min-h-screen text-white">
-        <b-container>
+        <NavBar />
+        <!-- <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
                     <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
                 </b-col>
 
             </b-row>
-        </b-container>
+        </b-container> -->
 
-        <div class="mt-8 flex justify-center">
+        <div class="pt-28 flex justify-center">
 
             <b-col cols="12" xl="12" lg="12" md="12" sm="12">
                 <b-container style="max-width: 1000px;" class="">
@@ -44,7 +45,7 @@
                         </b-card>
                     </div>
 
-                    <b-card border-variant="primary" bg-variant="dark" class="mt-8 overflow-y-scroll"
+                    <b-card border-variant="primary" bg-variant="dark" class="my-8 overflow-y-scroll"
                         style="height: 380px;">
                         <div v-if="articleComment == ''" class="flex justify-center">
                             <p class="text-2xl font-bold mt-20">This article currently have no comments.</p>
@@ -99,7 +100,7 @@
                     </b-card>
 
                 </b-container>
-                <b-container style="max-width: 1000px;" class="mt-8">
+                <b-container v-if="userRole == 1 || userData == null" style="max-width: 1000px;" class="pb-8">
 
                     <b-card border-variant="primary" bg-variant="dark" class="">
 
@@ -136,7 +137,11 @@
                     </b-card>
 
                 </b-container>
-                <b-container v-if="userRole == 2"></b-container>
+            
+                
+                    <b-container v-if="userRole == 2">                        
+                    </b-container>
+                
             </b-col>
 
         </div>
@@ -150,13 +155,14 @@ import swal from 'sweetalert2/dist/sweetalert2.js'
 import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
 import axios from "axios"
-import SlideBar from '@/components/slide_bar.vue'
+// import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 import FailedArticlePage from '@/components/failed_article_page.vue';
 
 export default {
     name: 'ShowArticle',
     components: {
-        SlideBar,
+        NavBar,
         FailedArticlePage
     },
 
@@ -174,7 +180,7 @@ export default {
             article: '',
             articleComment: [],
             articleId: '',
-            articlesData: '',            
+            articlesData: '',
             editCommetID: '',
             editMode: false,
             // url: 'http://localhost:3000'
@@ -183,7 +189,7 @@ export default {
     },
     async created() {
         await this.getSingleArticle();
-        await this.getCommentArticle();    
+        await this.getCommentArticle();
     },
     async mounted() {
         if (document.cookie == null) { return }
@@ -249,7 +255,7 @@ export default {
 
             console.log('Getsinglearticle:')
             console.log(this.article)
-            for (const i in this.article) {                
+            for (const i in this.article) {
                 this.articlesData = this.article[i].article_id
                 console.log('ArticleData:')
                 console.log(this.articlesData)

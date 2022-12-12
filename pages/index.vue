@@ -113,8 +113,7 @@ export default {
   components: {
     Header,
     Loading
-  },
-  // layout: "nav-bar",
+  },  
 
   data() {
     return {

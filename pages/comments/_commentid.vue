@@ -1,11 +1,12 @@
 <template>
     <div class="bg-zinc-800 min-h-screen text-white">
+        <NavBar />
         <Loading v-if="$fetchState.pending" />
         <div v-else class="container comment-movie">
-            <div class="flex justify-between">
+            <div class="flex justify-end mt-20">
                 <!-- <NuxtLink class="button" :to="{ name: 'index' }">Back</NuxtLink> -->
                 <!-- <b-button class="button" @click="back">Back</b-button> -->
-                <SlideBar />
+                <!-- <SlideBar /> -->
 
                 <div v-if="userData != null">
                     <NuxtLink class="button" :to="{ name: 'discusss-discussid', params: { discussid: this.idById } }">
@@ -148,11 +149,12 @@
 <script>
 import axios from "axios"
 import Loading from "../../components/Loading.vue"
-import SlideBar from '@/components/slide_bar.vue'
+// import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 
 export default {
     name: "CommentMovie",
-    components: { Loading, SlideBar },
+    components: { Loading, NavBar },
     head() {
         return {
             title: this.$route.params.movietitle

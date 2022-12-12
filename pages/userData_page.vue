@@ -3,12 +3,9 @@
         <FailedPage />
     </div>
     <div v-else class="bg-zinc-800 min-h-screen text-white">
+        <NavBar />
         <b-container>
-            <b-row align-h="between">
-                <b-col cols="5" xl="10" lg="8" md="8" sm="8">
-                    <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
-                </b-col>
-
+            <b-row align-h="end">                
                 <b-col cols="7" xl="2" lg="4" md="4" sm="4">
                     <UserBotton class="mr-2 mt-20" />
                 </b-col>
@@ -19,7 +16,7 @@
             <b-container>
                 <!-- search -->
                 <div class="mb-4 flex justify-start">
-                    <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Enter Full Movie Name"
+                    <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Search Full Movie Name"
                         @keyup.enter="$fetch" @keyup.delete="clearSearch" style="max-width: 400px;"></b-form-input>
                     <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm"
                         @click="clearSearch">Clear Search</b-button>
@@ -181,14 +178,14 @@ import axios from "axios"
 import { validationMixin } from "vuelidate";
 import { required, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js';
-import SlideBar from '@/components/slide_bar.vue';
+import NavBar from '@/components/nav_bar.vue'
 import UserBotton from '@/components/user_botton.vue';
 import FailedPage from '@/components/failed_page.vue';
 
 export default {
     name: 'userDataPage',
     components: {
-        SlideBar,
+        NavBar,
         UserBotton,
         FailedPage
     },

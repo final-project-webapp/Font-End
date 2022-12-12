@@ -4,71 +4,149 @@
     </div>
 
     <div v-else class="bg-zinc-800 min-h-screen text-white">
-        <b-container>
+        <NavBar />
+        <!-- <b-container>
             <b-row>
                 <b-col cols="9" xl="10" lg="10" md="10" sm="10">
                     <SlideBar class="ml-2 pt-20 xs:pl-20 sm:pl-20 md:pl-20 lg:pl-20 xl:pl-20" />
                 </b-col>
-
             </b-row>
-        </b-container>
+        </b-container> -->
 
-        <div class="mt-20">
+        <div class="pt-40">
             <b-container style="height: auto; width: 1800px;">
-                <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 600px;">
-                    <div v-if="articles == ''" class="flex justify-center">
-                        <p class="font-bold text-4xl">User has no articles.</p>
-                    </div>
-                    <b-row align-h="around">
-                        <div v-for="(a, index ) in articles" :key="index">
-                            <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">                                
 
-                                <b-card :header="a.articles" header-text-variant="white" header-border-variant="primary"
-                                    header-bg-variant="dark" header-tag="header" tag="article"
-                                    class="mb-4 px-4 text-xl break-words" style="height: auto; width: 400px;"
-                                    bg-variant="dark" text-variant="light" border-variant="primary">
-                                    <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
-                                    <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
-                                    <b-card-text class="text-sm">Date: {{ new
-                                            Date(a.date).toLocaleString('en-us', {
-                                                month: 'long',
-                                                day: 'numeric',
-                                                year: 'numeric',
-                                            })
-                                    }}</b-card-text>
+                <!-- search -->
+                <div class="mb-4 flex justify-start">
+                    <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Search Movie Name"
+                        @keyup.enter="$fetch" @keyup.delete="clearSearch" style="max-width: 400px;"></b-form-input>
+                    <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm"
+                        @click="clearSearch">Clear
+                        Search</b-button>
+                </div>
 
-                                    <div class="absolute bottom-3 right-3">
-                                        <b-dropdown size="sm" no-caret>
-                                            <template #button-content>
-                                                <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
-                                                </b-icon>
-                                            </template>
-                                            <b-dropdown-item-button variant="dark" class="text-xs"
-                                                @click="deleteArticle(a.article_id)">
-                                                <b-icon icon="trash-fill" variant="dark" font-scale="1"
-                                                    class="flex justify-end">
-                                                </b-icon>
-                                                Delete
-                                            </b-dropdown-item-button>
-                                            <b-dropdown-item-button variant="dark" class="text-xs flex">
-                                                <NuxtLink class=""
-                                                    :to="{ name: 'articles-articleid', params: { articleid: a.article_id } }">
-                                                    <b-icon icon="chat-left-text" font-scale="1">
+                <!-- search article -->
+                <div v-if="searchInput !== ''">
+                    <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 600px;">
+                        <!-- <div class="text-2xl font-bold mb-2 ml-4">
+                            {{ userData.name }}
+                        </div> -->
+
+                        <div v-if="searchedArticles == ''" class="flex justify-center">
+                            <p class="font-bold text-4xl">User has no articles.</p>
+                        </div>
+                        <b-row align-h="around">
+                            <div v-for="(a, index ) in searchedArticles" :key="index">
+                                <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
+
+                                    <b-card class="mb-4 px-4 text-xl break-words" style="height: auto; width: 400px;"
+                                        bg-variant="dark" text-variant="light" border-variant="primary">
+                                        <b-card-text class="text-lg break-words truncate ...">
+                                            {{ a.articles }}</b-card-text>
+                                        <b-card-text class="text-lg text-[#007bff]"> _________________ </b-card-text>
+                                        <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
+                                        <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
+                                        <b-card-text class="text-sm">Date: {{ new
+                                                Date(a.date).toLocaleString('en-us', {
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                    year: 'numeric',
+                                                })
+                                        }}</b-card-text>
+
+                                        <div class="absolute bottom-3 right-3">
+                                            <b-dropdown size="sm" no-caret>
+                                                <template #button-content>
+                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
                                                     </b-icon>
-                                                    See comment
-                                                </NuxtLink>
-                                            </b-dropdown-item-button>
-                                        </b-dropdown>
-                                    </div>
+                                                </template>
+                                                <b-dropdown-item-button variant="dark" class="text-xs"
+                                                    @click="deleteArticle(a.article_id)">
+                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                        class="flex justify-end">
+                                                    </b-icon>
+                                                    Delete
+                                                </b-dropdown-item-button>
+                                                <b-dropdown-item-button variant="dark" class="text-xs flex">
+                                                    <NuxtLink class=""
+                                                        :to="{ name: 'articles-articleid', params: { articleid: a.article_id } }">
+                                                        <b-icon icon="chat-left-text" font-scale="1">
+                                                        </b-icon>
+                                                        See comment
+                                                    </NuxtLink>
+                                                </b-dropdown-item-button>
+                                            </b-dropdown>
+                                        </div>
 
-                                </b-card>
+                                    </b-card>
 
-                                <!-- </b-card> -->
-                                <!-- </b-container> -->
-                            </b-col>
-                        </div>                        
-                    </b-row>
-                </b-card>
+                                    <!-- </b-card> -->
+                                    <!-- </b-container> -->
+                                </b-col>
+                            </div>
+                        </b-row>
+                    </b-card>
+                </div>
+
+                <!-- normal article -->
+                <div v-else>
+                    <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 600px;">
+                        <div v-if="articles == ''" class="flex justify-center">
+                            <p class="font-bold text-4xl">User has no articles.</p>
+                        </div>
+                        <b-row align-h="around">
+                            <div v-for="(a, index ) in articles" :key="index">
+                                <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
+
+                                    <b-card class="mb-4 px-4 text-xl break-words" style="height: auto; width: 400px;"
+                                        bg-variant="dark" text-variant="light" border-variant="primary">
+                                        <b-card-text class="text-lg break-words truncate ...">
+                                            {{ a.articles }}</b-card-text>
+                                        <b-card-text class="text-lg text-[#007bff]"> _________________ </b-card-text>
+                                        <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
+                                        <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
+                                        <b-card-text class="text-sm">Date: {{ new
+                                                Date(a.date).toLocaleString('en-us', {
+                                                    month: 'long',
+                                                    day: 'numeric',
+                                                    year: 'numeric',
+                                                })
+                                        }}</b-card-text>
+
+                                        <div class="absolute bottom-3 right-3">
+                                            <b-dropdown size="sm" no-caret>
+                                                <template #button-content>
+                                                    <b-icon icon="three-dots-vertical" variant="light" font-scale="1">
+                                                    </b-icon>
+                                                </template>
+                                                <b-dropdown-item-button variant="dark" class="text-xs"
+                                                    @click="deleteArticle(a.article_id)">
+                                                    <b-icon icon="trash-fill" variant="dark" font-scale="1"
+                                                        class="flex justify-end">
+                                                    </b-icon>
+                                                    Delete
+                                                </b-dropdown-item-button>
+                                                <b-dropdown-item-button variant="dark" class="text-xs flex">
+                                                    <NuxtLink class=""
+                                                        :to="{ name: 'articles-articleid', params: { articleid: a.article_id } }">
+                                                        <b-icon icon="chat-left-text" font-scale="1">
+                                                        </b-icon>
+                                                        See comment
+                                                    </NuxtLink>
+                                                </b-dropdown-item-button>
+                                            </b-dropdown>
+                                        </div>
+
+                                    </b-card>
+
+                                    <!-- </b-card> -->
+                                    <!-- </b-container> -->
+                                </b-col>
+                            </div>
+                        </b-row>
+                    </b-card>
+                </div>
+
             </b-container>
         </div>
     </div>
@@ -80,26 +158,26 @@
 // import swal from 'sweetalert2/dist/sweetalert2.js'
 import axios from "axios"
 import swal from 'sweetalert2/dist/sweetalert2.js';
-import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 import FailedPage from '@/components/failed_page.vue';
 
 export default {
     name: 'UserPage',
     components: {
-        SlideBar,
+        NavBar,
         FailedPage
     },
     // mixins: [validationMixin],
     data() {
         return {
             articles: [],
-            // form: {
-            //     title: ''
-            // },
             singleUser: '',
             userData: '',
             userRole: '',
             editArticleID: '',
+            searchDummyArticle: '',
+            searchInput: '',
+            searchedArticles: [],
             // url: 'http://localhost:3000'
             url: 'https://backend-final.azurewebsites.net'
         }
@@ -125,14 +203,21 @@ export default {
             setTimeout(() => {
                 swal.fire({
                     title: 'You do not have privileges here.',
-                    // text: 'Do you want to continue',
                     icon: 'error',
                     confirmButtonText: 'Done',
                     confirmButtonColor: '#007bff'
                 })
             }, 1000);
         } else {
-            await this.getArticleByID
+            await this.getArticleByID()
+        }
+    },
+
+    async fetch() {
+        if (this.searchDummyArticle === '') {
+            await this.getArticleByID();
+        } else {
+            await this.searchArticle()
         }
     },
 
@@ -149,7 +234,7 @@ export default {
                 })
                 const getuserdata = await res.json()
                 this.userData = getuserdata.data
-                console.log('UserInfo_page:')
+                console.log('_userData:')
                 console.log(this.userData)
                 this.userRole = getuserdata.data.role
             }
@@ -179,6 +264,25 @@ export default {
                 console.log(this.articles)
             }
             catch (error) { console.log(`getArticleUser F: ${error}`) }
+        },
+
+        async searchArticle() {
+            this.searchInput = this.searchDummyArticle
+            const data = axios.get(`${this.url}/getarticlebymoviename/${this.searchInput}`, { withCredentials: true })
+            const result = await data
+            console.log('SearchArticle2:')
+            console.log(result)
+            // result.data.data.forEach((searchArticle) => {
+            //     this.searchedArticles.push(searchArticle)
+            //     console.log('SearchArticles3:')
+            //     console.log(this.searchedArticles)
+            // })
+        },
+
+        clearSearch() {
+            this.searchDummyArticle = ''
+            this.searchInput = ''
+            this.searchedArticles = []
         },
 
         // DELETE

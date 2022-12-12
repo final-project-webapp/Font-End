@@ -3,12 +3,9 @@
         <FailedPage />
     </div>
     <div v-else class="bg-zinc-800 min-h-screen text-white">
+        <NavBar />
         <b-container>
-            <b-row align-h="between">
-                <b-col cols="5" xl="10" lg="8" md="8" sm="8">
-                    <SlideBar class="ml-2 mt-20 xs:ml-20 sm:ml-20 md:ml-20 lg:ml-20 xl:ml-20" />
-                </b-col>
-
+            <b-row align-h="end">            
                 <b-col cols="7" xl="2" lg="4" md="4" sm="4">
                     <UserBotton class="mr-2 mt-20" />
                 </b-col>
@@ -114,14 +111,15 @@
 import { validationMixin } from "vuelidate";
 import { required, minLength, maxLength } from "vuelidate/lib/validators";
 import swal from 'sweetalert2/dist/sweetalert2.js'
-import SlideBar from '@/components/slide_bar.vue'
+// import SlideBar from '@/components/slide_bar.vue'
+import NavBar from '@/components/nav_bar.vue'
 import UserBotton from '@/components/user_botton.vue'
 import FailedPage from '@/components/failed_page.vue';
 
 export default {
     name: 'userInfoPage',
     components: {
-        SlideBar,
+        NavBar,
         UserBotton,
         FailedPage
     },
@@ -461,23 +459,7 @@ export default {
                         })
 
                     }
-                    console.log('Changepassword2')
-                    // const res = await fetch(this.url + "/getarticleowner", {
-                    //     headers: {
-                    //         'Content-type': 'application/json'
-                    //     },
-                    //     credentials: 'include'
-                    // })
-                    // const getuserdata = await res.json()
-                    // this.articles = getuserdata
-                    // console.log('Reloaddata:')
-                    // console.log(this.articles)
-
-                    // setTimeout(() => { this.$router.go(-1) }, 2000);
-                    // console.log('EditForm:')
-                    // console.log(this.form.title, this.editArticleID)
-                    // this.editArticleID = ''
-
+                    console.log('Changepassword2')    
                 }
 
             }
