@@ -14,28 +14,25 @@
         </b-container> -->
 
         <div class="pt-40">
-            <b-container style="height: auto; width: 1800px;">
+            <b-container style="height: auto;">
 
                 <!-- search -->
-                <div class="mb-4 flex justify-start">
+                <!-- <div class="mb-4 flex justify-start">
                     <b-form-input v-model.lazy="searchDummyArticle" type="text" placeholder="Search Movie Name"
                         @keyup.enter="$fetch" @keyup.delete="clearSearch" style="max-width: 400px;"></b-form-input>
                     <b-button v-show="searchInput !== ''" class="ml-2 bg-primary" variant="" size="sm"
                         @click="clearSearch">Clear
                         Search</b-button>
-                </div>
+                </div> -->
 
                 <!-- search article -->
-                <div v-if="searchInput !== ''">
-                    <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 600px;">
-                        <!-- <div class="text-2xl font-bold mb-2 ml-4">
-                            {{ userData.name }}
-                        </div> -->
+                <!-- <div v-if="searchInput !== ''">
+                    <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 600px;">                        
 
                         <div v-if="searchedArticles == ''" class="flex justify-center">
                             <p class="font-bold text-4xl">User has no articles.</p>
                         </div>
-                        <b-row align-h="around">
+                        <b-row align-h="start">
                             <div v-for="(a, index ) in searchedArticles" :key="index">
                                 <b-col cols="12" xl="" lg="12" md="12 mb-4" sm="12" class="">
 
@@ -78,19 +75,17 @@
                                             </b-dropdown>
                                         </div>
 
-                                    </b-card>
-
-                                    <!-- </b-card> -->
-                                    <!-- </b-container> -->
+                                    </b-card>                                   
                                 </b-col>
                             </div>
                         </b-row>
                     </b-card>
-                </div>
+                </div> -->
 
                 <!-- normal article -->
-                <div v-else>
+                <!-- <div v-else> -->
                     <b-card bg-variant="dark" class="overflow-y-scroll" style="height: 600px;">
+
                         <div v-if="articles == ''" class="flex justify-center">
                             <p class="font-bold text-4xl">User has no articles.</p>
                         </div>
@@ -102,8 +97,10 @@
                                         bg-variant="dark" text-variant="light" border-variant="primary">
                                         <b-card-text class="text-lg break-words truncate ...">
                                             {{ a.articles }}</b-card-text>
-                                        <b-card-text class="text-lg text-[#007bff]"> _________________ </b-card-text>
-                                        <b-card-text class="text-sm">Movie name: {{ a.movie_name }}</b-card-text>
+                                        <b-card-text class="text-lg text-[#007bff]"> _________________
+                                        </b-card-text>
+                                        <b-card-text class="text-sm">Movie name: {{ a.movie_name
+                                        }}</b-card-text>
                                         <b-card-text class="text-sm">Writer: {{ a.writer }}</b-card-text>
                                         <b-card-text class="text-sm">Date: {{ new
                                                 Date(a.date).toLocaleString('en-us', {
@@ -144,8 +141,9 @@
                                 </b-col>
                             </div>
                         </b-row>
+
                     </b-card>
-                </div>
+                <!-- </div> -->
 
             </b-container>
         </div>
@@ -156,7 +154,7 @@
 // import { validationMixin } from "vuelidate";
 // import { required, maxLength } from "vuelidate/lib/validators";
 // import swal from 'sweetalert2/dist/sweetalert2.js'
-import axios from "axios"
+// import axios from "axios"
 import swal from 'sweetalert2/dist/sweetalert2.js';
 import NavBar from '@/components/nav_bar.vue'
 import FailedPage from '@/components/failed_page.vue';
@@ -213,13 +211,13 @@ export default {
         }
     },
 
-    async fetch() {
-        if (this.searchDummyArticle === '') {
-            await this.getArticleByID();
-        } else {
-            await this.searchArticle()
-        }
-    },
+    // async fetch() {
+    //     if (this.searchDummyArticle === '') {
+    //         await this.getArticleByID();
+    //     } else {
+    //         await this.searchArticle()
+    //     }
+    // },
 
     methods: {
         // GET
@@ -266,24 +264,24 @@ export default {
             catch (error) { console.log(`getArticleUser F: ${error}`) }
         },
 
-        async searchArticle() {
-            this.searchInput = this.searchDummyArticle
-            const data = axios.get(`${this.url}/getarticlebymoviename/${this.searchInput}`, { withCredentials: true })
-            const result = await data
-            console.log('SearchArticle2:')
-            console.log(result)
-            // result.data.data.forEach((searchArticle) => {
-            //     this.searchedArticles.push(searchArticle)
-            //     console.log('SearchArticles3:')
-            //     console.log(this.searchedArticles)
-            // })
-        },
+        // async searchArticle() {
+        //     this.searchInput = this.searchDummyArticle
+        //     const data = axios.get(`${this.url}/getarticleadmin/${this.searchInput}`, { withCredentials: true })
+        //     const result = await data
+        //     console.log('SearchArticle2:')
+        //     console.log(result)
+        //     result.data.data.forEach((searchArticle) => {
+        //         this.searchedArticles.push(searchArticle)
+        //         console.log('SearchArticles3:')
+        //         console.log(this.searchedArticles)
+        //     })
+        // },
 
-        clearSearch() {
-            this.searchDummyArticle = ''
-            this.searchInput = ''
-            this.searchedArticles = []
-        },
+        // clearSearch() {
+        //     this.searchDummyArticle = ''
+        //     this.searchInput = ''
+        //     this.searchedArticles = []
+        // },
 
         // DELETE
         async deleteArticle(articleId) {
@@ -294,13 +292,24 @@ export default {
                     method: 'DELETE',
                     credentials: 'include'
                 })
+                const res = await fetch(this.url + "/getarticlebyidparam/" + this.$route.params.userid, {
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    credentials: 'include'
+                })
+                const getarticlebyid = await res.json()
+                this.articles = getarticlebyid.data
+                console.log('_userArticleRe:')
+                console.log(this.articles)
 
-                const data = axios.get(`${this.url}/getarticlebyidparam/${this.$route.params.userid}`)
-                const result = await data;
-                this.singleUser = result.data;
-
-                console.log('RefreshAfterDeleteArticle:')
-                console.log(this.singleUser)
+                swal.fire({
+                    title: 'The article has been deleted.',
+                    // text: 'Do you want to continue',
+                    icon: 'success',
+                    confirmButtonText: 'Done',
+                    confirmButtonColor: '#007bff'
+                })
             }
             catch (error) {
                 console.log(`delete failed: ${error}`)
